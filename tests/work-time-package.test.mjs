@@ -198,7 +198,7 @@ test('offline package consumption ignores an unrelated npm_execpath',async()=>{
   delete environment.NODE_TEST_CONTEXT;
   let output;
   try{output=execFileSync(process.execPath,[
-   '--test','--test-name-pattern','^npm packed package installs offline and calculates without adjacent repositories or root src$',
+   '--test','--test-reporter=tap','--test-name-pattern','^npm packed package installs offline and calculates without adjacent repositories or root src$',
    fileURLToPath(import.meta.url),
   ],{
    encoding:'utf8',windowsHide:true,timeout:30000,
