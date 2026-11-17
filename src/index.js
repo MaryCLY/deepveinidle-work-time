@@ -1,18 +1,18 @@
-import {validateAdapter} from './adapter.js';
+import {validateAdapter,callRule} from './adapter.js';
 import {createBatchTimeEstimator} from './batch-time.js';
 import {createWorkExpectation} from './work-expectation.js';
 export {batchTimeModel} from './batch-time.js';
 export {gatheringSkills,toolSlots} from './domain.js';
 
-export function createWorkTimeEngine(game,source){
- validateAdapter(game,source);
+export function createWorkTimeEngine(game={}){
+ validateAdapter(game);
  const estimateBatchTime=createBatchTimeEstimator(game);
  const {workActionSeconds,workQualities,estimateWorkExpectation}=createWorkExpectation(game);
  function estimateTaskTime(options){
   const {job,player,tier=0,discard=false,siteId}=options;
   const skillXp=player?.skills?.[job.skill];
   if(typeof skillXp!=='number'||!Number.isFinite(skillXp)||skillXp<0)throw Error('invalidWorkConfiguration');
-  const level=game.level(skillXp);
+  const level=callRule(game,'level','estimateTaskTime',skillXp);
   if(!Number.isFinite(level))throw Error('invalidWorkConfiguration');
   if(level<job.levelReq)return {status:'levelTooLow',seconds:null};
   const expectation=estimateWorkExpectation(options);

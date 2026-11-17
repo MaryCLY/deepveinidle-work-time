@@ -1,4 +1,5 @@
 import {gatheringSkills} from './domain.js';
+import {callRule,requireCapability,tickMilliseconds} from './adapter.js';
 
 // The phase transitions in pN / RN / WOo of the reviewed 1.0.1214 snapshot.
 // This is an analytical approximation: initial pack is empty, all materials are
@@ -15,9 +16,13 @@ function routeLeg(from,target){
  // pN keeps the current tile when it already borders the destination. Otherwise
  // Ht chooses by Chebyshev proximity before k1 finds the actual walkable path.
  if(Math.abs(from.x-target.x)<=1&&Math.abs(from.y-target.y)<=1)return {point:from,distance:0};
- const point=game.siteEntrance(game.world,target.x,target.y,0,from);if(!point)return null;
- const path=game.walkPath(game.world,from.x,from.y,point.x,point.y);
- return path===null?null:{point,distance:path.length};
+ const feature='estimateBatchTime.route';
+ const point=callRule(game,'siteEntrance',feature,game.world,target.x,target.y,0,from);if(!point)return null;
+ if(!Number.isSafeInteger(point.x)||!Number.isSafeInteger(point.y)||Math.abs(point.x-target.x)>1||Math.abs(point.y-target.y)>1)throw Error('invalidResult');
+ const path=callRule(game,'walkPath',feature,game.world,from.x,from.y,point.x,point.y);
+ if(path===null)return null;
+ if(!Array.isArray(path))throw Error('invalidResult');
+ return {point,distance:path.length};
 }
 
 function siteRoute(site,bank,origin){
@@ -46,18 +51,37 @@ function siteRoute(site,bank,origin){
 }
 
 function workRoute(jobId,siteId){
+ const feature='estimateBatchTime.route',world=game.world;
+ let candidates;
+ if(siteId!==undefined){
+  if(!Number.isSafeInteger(siteId))return null;
+  requireCapability(typeof world?.siteById?.get==='function',feature,'world.siteById.get');
+  const site=world.siteById.get(siteId);if(!site)return null;
+  if(!Array.isArray(site.jobIds)||site.id!==siteId)throw Error('invalidResult');
+  if(!site.jobIds.includes(jobId))return null;
+  candidates=[site];
+ }else{
+  requireCapability(Array.isArray(world?.sites),feature,'world.sites');
+  candidates=world.sites.filter(site=>{
+   if(!site||!Array.isArray(site.jobIds))throw Error('invalidResult');
+   return site.jobIds.includes(jobId);
+  });
+ }
+ if(candidates.length===0)return null;
  // The task starts and finishes at the main-city depot, independent of the
  // character's current position or preferred bank. Its reviewed world ID is 1.
- const bank=game.world.bankById.get(1);if(!bank)return null;
- if(siteId!==undefined&&(!Number.isSafeInteger(siteId)||!game.world.siteById.get(siteId)?.jobIds.includes(jobId)))return null;
+ requireCapability(typeof world.bankById?.get==='function',feature,'world.bankById.get');
+ const bank=world.bankById.get(1);if(!bank)return null;
+ if(!Number.isSafeInteger(bank.x)||!Number.isSafeInteger(bank.y))throw Error('invalidResult');
  const cacheKey=`${jobId}:${siteId??'default'}`;
  if(routes.has(cacheKey))return routes.get(cacheKey);
- const origin=game.siteEntrance(game.world,bank.x,bank.y,0);if(!origin)return null;
+ const origin=callRule(game,'siteEntrance',feature,world,bank.x,bank.y,0);if(!origin)return null;
+ if(!Number.isSafeInteger(origin.x)||!Number.isSafeInteger(origin.y)||Math.abs(origin.x-bank.x)>1||Math.abs(origin.y-bank.y)>1)throw Error('invalidResult');
  let best=null;
  // Default selection minimizes the real first walk from this fixed origin;
  // the game UI can choose another site from the live character's position.
- for(const site of game.world.sites){
-  if(!site.jobIds.includes(jobId)||siteId!==undefined&&site.id!==siteId)continue;
+ for(const site of candidates){
+  if(!Number.isSafeInteger(site.id)||!Number.isSafeInteger(site.x)||!Number.isSafeInteger(site.y))throw Error('invalidResult');
   const candidate=siteRoute(site,bank,origin);
   if(candidate&&(best===null||candidate.distance<best.distance||candidate.distance===best.distance&&candidate.siteId<best.siteId))best=candidate;
  }
@@ -78,26 +102,55 @@ function walking(route,batches,strideSpeed){
 }
 
 function movement(player){
+ const feature='estimateBatchTime.movement';
  if(!player||!Number.isInteger(player.perks?.pockets)||player.perks.pockets<0||player.perks.pockets>5
-  ||!player.equipment||!Object.hasOwn(player.equipment,'mount')||!Number.isInteger(player.masteries?.move)||player.masteries.move<0||player.masteries.move>game.masteryRankLimit
+  ||!player.equipment||!Object.hasOwn(player.equipment,'mount')||!Number.isInteger(player.masteries?.move)||player.masteries.move<0
   ||!player.brews||!player.brewTier||!Number.isSafeInteger(player.lastTick)||player.lastTick<0)return null;
+ requireCapability(Number.isSafeInteger(game.masteryRankLimit)&&game.masteryRankLimit>=0,feature,'masteryRankLimit');
+ if(player.masteries.move>game.masteryRankLimit)return null;
  const mount=player.equipment.mount;
- if(mount!==null&&(!Number.isSafeInteger(mount)||game.tool(mount)?.slot!=='mount'))return null;
+ if(mount!==null){
+  if(!Number.isSafeInteger(mount))return null;
+  if(callRule(game,'tool',feature,mount)?.slot!=='mount')return null;
+ }
  const swiftUntil=player.brews.swift;
  if(swiftUntil!==undefined&&(!Number.isSafeInteger(swiftUntil)||swiftUntil<0))return null;
- if(swiftUntil>player.lastTick&&(!Number.isInteger(player.brewTier.swift)||player.brewTier.swift<0||player.brewTier.swift>4))return null;
- const strideSpeed=Math.round(game.mountStride(player)*(1+game.swiftSpeedBonus*game.brewStrength(player,'swift'))*game.masteryMultiplier(player.masteries,'move'));
- return Number.isFinite(strideSpeed)&&strideSpeed>0?{strideSpeed,slots:game.inventoryCapacity(player)}:null;
+ let swiftMultiplier=1;
+ if(swiftUntil>player.lastTick){
+  if(!Number.isInteger(player.brewTier.swift)||player.brewTier.swift<0||player.brewTier.swift>4)return null;
+  requireCapability(Number.isFinite(game.swiftSpeedBonus)&&game.swiftSpeedBonus>=0,feature,'swiftSpeedBonus');
+  const strength=callRule(game,'brewStrength',feature,player,'swift');
+  if(!Number.isFinite(strength)||strength<0)throw Error('invalidResult');
+  swiftMultiplier+=game.swiftSpeedBonus*strength;
+ }
+ const stride=callRule(game,'mountStride',feature,player),mastery=callRule(game,'masteryMultiplier',feature,player.masteries,'move');
+ if(!Number.isFinite(stride)||!Number.isFinite(mastery))throw Error('invalidResult');
+ const strideSpeed=Math.round(stride*swiftMultiplier*mastery);
+ if(!Number.isFinite(strideSpeed)||strideSpeed<=0)return null;
+ const slots=callRule(game,'inventoryCapacity',feature,player);
+ if(!Number.isSafeInteger(slots)||slots<0)throw Error('invalidResult');
+ return {strideSpeed,slots};
 }
 
 function capacity(job,tier,slots){
  // q_ limits how many inputs the game withdraws, including a reserved output stack.
  // This may be lower than the theoretical limit after consuming the first inputs.
- const inputs=game.recipeInputs(job,tier),nonstacked=inputs.filter(input=>!game.item(input.itemId).stackable).reduce((sum,input)=>sum+input.qty,0);
- const stacks=new Set(inputs.filter(input=>game.item(input.itemId).stackable).map(input=>input.itemId)).size;
- const stackedOutput=game.item(game.recipeOutput(job,tier)).stackable;
+ const feature='estimateBatchTime.capacity';
+ const inputs=callRule(game,'recipeInputs',feature,job,tier);
+ if(!Array.isArray(inputs)||inputs.some(input=>!input||!Number.isSafeInteger(input.itemId)||!Number.isSafeInteger(input.qty)||input.qty<0))throw Error('invalidResult');
+ const stacked=id=>{
+  const item=callRule(game,'item',feature,id);
+  if(typeof item?.stackable!=='boolean')throw Error('invalidResult');
+  return item.stackable;
+ };
+ const nonstacked=inputs.filter(input=>!stacked(input.itemId)).reduce((sum,input)=>sum+input.qty,0);
+ const stacks=new Set(inputs.filter(input=>stacked(input.itemId)).map(input=>input.itemId)).size;
+ const output=callRule(game,'recipeOutput',feature,job,tier);
+ if(!Number.isSafeInteger(output))throw Error('invalidResult');
+ const stackedOutput=stacked(output);
  if(nonstacked>0)return Math.floor((slots-stacks-(stackedOutput?1:0))/nonstacked);
  if(stackedOutput)return slots>=stacks+1?Infinity:0;
+ if(!Number.isSafeInteger(job.output?.qty)||job.output.qty<=0)throw Error('invalidJob');
  return Math.floor((slots-stacks)/job.output.qty);
 }
 
@@ -113,8 +166,9 @@ function estimateBatchTime({job,tier=0,count,player,actionSeconds,discard=false,
  if(batchCapacity<=0)return {...base,status:'unreachable',seconds:null,overheadSeconds:null,batches:null,batchCapacity};
  const batches=batchCapacity===Infinity?1:Math.ceil(Math.ceil(count)/batchCapacity);
  const walks=walking(route,batches,travel.strideSpeed);
+ if(!Array.isArray(job.inputs))throw Error('invalidJob');
  const initialTicks=job.inputs.length?batchTimeModel.initialCraftTicks:batchTimeModel.initialGatherTicks;
- const overheadSeconds=checked((initialTicks+batchTimeModel.finishTicks+(batches-1)*batchTimeModel.turnoverTicks+walks.totalWalkTicks+walks.walkStarts*batchTimeModel.walkStartTicks)*game.tickMs/1000);
+ const overheadSeconds=checked((initialTicks+batchTimeModel.finishTicks+(batches-1)*batchTimeModel.turnoverTicks+walks.totalWalkTicks+walks.walkStarts*batchTimeModel.walkStartTicks)*tickMilliseconds(game,'estimateBatchTime')/1000);
  const {legs,...geometry}=route;
  return {...base,...geometry,...travel,...walks,originAssumption:'main-city-bank',status:'ok',seconds:checked(workSeconds+overheadSeconds),overheadSeconds,batches,batchCapacity:batchCapacity===Infinity?null:batchCapacity};
 }

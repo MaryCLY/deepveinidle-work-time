@@ -45,23 +45,17 @@ const craft=()=>({id:41,skill:'smithing',levelReq:1,inputs:[{itemId:1,qty:2}],ou
 const gather=()=>({id:1,skill:'mining',levelReq:1,inputs:[],output:{itemId:1,qty:1}});
 const engine=()=>createWorkTimeEngine(adapter(),source);
 
-// Catches omitted source checks, incomplete adapter acceptance and accidental
-// mutation of exported domain constants by consumers.
-test('engine requires the reviewed source and complete adapter before calculating',()=>{
+test('construction accepts omitted or unrelated source metadata and validates only the container',()=>{
  for(const metadata of [undefined,{}, {...source,sourceVersion:'new'}, {...source,sourceSha256:'0'.repeat(64)}]){
-  assert.throws(()=>createWorkTimeEngine(adapter(),metadata),/unsupportedSource/);
+  const work=createWorkTimeEngine(adapter(),metadata);
+  assert.equal(work.workActionSeconds(craft(),player()),1.2);
  }
- assert.throws(()=>createWorkTimeEngine({},source),/invalidGameAdapter/);
- for(const key of Object.keys(adapter()).filter(key=>typeof adapter()[key]==='function')){
-  assert.throws(()=>createWorkTimeEngine({...adapter(),[key]:null},source),/invalidGameAdapter/);
- }
- for(const replacement of [{tickMs:0},{swiftSpeedBonus:NaN},{masteryRankLimit:-1},{world:null},{rarityThresholds:{}}]){
-  assert.throws(()=>createWorkTimeEngine({...adapter(),...replacement},source),/invalidGameAdapter/);
- }
+ assert.equal(typeof createWorkTimeEngine().estimateBatchTime,'function');
+ assert.equal(typeof createWorkTimeEngine({}).workQualities,'function');
+ for(const invalid of [null,[],3,'game'])assert.throws(()=>createWorkTimeEngine(invalid),/invalidGameAdapter.*createWorkTimeEngine.*game/);
  assert.ok(Object.isFrozen(batchTimeModel));assert.ok(Object.isFrozen(gatheringSkills));assert.ok(Object.isFrozen(toolSlots));
  assert.ok(gatheringSkills.includes('thieving'));assert.equal(toolSlots.mining,'pickaxe');
 });
-
 test('retained manufacturing counts warehouse walks and crosses its capacity only after attempt 14',()=>{
  const work=engine(),one=work.estimateBatchTime({job:craft(),count:14,player:player(),actionSeconds:2});
  assert.equal(one.status,'ok');assert.equal(one.batchCapacity,14);assert.equal(one.batches,1);
@@ -246,5 +240,127 @@ test('ordinary action probability rejects impossible values while zero stays unr
  for(const [chance,seconds]of [[.25,2.4],[1,.6]]){
   const work=createWorkTimeEngine({...adapter(),workChance:()=>chance},source);
   near(work.workActionSeconds(options.job,options.player),seconds);
+ }
+});
+
+test('pure batch and plain qualities ignore missing and malformed unrelated capabilities',()=>{
+ const work=createWorkTimeEngine({world:null,rarityThresholds:{},tickMs:NaN});
+ for(const job of [gather(),{...gather(),skill:'thieving'},{...craft(),upgrade:{ticks:5}}]){
+  const result=work.estimateBatchTime({job,count:2,actionSeconds:3,discard:true});
+  assert.equal(result.seconds,6);assert.equal(result.sourceVersion,'1.0.1214');
+ }
+ assert.deepEqual(work.workQualities(undefined,{plain:true},NaN,NaN),[1,0,0,0,0]);
+ assert.equal(work.estimateBatchTime({job:craft(),count:2,actionSeconds:NaN}).reason,'actionTime');
+});
+
+test('action branches need only their own rules and preserve method this and adapter exceptions',()=>{
+ const zero=createWorkTimeEngine({workChance(){return 0;}});
+ assert.equal(zero.workActionSeconds(craft()),null);
+ const stopped=zero.estimateWorkExpectation({job:gather(),quantity:1});
+ assert.equal(stopped.status,'unreachable');assert.equal(stopped.burn,null);assert.equal(stopped.caught,null);assert.equal(stopped.quality,null);assert.equal(stopped.waitSeconds,null);
+ assert.equal(createWorkTimeEngine({level:()=>1,workChance:()=>0}).estimateTaskTime({job:gather(),quantity:1,player:player()}).status,'unreachable');
+ const game={tickMs:600,chance:.25,workChance(){return this.chance;},world:null,rarityThresholds:{}};
+ assert.equal(createWorkTimeEngine(game).workActionSeconds(craft()),2.4);
+ const upgrade={...craft(),upgrade:{ticks:5}},upgrades={tickMs:600,scale:1,upgradeTicks(_player,rule){return this.scale*rule.ticks;}};
+ assert.equal(createWorkTimeEngine(upgrades).workActionSeconds(upgrade),3);
+ assert.equal(createWorkTimeEngine(upgrades).workActionSeconds({...upgrade,upgrade:{ticks:3}}),1.8);
+ const sentinel=Error('rule sentinel');
+ assert.throws(()=>createWorkTimeEngine({workChance(){throw sentinel;}}).workActionSeconds(craft()),error=>error===sentinel);
+});
+
+test('manufacturing plain gathering nonrarity gathering and upgrades use independent expectation capabilities',()=>{
+ const rules={tickMs:600,workChance:()=>.5,burnChance:()=>0,caughtChance:()=>0};
+ const work=createWorkTimeEngine(rules);
+ assert.equal(work.estimateWorkExpectation({job:craft(),quantity:2}).attempts,2);
+ assert.equal(work.estimateWorkExpectation({job:{...gather(),plain:true},quantity:2}).quality,1);
+ assert.equal(work.estimateWorkExpectation({job:{...gather(),plain:true},tier:4,quantity:2}).status,'unreachable');
+ const nonrare=createWorkTimeEngine({...rules,itemSupportsRarity:()=>false});
+ assert.equal(nonrare.estimateWorkExpectation({job:gather(),quantity:2}).quality,1);
+ const upgrades=createWorkTimeEngine({tickMs:600,upgradeTicks:(_player,rule)=>rule.ticks});
+ assert.equal(upgrades.estimateWorkExpectation({job:{...craft(),upgrade:{ticks:5}},quantity:2}).actionSeconds,3);
+});
+
+test('low level tasks stop before work rules while valid minimal plain tasks can discard products',()=>{
+ const low=createWorkTimeEngine({level:()=>1});
+ assert.equal(low.estimateTaskTime({job:{...gather(),levelReq:2},player:player(),quantity:1}).status,'levelTooLow');
+ const work=createWorkTimeEngine({level:()=>1,tickMs:600,workChance:()=>.5,burnChance:()=>0,caughtChance:()=>0});
+ const result=work.estimateTaskTime({job:{...gather(),plain:true},player:player(),quantity:2,discard:true});
+ assert.equal(result.seconds,2.4);
+});
+
+test('missing capabilities report their actual feature and do not poison other methods on the same instance',()=>{
+ const work=createWorkTimeEngine({rarityThresholds:{},world:null});
+ assert.throws(()=>work.workActionSeconds(craft()),error=>error.message.startsWith('invalidGameAdapter')&&error.feature==='workActionSeconds'&&error.capability==='workChance');
+ assert.deepEqual(work.workQualities(null,{plain:true}),[1,0,0,0,0]);
+ assert.equal(work.estimateBatchTime({job:gather(),count:1,actionSeconds:2,discard:true}).seconds,2);
+ const noTick=createWorkTimeEngine({workChance:()=>.5});
+ assert.throws(()=>noTick.workActionSeconds(craft()),error=>error.feature==='workActionSeconds'&&error.capability==='tickMs');
+ const noLevel=createWorkTimeEngine({});
+ assert.throws(()=>noLevel.estimateTaskTime({job:gather(),player:player(),quantity:1}),error=>error.feature==='estimateTaskTime'&&error.capability==='level');
+});
+
+test('quality rules validate thresholds only when used and require tool luck only for equipped tools',()=>{
+ const game=adapter();delete game.toolLuck;
+ const work=createWorkTimeEngine(game);
+ near(work.workQualities(player(),gather(),100,0)[0],.9);
+ assert.throws(()=>work.workQualities({...player(),equipment:{...player().equipment,pickaxe:1}},gather(),100,0),error=>error.feature==='workQualities'&&error.capability==='toolLuck');
+ const bad=createWorkTimeEngine({...adapter(),rarityThresholds:{}});
+ assert.equal(bad.workActionSeconds(craft()),1.2);
+ assert.throws(()=>bad.workQualities(player(),gather(),100,0),error=>error.feature==='workQualities'&&error.capability==='rarityThresholds');
+ assert.equal(bad.workActionSeconds(craft()),1.2);
+});
+
+test('logistics skip unused mount swift site-index and zero-distance path capabilities',()=>{
+ const game=adapter();delete game.tool;delete game.brewStrength;delete game.swiftSpeedBonus;delete game.world.siteById;
+ const work=createWorkTimeEngine(game),options={job:craft(),count:1,player:player(),actionSeconds:2};
+ near(work.estimateBatchTime(options).seconds,11);
+ assert.throws(()=>work.estimateBatchTime({...options,siteId:10}),error=>error.feature==='estimateBatchTime.route'&&error.capability==='world.siteById.get');
+ assert.throws(()=>work.estimateBatchTime({...options,player:{...player(),equipment:{...player().equipment,mount:1}}}),error=>error.feature==='estimateBatchTime.movement'&&error.capability==='tool');
+ assert.throws(()=>work.estimateBatchTime({...options,player:{...player(),brews:{swift:200},brewTier:{swift:0}}}),/invalidGameAdapter.*estimateBatchTime.movement.*swiftSpeedBonus/);
+ const adjacent=adapter(0);delete adjacent.walkPath;
+ const result=createWorkTimeEngine(adjacent).estimateBatchTime(options);
+ assert.equal(result.totalWalkTicks,0);near(result.overheadSeconds,4.2);
+});
+
+test('used malformed adapter results fail explicitly without blocking unrelated action methods',()=>{
+ const badEntrance=createWorkTimeEngine({...adapter(),siteEntrance:()=>({x:999,y:999})});
+ assert.throws(()=>badEntrance.estimateBatchTime({job:craft(),count:1,player:player(),actionSeconds:2}),/invalidResult/);
+ const badPath=createWorkTimeEngine({...adapter(),walkPath:()=>undefined});
+ assert.throws(()=>badPath.estimateBatchTime({job:craft(),count:1,player:player(),actionSeconds:2}),/invalidResult/);
+ assert.equal(badPath.workActionSeconds(craft()),1.2);
+ const badCapacity=createWorkTimeEngine({...adapter(),inventoryCapacity:()=>NaN});
+ assert.throws(()=>badCapacity.estimateBatchTime({job:craft(),count:1,player:player(),actionSeconds:2}),/invalidResult/);
+ const badRarity=createWorkTimeEngine({...adapter(),itemSupportsRarity:()=>undefined});
+ assert.throws(()=>badRarity.estimateWorkExpectation({job:gather(),quantity:1,player:player(),tick:100}),/invalidResult/);
+ const missingWorld=createWorkTimeEngine({...adapter(),world:null});
+ assert.equal(missingWorld.workActionSeconds(craft()),1.2);
+ assert.throws(()=>missingWorld.estimateBatchTime({job:craft(),count:1,player:player(),actionSeconds:2}),error=>error.feature==='estimateBatchTime.route'&&error.capability==='world.sites');
+});
+
+test('caught waiting rejects damaged stun values only when that wait is relevant',()=>{
+ const rules={tickMs:600,workChance:()=>.5,burnChance:()=>0,caughtChance:()=>.2};
+ const work=createWorkTimeEngine(rules),options={job:{...gather(),plain:true},quantity:1};
+ for(const stunTicks of [NaN,Infinity,-1,'8']){
+  assert.throws(()=>work.estimateWorkExpectation({...options,job:{...options.job,caught:{stunTicks}}}),/invalidResult/);
+ }
+ assert.equal(work.estimateWorkExpectation(options).waitSeconds,0);
+ const uncaught=createWorkTimeEngine({...rules,caughtChance:()=>0});
+ assert.equal(uncaught.estimateWorkExpectation({...options,job:{...options.job,caught:{stunTicks:NaN}}}).waitSeconds,0);
+});
+
+test('explicit sites use only their indexed target and ignore absent or unrelated site lists',()=>{
+ const game=adapter(),options={job:craft(),siteId:10,count:1,player:player(),actionSeconds:2};
+ delete game.world.sites;
+ near(createWorkTimeEngine(game).estimateBatchTime(options).seconds,11);
+ const unrelated=adapter();unrelated.world.sites=[{id:99}];
+ near(createWorkTimeEngine(unrelated).estimateBatchTime(options).seconds,11);
+});
+
+test('empty or unmatched default sites preserve known work without bank or entrance capabilities',()=>{
+ for(const sites of [[],[{id:99,jobIds:[999]}]]){
+  const game=adapter();game.world.sites=sites;
+  delete game.world.bankById;delete game.world.siteById;delete game.siteEntrance;delete game.walkPath;
+  const result=createWorkTimeEngine(game).estimateBatchTime({job:craft(),count:10,player:player(),actionSeconds:2});
+  assert.equal(result.status,'unknownTime');assert.equal(result.reason,'workLocation');assert.equal(result.seconds,null);assert.equal(result.workSeconds,20);
  }
 });

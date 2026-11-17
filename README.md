@@ -2,7 +2,7 @@
 
 公开仓库：[MaryCLY/deepveinidle-work-time](https://github.com/MaryCLY/deepveinidle-work-time)。包名为 `@dvi-lab/work-time`，当前版本 `0.1.0`。这是无依赖 ESM 工作耗时计算库，使用 Node.js 20+，也可由浏览器工程在构建时打包。
 
-算法迁自 DeepVeinIdle Buddy 的批量时间 v3 与工作期望。运行包不包含游戏资源、角色构造、存档或网页组件；由消费方注入已核验的游戏规则。计算不请求网络，不要求最终用户访问 GitHub，不替换 Lab 网页逐 tick 模拟。
+算法迁自 DeepVeinIdle Buddy 的批量时间 v3 与工作期望。运行包不包含游戏资源、角色构造、存档或网页组件；由消费方按使用的功能提供规则或计算函数。计算不请求网络，不要求最终用户访问 GitHub，不替换 Lab 网页逐 tick 模拟。
 
 ## 作为构建依赖
 
@@ -29,18 +29,43 @@ npm 包仅含 `src/`、README、LICENSE 及 npm 自动包含的 package.json；�
 ```js
 import {createWorkTimeEngine} from '@dvi-lab/work-time';
 
-const engine=createWorkTimeEngine(game,{
- sourceVersion:'1.0.1214',
- sourceSha256:'cb67b9c88201f9768b3ec90ffdbeb0ccf7d33b897649c019f13b95c6f0785dc5',
-});
+const engine=createWorkTimeEngine(game);
 const timing=engine.estimateTaskTime({job,tier:0,quantity:100,player,tick:player.lastTick,worldRarity:0});
 ```
 
-`game` 必须由调用方提供，并对应已核验的 1.0.1214 游戏资源（公开资源 URL 为 `https://deepveinidle.com/assets/index-B2g2JEXj.js`）。元数据是调用方对适配器来源的声明；包核对声明，不能独立证明注入函数来自该资源。包本身不复制、下载或重新授权游戏资源。包代码采用 MIT；测试目录保留的游戏提取声明与注入游戏资源的授权另行处理，公开可访问不表示已获再分发授权。详见 [权利与来源说明](https://github.com/MaryCLY/deepveinidle-work-time/blob/main/NOTICE.md)。
+`game` 可按使用场景只提供必要能力。库不校验游戏资源版本或 SHA，也不要求加载整份游戏源码；旧调用额外传入的来源对象不参与计算或准入检查。历史基线 `1.0.1214` 及资源摘要保存在模型记录和原始测试资料中，不用于拒绝其他版本。
+
+例如，已知每次工作秒数且选择采集丢弃时，可以完全不提供游戏规则：
+
+```js
+const engine=createWorkTimeEngine();
+const result=engine.estimateBatchTime({
+ job:{skill:'mining'},count:100,actionSeconds:2,discard:true,
+});
+// result.seconds === 200
+```
+
+各功能只在实际使用某项能力时校验；一个功能缺少依赖不会阻断其他功能。能力完整仍不能自动证明新版本的规则语义符合 v3 模型，机制变化需要新的样例与回归验证。
+
+包代码采用 MIT；测试目录保留的游戏提取声明与注入游戏资源的授权另行处理，公开可访问不表示已获再分发授权。详见[权利与来源说明](https://github.com/MaryCLY/deepveinidle-work-time/blob/main/NOTICE.md)。
 
 ## 适配器契约
 
-初始化会检查来源、下列函数及配置形状。函数必须是同步、确定的已核验游戏规则，签名与旧游戏提取规则一致：
+构造时仅检查适配器容器；下列能力在对应功能和实际分支使用时才检查，函数保留适配器方法的 `this`。缺少来源参数、版本不同或摘要变化均不触发错误。
+
+| 功能／分支 | 使用的能力 |
+| --- | --- |
+| 已知单次时间的采集丢弃、偷窃或升级批量估时 | 不需要游戏能力 |
+| 普通动作时间 | `workChance`；概率大于 0 时使用 `tickMs` |
+| 升级动作时间 | `upgradeTicks`、`tickMs`，不要求普通工作概率 |
+| plain 品质 | 不需要游戏或角色配置，直接返回固定概率 |
+| 非 plain 品质 | 品质倍率、阈值与装备幸运；有工具时才需要 `toolLuck` |
+| 普通制造期望 | 动作、烧毁和被抓规则，不要求采集品质能力 |
+| 采集期望 | plain 跳过品质规则；其他采集先检查是否支持品质，再按需要计算 |
+| 完整任务入口 | 使用 `level` 校验等级；等级不足时不继续访问工作和物流能力 |
+| 保留产物的物流 | 分阶段使用移动、地图与材料容量；显式地点只查索引目标，默认地点才扫描站点列表；无候选不查询入口，无实际行走不要求寻路，无有效迅捷药水不要求其规则 |
+
+完整能力的字段契约如下，未使用的字段可省略：
 
 | 成员 | 契约 |
 | --- | --- |
@@ -74,7 +99,13 @@ const timing=engine.estimateTaskTime({job,tier:0,quantity:100,player,tick:player
 
 quantity/count 必须为大于零的有限数且不超过安全整数上限；期望采集次数可为小数。tier 为 0–4 整数。调用方处理未初始化、已完成和收藏积分。所有秒数均为期望值；`workSeconds` 在组合方法中包含被抓等待。
 
-状态包括 `ok`、`levelTooLow`、`unreachable` 和 `unknownTime`。物流未知时总时间为 null，保留已知工作时间和原因 `movementConfiguration`／`workLocation`；纯动作时间未知的批量调用返回 `actionTime`。无可用背包容量为 unreachable。无效来源／适配器抛出 `unsupportedSource`／`invalidGameAdapter`；数量、品质、配方、工作配置、概率及溢出错误分别明确抛出 `invalidQuantity`、`invalidTier`、`invalidJob`、`invalidWorkConfiguration`、`invalidResult`、`quantityOverflow`。
+状态包括 `ok`、`levelTooLow`、`unreachable` 和 `unknownTime`。物流未知时总时间为 null，保留已知工作时间和原因 `movementConfiguration`／`workLocation`；纯动作时间未知的批量调用返回 `actionTime`。无可用背包容量为 unreachable。
+
+只有本次实际使用的适配器能力缺失或格式不兼容时，才抛出以 `invalidGameAdapter` 开头的错误，并标明具体 `feature`／`capability`；不会提前拒绝其他功能，也不会吞掉适配器自身抛出的异常。数量、品质、配方、角色配置、概率及溢出错误继续分别使用 `invalidQuantity`、`invalidTier`、`invalidJob`、`invalidWorkConfiguration`、`invalidResult`、`quantityOverflow`。
+
+`batchTimeModel.sourceVersion` 和结果中的 `sourceVersion` 是模型历史验证基线，不是对调用方资源版本的判断或新版本已通过验证的证明。
+
+普通动作概率为 0 时，期望入口直接返回 `unreachable`：保留已知产量，`actionSeconds` 和 `attempts` 为 null，尚未计算的 `burn`、`caught`、`quality`、`waitSeconds` 也为 null。此时不访问无关概率、tick 或物流能力。升级分支的确定性概率和零等待继续明确返回。
 
 ## 模型与历史验证资料
 
@@ -88,4 +119,4 @@ quantity/count 必须为大于零的有限数且不超过安全整数上限；�
 
 保留 25 项原始文件，包含 14,950 条物流、672 条小时概率、128 条有限任务数据、18 组代表路径、4 组相位轨迹与 87 条 Chrome 参考。历史资料和摘要原样保留；Git 对历史 `buddy/**` 使用 `-text` 保留原始字节，回归同时核对 raw 与 UTF-8/LF 摘要。其中关于 Lab、Buddy 工作区的旧命令和路径属于收集时语境，当前入口为仓库根目录的 `npm test`。原完整游戏 bundle 未复制，当前回放只读取本仓库保留的生成 upstream 与脱敏配置，不依赖相邻 Lab 或 Buddy 工作区。
 
-当前两个顶层测试文件共 19 项：15 项包契约与离线打包测试、4 项来源／数据／路径／全物流向量回放。CI 定义 Ubuntu 下 Node.js 20 和 24 两组检查；本地结果与实际 CI 运行分别报告。不要递归执行历史目录中的旧 `.test.mjs`、oracle 或归档脚本，不重新生成或覆盖历史数据。
+当前两个顶层测试文件覆盖按功能兼容性、包契约、离线打包和原始资料／14,950条物流向量回放。CI 定义 Ubuntu 下 Node.js 20 和 24；本地结果与实际 CI 分别报告。不要递归执行历史目录中的旧测试、oracle或归档脚本，不重新生成或覆盖历史数据。
