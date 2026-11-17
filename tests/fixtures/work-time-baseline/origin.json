@@ -1,0 +1,379 @@
+{
+  "schemaVersion": 1,
+  "collectedAt": "2026-11-17T14:29:22.720Z",
+  "source": {
+    "repository": "https://github.com/MaryCLY/deepveinidle-buddy",
+    "head": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+    "collectionState": "Working-tree files are recorded by content hash; the archived batch-time input is restored from its matching historical Git blob."
+  },
+  "hashNormalization": "utf8-lf",
+  "hashEncoding": "raw is the exact source bytes; normalized is UTF-8 with CRLF converted to LF.",
+  "copyVerification": {
+    "rawBytesEqual": true,
+    "files": 25
+  },
+  "totalRawBytes": 1758991,
+  "totalNormalizedBytes": 1758948,
+  "originalGameBundle": {
+    "copied": false,
+    "sourcePath": "vendor/game-original.js",
+    "labPath": "vendor/game-original.js",
+    "sourceUrl": "https://deepveinidle.com/assets/index-B2g2JEXj.js",
+    "sourceVersion": "1.0.1214",
+    "sha256": "cb67b9c88201f9768b3ec90ffdbeb0ccf7d33b897649c019f13b95c6f0785dc5",
+    "normalizedBytes": 8180094,
+    "labVerifiedAtCollection": true
+  },
+  "files": [
+    {
+      "path": "buddy/docs/model-testing/2026-11-17-alpha/README.md",
+      "sourcePath": "docs/model-testing/2026-11-17-alpha/README.md",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 7457,
+        "sha256": "0d03dc1bb42fafb10ebb712c8679bffd3674cc9650ffccea4ffec2d408731fd2"
+      },
+      "normalized": {
+        "bytes": 7457,
+        "sha256": "0d03dc1bb42fafb10ebb712c8679bffd3674cc9650ffccea4ffec2d408731fd2"
+      }
+    },
+    {
+      "path": "buddy/docs/model-testing/2026-11-17-alpha/finite-probability.csv",
+      "sourcePath": "docs/model-testing/2026-11-17-alpha/finite-probability.csv",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 5009,
+        "sha256": "73fe9db51c1e669787b97a8aca64813681ecb0f30794596b08e6f37d1285b595"
+      },
+      "normalized": {
+        "bytes": 5009,
+        "sha256": "73fe9db51c1e669787b97a8aca64813681ecb0f30794596b08e6f37d1285b595"
+      }
+    },
+    {
+      "path": "buddy/docs/model-testing/2026-11-17-alpha/hourly-probability.csv",
+      "sourcePath": "docs/model-testing/2026-11-17-alpha/hourly-probability.csv",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 19125,
+        "sha256": "fd2e7f665ad8f9cc4c9032224d65ca847459637032234bb58884eb1ce734f05f"
+      },
+      "normalized": {
+        "bytes": 19125,
+        "sha256": "fd2e7f665ad8f9cc4c9032224d65ca847459637032234bb58884eb1ce734f05f"
+      }
+    },
+    {
+      "path": "buddy/docs/model-testing/2026-11-17-alpha/logistics.csv",
+      "sourcePath": "docs/model-testing/2026-11-17-alpha/logistics.csv",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 897514,
+        "sha256": "cda02f47d993a73c09859afdf420e9e7957170ffcd4a65a53e2dbdebb667e587"
+      },
+      "normalized": {
+        "bytes": 897514,
+        "sha256": "cda02f47d993a73c09859afdf420e9e7957170ffcd4a65a53e2dbdebb667e587"
+      }
+    },
+    {
+      "path": "buddy/docs/model-testing/2026-11-17-alpha/manifest.json",
+      "sourcePath": "docs/model-testing/2026-11-17-alpha/manifest.json",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 6684,
+        "sha256": "cf7d609a0863ccaad699eff0cb4bf93de32c190751b380b66902ec7a277bcadc"
+      },
+      "normalized": {
+        "bytes": 6684,
+        "sha256": "cf7d609a0863ccaad699eff0cb4bf93de32c190751b380b66902ec7a277bcadc"
+      }
+    },
+    {
+      "path": "buddy/docs/model-testing/2026-11-17-alpha/phase-traces.json",
+      "sourcePath": "docs/model-testing/2026-11-17-alpha/phase-traces.json",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 79202,
+        "sha256": "0db7422d657a4a61eba7a61656b235eb633eb226c8b7538516f1d1ccd8db75d9"
+      },
+      "normalized": {
+        "bytes": 79202,
+        "sha256": "0db7422d657a4a61eba7a61656b235eb633eb226c8b7538516f1d1ccd8db75d9"
+      }
+    },
+    {
+      "path": "buddy/docs/model-testing/2026-11-17-alpha/representative-paths.json",
+      "sourcePath": "docs/model-testing/2026-11-17-alpha/representative-paths.json",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 30825,
+        "sha256": "6bb28beeb6a45b1f009240eb38715e71e4ccb93466226334b2300a080dc7925a"
+      },
+      "normalized": {
+        "bytes": 30825,
+        "sha256": "6bb28beeb6a45b1f009240eb38715e71e4ccb93466226334b2300a080dc7925a"
+      }
+    },
+    {
+      "path": "buddy/docs/model-testing/2026-11-17-alpha/summary.json",
+      "sourcePath": "docs/model-testing/2026-11-17-alpha/summary.json",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 32343,
+        "sha256": "3707ee7d5a2cb881c3f283bbe6aaf21a8f85e87a479f69bc3a4dae37479163a7"
+      },
+      "normalized": {
+        "bytes": 32343,
+        "sha256": "3707ee7d5a2cb881c3f283bbe6aaf21a8f85e87a479f69bc3a4dae37479163a7"
+      }
+    },
+    {
+      "path": "buddy/docs/superpowers/plans/2026-11-17-batch-time-routes.md",
+      "sourcePath": "docs/superpowers/plans/2026-11-17-batch-time-routes.md",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 5929,
+        "sha256": "54e739cbedb113ba7e16e8d0aea4a2d1fd89e81ff4f19cfa20f8cd12d984e265"
+      },
+      "normalized": {
+        "bytes": 5929,
+        "sha256": "54e739cbedb113ba7e16e8d0aea4a2d1fd89e81ff4f19cfa20f8cd12d984e265"
+      }
+    },
+    {
+      "path": "buddy/docs/superpowers/plans/2026-11-17-timing-model-optimization.md",
+      "sourcePath": "docs/superpowers/plans/2026-11-17-timing-model-optimization.md",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 5295,
+        "sha256": "fa9140b319a35d22634f0fdac4cd18fb8d6df415edde9f3a4926c6b728a78a1e"
+      },
+      "normalized": {
+        "bytes": 5295,
+        "sha256": "fa9140b319a35d22634f0fdac4cd18fb8d6df415edde9f3a4926c6b728a78a1e"
+      }
+    },
+    {
+      "path": "buddy/docs/test-server.md",
+      "sourcePath": "docs/test-server.md",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 11091,
+        "sha256": "b2d00dfe085dd4e59b4fb4d74d019b6afa42e326fb5e051c5f40081ed633f8af"
+      },
+      "normalized": {
+        "bytes": 11091,
+        "sha256": "b2d00dfe085dd4e59b4fb4d74d019b6afa42e326fb5e051c5f40081ed633f8af"
+      }
+    },
+    {
+      "path": "buddy/scripts/archive-time-model.mjs",
+      "sourcePath": "scripts/archive-time-model.mjs",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 9583,
+        "sha256": "9452f35f76ec6989852139a0518d7e31723f0547c7e1b253f7afb149bf863363"
+      },
+      "normalized": {
+        "bytes": 9583,
+        "sha256": "9452f35f76ec6989852139a0518d7e31723f0547c7e1b253f7afb149bf863363"
+      }
+    },
+    {
+      "path": "buddy/scripts/check-time-model.mjs",
+      "sourcePath": "scripts/check-time-model.mjs",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 15214,
+        "sha256": "e6dba671c318869d497a7d3fd1f5263e71e5f2526b3a2ab6a73947997e432aa8"
+      },
+      "normalized": {
+        "bytes": 15214,
+        "sha256": "e6dba671c318869d497a7d3fd1f5263e71e5f2526b3a2ab6a73947997e432aa8"
+      }
+    },
+    {
+      "path": "buddy/src/engine/batch-time.js",
+      "sourcePath": "src/engine/batch-time.js",
+      "sourceKind": "git-blob",
+      "sourceRevision": "e50b1b53b05e56f297608caddbe340b8d79ab809",
+      "raw": {
+        "bytes": 8874,
+        "sha256": "b75785f7c4a5d6fb33440b01120af7275165737824252fca71995f7145c6ac9d"
+      },
+      "normalized": {
+        "bytes": 8874,
+        "sha256": "b75785f7c4a5d6fb33440b01120af7275165737824252fca71995f7145c6ac9d"
+      }
+    },
+    {
+      "path": "buddy/src/engine/rarity-probabilities.js",
+      "sourcePath": "src/engine/rarity-probabilities.js",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 372,
+        "sha256": "8a35269cf735a79db884d4265a51e9069fcb4793ab471102ab79d41e1968d60f"
+      },
+      "normalized": {
+        "bytes": 367,
+        "sha256": "591488f65cccabad4e8c1151b9d07a878701c4485e0f27c484ce1de40a6cb335"
+      }
+    },
+    {
+      "path": "buddy/src/engine/upstream.js",
+      "sourcePath": "src/engine/upstream.js",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 514701,
+        "sha256": "56e06bb9880aa2f3bd83ef9b4e39460d145a4cd11241766751d84c03f1e17e36"
+      },
+      "normalized": {
+        "bytes": 514701,
+        "sha256": "56e06bb9880aa2f3bd83ef9b4e39460d145a4cd11241766751d84c03f1e17e36"
+      }
+    },
+    {
+      "path": "buddy/src/engine/work-expectation.js",
+      "sourcePath": "src/engine/work-expectation.js",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 1153,
+        "sha256": "7482183ce3a02590f46379a101f56489191d40ec801469f0d357c37595eb7662"
+      },
+      "normalized": {
+        "bytes": 1130,
+        "sha256": "978ad41bada1a08b612ca118c060763c233cae3c213b3c2dd6167e409e0b27e5"
+      }
+    },
+    {
+      "path": "buddy/src/engine/work-player.js",
+      "sourcePath": "src/engine/work-player.js",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 1140,
+        "sha256": "0ce5444ace4f5c48f9249312067619efe92e7db4267d90b209472645ac36ae48"
+      },
+      "normalized": {
+        "bytes": 1125,
+        "sha256": "cf6e0451c9f017c024c8600a846e462620bd44f585c250c9d11966bb0486dc2a"
+      }
+    },
+    {
+      "path": "buddy/tests/batch-time.test.mjs",
+      "sourcePath": "tests/batch-time.test.mjs",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 13755,
+        "sha256": "aa36be2f57b027fecb67be477a8fb8ec5291f9a8f7a3ccd58b15812bc616b508"
+      },
+      "normalized": {
+        "bytes": 13755,
+        "sha256": "aa36be2f57b027fecb67be477a8fb8ec5291f9a8f7a3ccd58b15812bc616b508"
+      }
+    },
+    {
+      "path": "buddy/tests/fixtures/batch-calibration.js",
+      "sourcePath": "tests/fixtures/batch-calibration.js",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 1159,
+        "sha256": "e527348b689a1472669a6605fa9dd7596dbed599a60e93a5c7b427d7a8138ff4"
+      },
+      "normalized": {
+        "bytes": 1159,
+        "sha256": "e527348b689a1472669a6605fa9dd7596dbed599a60e93a5c7b427d7a8138ff4"
+      }
+    },
+    {
+      "path": "buddy/tests/fixtures/chrome-time-references.js",
+      "sourcePath": "tests/fixtures/chrome-time-references.js",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 5359,
+        "sha256": "829a7e44a9d202d9f985702e28b9aa65b42108f180e8a209b0d8aee864195789"
+      },
+      "normalized": {
+        "bytes": 5359,
+        "sha256": "829a7e44a9d202d9f985702e28b9aa65b42108f180e8a209b0d8aee864195789"
+      }
+    },
+    {
+      "path": "buddy/tests/helpers/game-work-oracle.mjs",
+      "sourcePath": "tests/helpers/game-work-oracle.mjs",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 10640,
+        "sha256": "2949002dd9cf18cff9c3b98e956d0efa5293217c93d907ae38cfea402adc3659"
+      },
+      "normalized": {
+        "bytes": 10640,
+        "sha256": "2949002dd9cf18cff9c3b98e956d0efa5293217c93d907ae38cfea402adc3659"
+      }
+    },
+    {
+      "path": "buddy/tests/model-archive.test.mjs",
+      "sourcePath": "tests/model-archive.test.mjs",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 3733,
+        "sha256": "97963a7825aa5cd58c573db95bc37fc6a25e4f33cf1bb16936a87ed6bc586baf"
+      },
+      "normalized": {
+        "bytes": 3733,
+        "sha256": "97963a7825aa5cd58c573db95bc37fc6a25e4f33cf1bb16936a87ed6bc586baf"
+      }
+    },
+    {
+      "path": "buddy/tests/time-model-oracle.test.mjs",
+      "sourcePath": "tests/time-model-oracle.test.mjs",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 4202,
+        "sha256": "a262a3e0465d8a427b3480309a166de9b7d8b93a117d696a946629cf67948b4a"
+      },
+      "normalized": {
+        "bytes": 4202,
+        "sha256": "a262a3e0465d8a427b3480309a166de9b7d8b93a117d696a946629cf67948b4a"
+      }
+    },
+    {
+      "path": "buddy/vendor/manifest.json",
+      "sourcePath": "vendor/manifest.json",
+      "sourceKind": "working-tree",
+      "sourceRevision": "85ae2eb4e218e5f91a471c908e14010d805b013d",
+      "raw": {
+        "bytes": 68632,
+        "sha256": "83d04284d9629809c4f37a76214c7823e7253f1ef2b0a9a344e5ea187f2d7f93"
+      },
+      "normalized": {
+        "bytes": 68632,
+        "sha256": "83d04284d9629809c4f37a76214c7823e7253f1ef2b0a9a344e5ea187f2d7f93"
+      }
+    }
+  ]
+}

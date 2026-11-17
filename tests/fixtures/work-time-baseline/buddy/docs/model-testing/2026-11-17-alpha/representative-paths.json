@@ -1,0 +1,1586 @@
+[
+  {
+    "jobId": 1,
+    "name": "Copper",
+    "siteId": 1,
+    "tier": 0,
+    "count": 1,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 1,
+      "siteId": 1,
+      "tier": 0,
+      "count": 1,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 17,
+      "seconds": 10.2,
+      "workTicks": 1,
+      "workSeconds": 0.6,
+      "overheadTicks": 16,
+      "overheadSeconds": 9.6,
+      "walkTicks": 10,
+      "events": {
+        "produced": 1,
+        "quantity": 1,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 1,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 188,
+            "y": 78
+          },
+          "distance": 12,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 188,
+            "y": 78
+          },
+          "to": {
+            "x": 199,
+            "y": 82
+          },
+          "distance": 11,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 199,
+        "y": 82
+      },
+      "skillsChanged": [
+        "mining"
+      ]
+    },
+    "model": {
+      "seconds": 10.2,
+      "overheadSeconds": 9.6,
+      "capacity": 28,
+      "batches": 1,
+      "distance": 12,
+      "returnDistance": 11
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": 0.5999999999999996
+  },
+  {
+    "jobId": 1,
+    "name": "Copper",
+    "siteId": 1,
+    "tier": 0,
+    "count": 28,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 1,
+      "siteId": 1,
+      "tier": 0,
+      "count": 28,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 44,
+      "seconds": 26.4,
+      "workTicks": 28,
+      "workSeconds": 16.8,
+      "overheadTicks": 16,
+      "overheadSeconds": 9.6,
+      "walkTicks": 10,
+      "events": {
+        "produced": 28,
+        "quantity": 28,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 1,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 188,
+            "y": 78
+          },
+          "distance": 12,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 188,
+            "y": 78
+          },
+          "to": {
+            "x": 199,
+            "y": 82
+          },
+          "distance": 11,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 199,
+        "y": 82
+      },
+      "skillsChanged": [
+        "mining"
+      ]
+    },
+    "model": {
+      "seconds": 26.4,
+      "overheadSeconds": 9.6,
+      "capacity": 28,
+      "batches": 1,
+      "distance": 12,
+      "returnDistance": 11
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": 0.5999999999999996
+  },
+  {
+    "jobId": 1,
+    "name": "Copper",
+    "siteId": 1,
+    "tier": 0,
+    "count": 29,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 1,
+      "siteId": 1,
+      "tier": 0,
+      "count": 29,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 63,
+      "seconds": 37.8,
+      "workTicks": 29,
+      "workSeconds": 17.4,
+      "overheadTicks": 34,
+      "overheadSeconds": 20.4,
+      "walkTicks": 20,
+      "events": {
+        "produced": 29,
+        "quantity": 29,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 2,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 188,
+            "y": 78
+          },
+          "distance": 12,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 188,
+            "y": 78
+          },
+          "to": {
+            "x": 199,
+            "y": 82
+          },
+          "distance": 11,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 199,
+            "y": 82
+          },
+          "to": {
+            "x": 188,
+            "y": 78
+          },
+          "distance": 11,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 188,
+            "y": 78
+          },
+          "to": {
+            "x": 199,
+            "y": 82
+          },
+          "distance": 11,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 199,
+        "y": 82
+      },
+      "skillsChanged": [
+        "mining"
+      ]
+    },
+    "model": {
+      "seconds": 37.8,
+      "overheadSeconds": 20.4,
+      "capacity": 28,
+      "batches": 2,
+      "distance": 12,
+      "returnDistance": 11
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": 0.6000000000000014
+  },
+  {
+    "jobId": 3,
+    "name": "Iron",
+    "siteId": 7,
+    "tier": 0,
+    "count": 1,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 3,
+      "siteId": 7,
+      "tier": 0,
+      "count": 1,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 29,
+      "seconds": 17.4,
+      "workTicks": 1,
+      "workSeconds": 0.6,
+      "overheadTicks": 28,
+      "overheadSeconds": 16.8,
+      "walkTicks": 22,
+      "events": {
+        "produced": 1,
+        "quantity": 1,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 1,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 196,
+            "y": 58
+          },
+          "distance": 27,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 196,
+            "y": 58
+          },
+          "to": {
+            "x": 201,
+            "y": 82
+          },
+          "distance": 26,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 201,
+        "y": 82
+      },
+      "skillsChanged": [
+        "mining"
+      ]
+    },
+    "model": {
+      "seconds": 17.400000000000002,
+      "overheadSeconds": 16.8,
+      "capacity": 28,
+      "batches": 1,
+      "distance": 27,
+      "returnDistance": 26
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": 0.5999999999999979
+  },
+  {
+    "jobId": 3,
+    "name": "Iron",
+    "siteId": 7,
+    "tier": 0,
+    "count": 28,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 3,
+      "siteId": 7,
+      "tier": 0,
+      "count": 28,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 56,
+      "seconds": 33.6,
+      "workTicks": 28,
+      "workSeconds": 16.8,
+      "overheadTicks": 28,
+      "overheadSeconds": 16.8,
+      "walkTicks": 22,
+      "events": {
+        "produced": 28,
+        "quantity": 28,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 1,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 196,
+            "y": 58
+          },
+          "distance": 27,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 196,
+            "y": 58
+          },
+          "to": {
+            "x": 201,
+            "y": 82
+          },
+          "distance": 26,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 201,
+        "y": 82
+      },
+      "skillsChanged": [
+        "mining"
+      ]
+    },
+    "model": {
+      "seconds": 33.6,
+      "overheadSeconds": 16.8,
+      "capacity": 28,
+      "batches": 1,
+      "distance": 27,
+      "returnDistance": 26
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": 0.5999999999999979
+  },
+  {
+    "jobId": 3,
+    "name": "Iron",
+    "siteId": 7,
+    "tier": 0,
+    "count": 29,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 3,
+      "siteId": 7,
+      "tier": 0,
+      "count": 29,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 87,
+      "seconds": 52.199999999999996,
+      "workTicks": 29,
+      "workSeconds": 17.4,
+      "overheadTicks": 58,
+      "overheadSeconds": 34.8,
+      "walkTicks": 44,
+      "events": {
+        "produced": 29,
+        "quantity": 29,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 2,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 196,
+            "y": 58
+          },
+          "distance": 27,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 196,
+            "y": 58
+          },
+          "to": {
+            "x": 201,
+            "y": 82
+          },
+          "distance": 26,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 201,
+            "y": 82
+          },
+          "to": {
+            "x": 196,
+            "y": 58
+          },
+          "distance": 26,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 196,
+            "y": 58
+          },
+          "to": {
+            "x": 201,
+            "y": 82
+          },
+          "distance": 26,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 201,
+        "y": 82
+      },
+      "skillsChanged": [
+        "mining"
+      ]
+    },
+    "model": {
+      "seconds": 52.199999999999996,
+      "overheadSeconds": 34.8,
+      "capacity": 28,
+      "batches": 2,
+      "distance": 27,
+      "returnDistance": 26
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": 0.6000000000000014
+  },
+  {
+    "jobId": 41,
+    "name": "Bronze bar",
+    "siteId": 42,
+    "tier": 0,
+    "count": 1,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 41,
+      "siteId": 42,
+      "tier": 0,
+      "count": 1,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 14,
+      "seconds": 8.4,
+      "workTicks": 1,
+      "workSeconds": 0.6,
+      "overheadTicks": 13,
+      "overheadSeconds": 7.8,
+      "walkTicks": 4,
+      "events": {
+        "produced": 1,
+        "quantity": 1,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 1,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 198,
+            "y": 85
+          },
+          "distance": 3,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 198,
+            "y": 85
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 3,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "skillsChanged": [
+        "smithing"
+      ]
+    },
+    "model": {
+      "seconds": 8.4,
+      "overheadSeconds": 7.8,
+      "capacity": 14,
+      "batches": 1,
+      "distance": 3,
+      "returnDistance": 3
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": -0.6000000000000005
+  },
+  {
+    "jobId": 41,
+    "name": "Bronze bar",
+    "siteId": 42,
+    "tier": 0,
+    "count": 14,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 41,
+      "siteId": 42,
+      "tier": 0,
+      "count": 14,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 27,
+      "seconds": 16.2,
+      "workTicks": 14,
+      "workSeconds": 8.4,
+      "overheadTicks": 13,
+      "overheadSeconds": 7.8,
+      "walkTicks": 4,
+      "events": {
+        "produced": 14,
+        "quantity": 14,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 1,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 198,
+            "y": 85
+          },
+          "distance": 3,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 198,
+            "y": 85
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 3,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "skillsChanged": [
+        "smithing"
+      ]
+    },
+    "model": {
+      "seconds": 16.2,
+      "overheadSeconds": 7.8,
+      "capacity": 14,
+      "batches": 1,
+      "distance": 3,
+      "returnDistance": 3
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": -0.6000000000000005
+  },
+  {
+    "jobId": 41,
+    "name": "Bronze bar",
+    "siteId": 42,
+    "tier": 0,
+    "count": 15,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 41,
+      "siteId": 42,
+      "tier": 0,
+      "count": 15,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 40,
+      "seconds": 24,
+      "workTicks": 15,
+      "workSeconds": 9,
+      "overheadTicks": 25,
+      "overheadSeconds": 15,
+      "walkTicks": 8,
+      "events": {
+        "produced": 15,
+        "quantity": 15,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 2,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 198,
+            "y": 85
+          },
+          "distance": 3,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 198,
+            "y": 85
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 3,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 198,
+            "y": 85
+          },
+          "distance": 3,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 198,
+            "y": 85
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 3,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "skillsChanged": [
+        "smithing"
+      ]
+    },
+    "model": {
+      "seconds": 24,
+      "overheadSeconds": 15,
+      "capacity": 14,
+      "batches": 2,
+      "distance": 3,
+      "returnDistance": 3
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": -1.8000000000000007
+  },
+  {
+    "jobId": 51,
+    "name": "Bronze pickaxe",
+    "siteId": 43,
+    "tier": 0,
+    "count": 1,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 51,
+      "siteId": 43,
+      "tier": 0,
+      "count": 1,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 16,
+      "seconds": 9.6,
+      "workTicks": 1,
+      "workSeconds": 0.6,
+      "overheadTicks": 15,
+      "overheadSeconds": 9,
+      "walkTicks": 6,
+      "events": {
+        "produced": 1,
+        "quantity": 1,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 1,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 203,
+            "y": 86
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 203,
+            "y": 86
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 6,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "skillsChanged": [
+        "smithing"
+      ]
+    },
+    "model": {
+      "seconds": 9.6,
+      "overheadSeconds": 9,
+      "capacity": 14,
+      "batches": 1,
+      "distance": 6,
+      "returnDistance": 6
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": -0.5999999999999996
+  },
+  {
+    "jobId": 51,
+    "name": "Bronze pickaxe",
+    "siteId": 43,
+    "tier": 0,
+    "count": 14,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 51,
+      "siteId": 43,
+      "tier": 0,
+      "count": 14,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 29,
+      "seconds": 17.4,
+      "workTicks": 14,
+      "workSeconds": 8.4,
+      "overheadTicks": 15,
+      "overheadSeconds": 9,
+      "walkTicks": 6,
+      "events": {
+        "produced": 14,
+        "quantity": 14,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 1,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 203,
+            "y": 86
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 203,
+            "y": 86
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 6,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "skillsChanged": [
+        "smithing"
+      ]
+    },
+    "model": {
+      "seconds": 17.4,
+      "overheadSeconds": 9,
+      "capacity": 14,
+      "batches": 1,
+      "distance": 6,
+      "returnDistance": 6
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": -0.5999999999999996
+  },
+  {
+    "jobId": 51,
+    "name": "Bronze pickaxe",
+    "siteId": 43,
+    "tier": 0,
+    "count": 15,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 51,
+      "siteId": 43,
+      "tier": 0,
+      "count": 15,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 44,
+      "seconds": 26.4,
+      "workTicks": 15,
+      "workSeconds": 9,
+      "overheadTicks": 29,
+      "overheadSeconds": 17.4,
+      "walkTicks": 12,
+      "events": {
+        "produced": 15,
+        "quantity": 15,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 2,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 203,
+            "y": 86
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 203,
+            "y": 86
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 203,
+            "y": 86
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 203,
+            "y": 86
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 6,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "skillsChanged": [
+        "smithing"
+      ]
+    },
+    "model": {
+      "seconds": 26.4,
+      "overheadSeconds": 17.4,
+      "capacity": 14,
+      "batches": 2,
+      "distance": 6,
+      "returnDistance": 6
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": -1.799999999999999
+  },
+  {
+    "jobId": 230,
+    "name": "Cut gem",
+    "siteId": 43,
+    "tier": 0,
+    "count": 1,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 230,
+      "siteId": 43,
+      "tier": 0,
+      "count": 1,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 16,
+      "seconds": 9.6,
+      "workTicks": 1,
+      "workSeconds": 0.6,
+      "overheadTicks": 15,
+      "overheadSeconds": 9,
+      "walkTicks": 6,
+      "events": {
+        "produced": 1,
+        "quantity": 1,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 1,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 203,
+            "y": 86
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 203,
+            "y": 86
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 6,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "skillsChanged": [
+        "crafting"
+      ]
+    },
+    "model": {
+      "seconds": 9.6,
+      "overheadSeconds": 9,
+      "capacity": null,
+      "batches": 1,
+      "distance": 6,
+      "returnDistance": 6
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": -0.5999999999999996
+  },
+  {
+    "jobId": 248,
+    "name": "Homespun hood",
+    "siteId": 43,
+    "tier": 0,
+    "count": 1,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 248,
+      "siteId": 43,
+      "tier": 0,
+      "count": 1,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 16,
+      "seconds": 9.6,
+      "workTicks": 1,
+      "workSeconds": 0.6,
+      "overheadTicks": 15,
+      "overheadSeconds": 9,
+      "walkTicks": 6,
+      "events": {
+        "produced": 1,
+        "quantity": 1,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 1,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 203,
+            "y": 86
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 203,
+            "y": 86
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 6,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "skillsChanged": [
+        "crafting"
+      ]
+    },
+    "model": {
+      "seconds": 9.6,
+      "overheadSeconds": 9,
+      "capacity": 27,
+      "batches": 1,
+      "distance": 6,
+      "returnDistance": 6
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": -0.5999999999999996
+  },
+  {
+    "jobId": 248,
+    "name": "Homespun hood",
+    "siteId": 43,
+    "tier": 0,
+    "count": 27,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 248,
+      "siteId": 43,
+      "tier": 0,
+      "count": 27,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 42,
+      "seconds": 25.2,
+      "workTicks": 27,
+      "workSeconds": 16.2,
+      "overheadTicks": 15,
+      "overheadSeconds": 9,
+      "walkTicks": 6,
+      "events": {
+        "produced": 27,
+        "quantity": 27,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 1,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 203,
+            "y": 86
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 203,
+            "y": 86
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 6,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "skillsChanged": [
+        "crafting"
+      ]
+    },
+    "model": {
+      "seconds": 25.2,
+      "overheadSeconds": 9,
+      "capacity": 27,
+      "batches": 1,
+      "distance": 6,
+      "returnDistance": 6
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": -0.5999999999999996
+  },
+  {
+    "jobId": 248,
+    "name": "Homespun hood",
+    "siteId": 43,
+    "tier": 0,
+    "count": 28,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 248,
+      "siteId": 43,
+      "tier": 0,
+      "count": 28,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 57,
+      "seconds": 34.199999999999996,
+      "workTicks": 28,
+      "workSeconds": 16.8,
+      "overheadTicks": 29,
+      "overheadSeconds": 17.4,
+      "walkTicks": 12,
+      "events": {
+        "produced": 28,
+        "quantity": 28,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 2,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 203,
+            "y": 86
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 203,
+            "y": 86
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 203,
+            "y": 86
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 203,
+            "y": 86
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 6,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "skillsChanged": [
+        "crafting"
+      ]
+    },
+    "model": {
+      "seconds": 34.2,
+      "overheadSeconds": 17.4,
+      "capacity": 27,
+      "batches": 2,
+      "distance": 6,
+      "returnDistance": 6
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": -1.799999999999999
+  },
+  {
+    "jobId": 420,
+    "name": "Cobalt rocket",
+    "siteId": 43,
+    "tier": 0,
+    "count": 1,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 420,
+      "siteId": 43,
+      "tier": 0,
+      "count": 1,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 16,
+      "seconds": 9.6,
+      "workTicks": 1,
+      "workSeconds": 0.6,
+      "overheadTicks": 15,
+      "overheadSeconds": 9,
+      "walkTicks": 6,
+      "events": {
+        "produced": 1,
+        "quantity": 1,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 1,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 203,
+            "y": 86
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 203,
+            "y": 86
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 6,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "skillsChanged": [
+        "crafting"
+      ]
+    },
+    "model": {
+      "seconds": 9.6,
+      "overheadSeconds": 9,
+      "capacity": 1,
+      "batches": 1,
+      "distance": 6,
+      "returnDistance": 6
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": -0.5999999999999996
+  },
+  {
+    "jobId": 420,
+    "name": "Cobalt rocket",
+    "siteId": 43,
+    "tier": 0,
+    "count": 2,
+    "configuration": "test-character",
+    "original": {
+      "jobId": 420,
+      "siteId": 43,
+      "tier": 0,
+      "count": 2,
+      "seed": 1,
+      "everyAttemptLands": true,
+      "totalTicks": 31,
+      "seconds": 18.599999999999998,
+      "workTicks": 2,
+      "workSeconds": 1.2,
+      "overheadTicks": 29,
+      "overheadSeconds": 17.4,
+      "walkTicks": 12,
+      "events": {
+        "produced": 2,
+        "quantity": 2,
+        "burnt": 0,
+        "bonus": 0,
+        "deposited": 2,
+        "dropped": 0,
+        "free": 0,
+        "levelUp": 0
+      },
+      "legs": [
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 203,
+            "y": 86
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 203,
+            "y": 86
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 200,
+            "y": 83
+          },
+          "to": {
+            "x": 203,
+            "y": 86
+          },
+          "distance": 6,
+          "speed": 2500
+        },
+        {
+          "from": {
+            "x": 203,
+            "y": 86
+          },
+          "to": {
+            "x": 200,
+            "y": 83
+          },
+          "distance": 6,
+          "speed": 2500
+        }
+      ],
+      "initialPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "finalPosition": {
+        "x": 200,
+        "y": 83
+      },
+      "skillsChanged": [
+        "crafting"
+      ]
+    },
+    "model": {
+      "seconds": 18.599999999999998,
+      "overheadSeconds": 17.4,
+      "capacity": 1,
+      "batches": 2,
+      "distance": 6,
+      "returnDistance": 6
+    },
+    "overheadErrorSeconds": 0,
+    "legacyOverheadErrorSeconds": -1.799999999999999
+  }
+]

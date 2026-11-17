@@ -1,0 +1,1175 @@
+{
+  "capturedAt": "2026-11-17T06:54:27.416Z",
+  "schemaVersion": 1,
+  "source": {
+    "sourceVersion": "1.0.1214",
+    "sha256": "cb67b9c88201f9768b3ec90ffdbeb0ccf7d33b897649c019f13b95c6f0785dc5",
+    "declarations": 1428,
+    "initialTick": 1000000,
+    "tickMs": 600
+  },
+  "model": {
+    "sourceVersion": "1.0.1214",
+    "version": 3,
+    "initialCraftTicks": 5,
+    "initialGatherTicks": 2,
+    "turnoverTicks": 6,
+    "finishTicks": 2,
+    "walkStartTicks": 1
+  },
+  "sourceInputs": {
+    "hashNormalization": "utf8-lf",
+    "files": [
+      {
+        "path": "vendor/game-original.js",
+        "bytes": 8180094,
+        "sha256": "cb67b9c88201f9768b3ec90ffdbeb0ccf7d33b897649c019f13b95c6f0785dc5"
+      },
+      {
+        "path": "vendor/manifest.json",
+        "bytes": 68632,
+        "sha256": "83d04284d9629809c4f37a76214c7823e7253f1ef2b0a9a344e5ea187f2d7f93"
+      },
+      {
+        "path": "src/engine/upstream.js",
+        "bytes": 514701,
+        "sha256": "56e06bb9880aa2f3bd83ef9b4e39460d145a4cd11241766751d84c03f1e17e36"
+      },
+      {
+        "path": "src/engine/batch-time.js",
+        "bytes": 8874,
+        "sha256": "b75785f7c4a5d6fb33440b01120af7275165737824252fca71995f7145c6ac9d"
+      },
+      {
+        "path": "scripts/check-time-model.mjs",
+        "bytes": 15214,
+        "sha256": "e6dba671c318869d497a7d3fd1f5263e71e5f2526b3a2ab6a73947997e432aa8"
+      },
+      {
+        "path": "tests/helpers/game-work-oracle.mjs",
+        "bytes": 10640,
+        "sha256": "2949002dd9cf18cff9c3b98e956d0efa5293217c93d907ae38cfea402adc3659"
+      },
+      {
+        "path": "tests/fixtures/batch-calibration.js",
+        "bytes": 1159,
+        "sha256": "e527348b689a1472669a6605fa9dd7596dbed599a60e93a5c7b427d7a8138ff4"
+      },
+      {
+        "path": "tests/fixtures/chrome-time-references.js",
+        "bytes": 5359,
+        "sha256": "829a7e44a9d202d9f985702e28b9aa65b42108f180e8a209b0d8aee864195789"
+      }
+    ]
+  },
+  "coverage": {
+    "ordinaryRecipes": 200,
+    "configurations": [
+      "level100-unmounted",
+      "test-character",
+      "fast-large-pack"
+    ],
+    "tiers": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "isolatedCases": 14950,
+    "hourlyGroups": 21,
+    "seeds": 32,
+    "excludedRecipes": [
+      {
+        "jobId": 160,
+        "skill": "farming",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 161,
+        "skill": "farming",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 162,
+        "skill": "farming",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 163,
+        "skill": "farming",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 164,
+        "skill": "farming",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 165,
+        "skill": "farming",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 343,
+        "skill": "smithing",
+        "reason": "noWorldSite"
+      },
+      {
+        "jobId": 301,
+        "skill": "smithing",
+        "reason": "noWorldSite"
+      },
+      {
+        "jobId": 302,
+        "skill": "smithing",
+        "reason": "noWorldSite"
+      },
+      {
+        "jobId": 303,
+        "skill": "smithing",
+        "reason": "noWorldSite"
+      },
+      {
+        "jobId": 304,
+        "skill": "smithing",
+        "reason": "noWorldSite"
+      },
+      {
+        "jobId": 305,
+        "skill": "smithing",
+        "reason": "noWorldSite"
+      },
+      {
+        "jobId": 210,
+        "skill": "farming",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 211,
+        "skill": "farming",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 212,
+        "skill": "farming",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 292,
+        "skill": "crafting",
+        "reason": "noWorldSite"
+      },
+      {
+        "jobId": 293,
+        "skill": "crafting",
+        "reason": "noWorldSite"
+      },
+      {
+        "jobId": 294,
+        "skill": "crafting",
+        "reason": "noWorldSite"
+      },
+      {
+        "jobId": 240,
+        "skill": "thieving",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 241,
+        "skill": "thieving",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 242,
+        "skill": "thieving",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 243,
+        "skill": "thieving",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 244,
+        "skill": "thieving",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 245,
+        "skill": "thieving",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 246,
+        "skill": "thieving",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 247,
+        "skill": "thieving",
+        "reason": "productExceptionOrFarming"
+      },
+      {
+        "jobId": 299,
+        "skill": "fletching",
+        "reason": "noWorldSite"
+      }
+    ]
+  },
+  "isolatedLogistics": {
+    "mismatches": 0,
+    "absoluteErrorSeconds": {
+      "samples": 14950,
+      "mean": 8.296596408770735e-16,
+      "standardDeviation": 2.5241977403540186e-15,
+      "standardError": 2.0644424340445618e-17,
+      "mean95Interval": [
+        7.891965691698001e-16,
+        8.701227125843469e-16
+      ],
+      "min": 0,
+      "p05": 0,
+      "median": 0,
+      "p95": 7.105427357601002e-15,
+      "max": 5.684341886080802e-14
+    },
+    "legacyV2AbsoluteErrorSeconds": {
+      "samples": 14950,
+      "mean": 1.7267558528425389,
+      "standardDeviation": 2.1407403098392925,
+      "standardError": 0.017508276254466947,
+      "mean95Interval": [
+        1.6924396313837837,
+        1.761072074301294
+      ],
+      "min": 0,
+      "p05": 0.5999999999999979,
+      "median": 0.6000000000000005,
+      "p95": 9,
+      "max": 17.400000000000034
+    },
+    "eventCounts": {
+      "produced": 413995,
+      "quantity": 413995,
+      "burnt": 720,
+      "bonus": 30,
+      "deposited": 26290,
+      "dropped": 0,
+      "free": 0,
+      "levelUp": 3
+    }
+  },
+  "hourlyProbability": [
+    {
+      "jobId": 1,
+      "siteId": 1,
+      "configuration": "level100-unmounted",
+      "pureSeconds": 2.006688963210702,
+      "modelPureSeconds": 2.006688963210702,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 1358.7231880558363,
+      "originalRate": {
+        "samples": 32,
+        "mean": 1353.40625,
+        "standardDeviation": 22.345104854027873,
+        "standardError": 3.950093792151887,
+        "mean95Interval": [
+          1345.6640661673823,
+          1361.1484338326177
+        ],
+        "min": 1304,
+        "p05": 1316,
+        "median": 1357,
+        "p95": 1381,
+        "max": 1401
+      },
+      "rateErrorPercent": 0.3928560294321315,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 1,
+      "siteId": 1,
+      "configuration": "test-character",
+      "pureSeconds": 1.8580453363062055,
+      "modelPureSeconds": 1.8580453363062055,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 1604.449919527704,
+      "originalRate": {
+        "samples": 32,
+        "mean": 1596.4375,
+        "standardDeviation": 28.615923779427426,
+        "standardError": 5.058628438587627,
+        "mean95Interval": [
+          1586.5225882603681,
+          1606.3524117396319
+        ],
+        "min": 1535,
+        "p05": 1538,
+        "median": 1602,
+        "p95": 1636,
+        "max": 1638
+      },
+      "rateErrorPercent": 0.5018937182134531,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 1,
+      "siteId": 1,
+      "configuration": "fast-large-pack",
+      "pureSeconds": 2.006688963210702,
+      "modelPureSeconds": 2.006688963210702,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 1566.853320231524,
+      "originalRate": {
+        "samples": 32,
+        "mean": 1559.875,
+        "standardDeviation": 29.178063249640132,
+        "standardError": 5.158001596427632,
+        "mean95Interval": [
+          1549.765316871002,
+          1569.984683128998
+        ],
+        "min": 1488,
+        "p05": 1508,
+        "median": 1562,
+        "p95": 1599,
+        "max": 1614
+      },
+      "rateErrorPercent": 0.44736406644918514,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 41,
+      "siteId": 42,
+      "configuration": "level100-unmounted",
+      "pureSeconds": 1.6053511705685617,
+      "modelPureSeconds": 1.6053511705685617,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 1632.3928625634826,
+      "originalRate": {
+        "samples": 32,
+        "mean": 1624.96875,
+        "standardDeviation": 16.146757366031732,
+        "standardError": 2.8543704069237186,
+        "mean95Interval": [
+          1619.3741840024295,
+          1630.5633159975705
+        ],
+        "min": 1596,
+        "p05": 1596,
+        "median": 1624,
+        "p95": 1652,
+        "max": 1666
+      },
+      "rateErrorPercent": 0.45687725154608394,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 41,
+      "siteId": 42,
+      "configuration": "test-character",
+      "pureSeconds": 0.8874246382357999,
+      "modelPureSeconds": 0.8874246382357999,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 2568.290453939044,
+      "originalRate": {
+        "samples": 32,
+        "mean": 2558.34375,
+        "standardDeviation": 19.02072779726107,
+        "standardError": 3.3624214021366914,
+        "mean95Interval": [
+          2551.753404051812,
+          2564.934095948188
+        ],
+        "min": 2509,
+        "p05": 2512,
+        "median": 2562,
+        "p95": 2580,
+        "max": 2590
+      },
+      "rateErrorPercent": 0.38879466213419533,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 41,
+      "siteId": 42,
+      "configuration": "fast-large-pack",
+      "pureSeconds": 1.6053511705685617,
+      "modelPureSeconds": 1.6053511705685617,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 1817.8593496096319,
+      "originalRate": {
+        "samples": 32,
+        "mean": 1811.71875,
+        "standardDeviation": 20.605269919064394,
+        "standardError": 3.642531521987404,
+        "mean95Interval": [
+          1804.5793882169046,
+          1818.8581117830954
+        ],
+        "min": 1763,
+        "p05": 1770,
+        "median": 1809,
+        "p95": 1848,
+        "max": 1859
+      },
+      "rateErrorPercent": 0.3389377964781781,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 45,
+      "siteId": 42,
+      "configuration": "level100-unmounted",
+      "pureSeconds": 2.2325581395348837,
+      "modelPureSeconds": 2.2325581395348837,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 920.1141085717165,
+      "originalRate": {
+        "samples": 32,
+        "mean": 915.34375,
+        "standardDeviation": 15.7730176547641,
+        "standardError": 2.788301935864707,
+        "mean95Interval": [
+          909.8786782057052,
+          920.8088217942948
+        ],
+        "min": 873,
+        "p05": 885,
+        "median": 918,
+        "p95": 931,
+        "max": 943
+      },
+      "rateErrorPercent": 0.5211548745175376,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 45,
+      "siteId": 42,
+      "configuration": "test-character",
+      "pureSeconds": 1.2341393806162984,
+      "modelPureSeconds": 1.2341393806162984,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 1346.227479884266,
+      "originalRate": {
+        "samples": 32,
+        "mean": 1342,
+        "standardDeviation": 15.22128443988877,
+        "standardError": 2.690768361453657,
+        "mean95Interval": [
+          1336.726094011551,
+          1347.273905988449
+        ],
+        "min": 1306,
+        "p05": 1310,
+        "median": 1341,
+        "p95": 1365,
+        "max": 1383
+      },
+      "rateErrorPercent": 0.31501340419268775,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 45,
+      "siteId": 42,
+      "configuration": "fast-large-pack",
+      "pureSeconds": 2.2325581395348837,
+      "modelPureSeconds": 2.2325581395348837,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 1113.6689751739632,
+      "originalRate": {
+        "samples": 32,
+        "mean": 1105.5,
+        "standardDeviation": 21.820288724029297,
+        "standardError": 3.857318531052368,
+        "mean95Interval": [
+          1097.9396556791373,
+          1113.0603443208627
+        ],
+        "min": 1050,
+        "p05": 1061,
+        "median": 1104,
+        "p95": 1132,
+        "max": 1145
+      },
+      "rateErrorPercent": 0.7389394096755542,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 51,
+      "siteId": 43,
+      "configuration": "level100-unmounted",
+      "pureSeconds": 2.006688963210702,
+      "modelPureSeconds": 2.006688963210702,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 1257.0568802260227,
+      "originalRate": {
+        "samples": 32,
+        "mean": 1250.53125,
+        "standardDeviation": 20.94782860913035,
+        "standardError": 3.7030879151624085,
+        "mean95Interval": [
+          1243.2731976862817,
+          1257.7893023137183
+        ],
+        "min": 1197,
+        "p05": 1218,
+        "median": 1250,
+        "p95": 1285,
+        "max": 1292
+      },
+      "rateErrorPercent": 0.5218286409094386,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 51,
+      "siteId": 43,
+      "configuration": "test-character",
+      "pureSeconds": 1.1092807977947496,
+      "modelPureSeconds": 1.1092807977947496,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 2106.1486051911443,
+      "originalRate": {
+        "samples": 32,
+        "mean": 2097.5,
+        "standardDeviation": 20.112185361118765,
+        "standardError": 3.5553656633319726,
+        "mean95Interval": [
+          2090.5314832998693,
+          2104.4685167001307
+        ],
+        "min": 2045,
+        "p05": 2058,
+        "median": 2100,
+        "p95": 2123,
+        "max": 2134
+      },
+      "rateErrorPercent": 0.41232921054323857,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 51,
+      "siteId": 43,
+      "configuration": "fast-large-pack",
+      "pureSeconds": 2.006688963210702,
+      "modelPureSeconds": 2.006688963210702,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 1465.3869358259594,
+      "originalRate": {
+        "samples": 32,
+        "mean": 1457.5625,
+        "standardDeviation": 25.515849853571407,
+        "standardError": 4.510607614799529,
+        "mean95Interval": [
+          1448.721709074993,
+          1466.403290925007
+        ],
+        "min": 1401,
+        "p05": 1408,
+        "median": 1457,
+        "p95": 1489,
+        "max": 1501
+      },
+      "rateErrorPercent": 0.5368164882095572,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 68,
+      "siteId": 44,
+      "configuration": "level100-unmounted",
+      "pureSeconds": 2.2857142857142856,
+      "modelPureSeconds": 2.2857142857142856,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 1222.7217762834748,
+      "originalRate": {
+        "samples": 32,
+        "mean": 1209.78125,
+        "standardDeviation": 35.15566666182708,
+        "standardError": 6.21470257342794,
+        "mean95Interval": [
+          1197.6004329560812,
+          1221.9620670439188
+        ],
+        "min": 1135,
+        "p05": 1143,
+        "median": 1209,
+        "p95": 1260,
+        "max": 1275
+      },
+      "rateErrorPercent": 1.0696583604246523,
+      "outputSuccessProbability": 0.8200000000000001
+    },
+    {
+      "jobId": 68,
+      "siteId": 44,
+      "configuration": "test-character",
+      "pureSeconds": 1.2635236515833532,
+      "modelPureSeconds": 1.2635236515833532,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 2120.5444594468386,
+      "originalRate": {
+        "samples": 32,
+        "mean": 2104.15625,
+        "standardDeviation": 33.95963539170437,
+        "standardError": 6.003272118024208,
+        "mean95Interval": [
+          2092.3898366486724,
+          2115.9226633513276
+        ],
+        "min": 2026,
+        "p05": 2033,
+        "median": 2107,
+        "p95": 2155,
+        "max": 2174
+      },
+      "rateErrorPercent": 0.7788494531638879,
+      "outputSuccessProbability": 0.8200000000000001
+    },
+    {
+      "jobId": 68,
+      "siteId": 44,
+      "configuration": "fast-large-pack",
+      "pureSeconds": 2.2857142857142856,
+      "modelPureSeconds": 2.2857142857142856,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 1232.6678909982616,
+      "originalRate": {
+        "samples": 32,
+        "mean": 1220.375,
+        "standardDeviation": 34.24429697044458,
+        "standardError": 6.053593651191827,
+        "mean95Interval": [
+          1208.5099564436641,
+          1232.2400435563359
+        ],
+        "min": 1150,
+        "p05": 1162,
+        "median": 1215,
+        "p95": 1271,
+        "max": 1283
+      },
+      "rateErrorPercent": 1.007304393998698,
+      "outputSuccessProbability": 0.8200000000000001
+    },
+    {
+      "jobId": 230,
+      "siteId": 43,
+      "configuration": "level100-unmounted",
+      "pureSeconds": 2.006688963210702,
+      "modelPureSeconds": 2.006688963210702,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 1793.9988735481074,
+      "originalRate": {
+        "samples": 32,
+        "mean": 1779.25,
+        "standardDeviation": 37.648041117699606,
+        "standardError": 6.655296293178839,
+        "mean95Interval": [
+          1766.2056192653695,
+          1792.2943807346305
+        ],
+        "min": 1695,
+        "p05": 1716,
+        "median": 1786,
+        "p95": 1830,
+        "max": 1837
+      },
+      "rateErrorPercent": 0.8289376730705289,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 230,
+      "siteId": 43,
+      "configuration": "test-character",
+      "pureSeconds": 1.1092807977947496,
+      "modelPureSeconds": 1.1092807977947496,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 3245.3433669344718,
+      "originalRate": {
+        "samples": 32,
+        "mean": 3228.25,
+        "standardDeviation": 36.84681125959206,
+        "standardError": 6.5136575266895935,
+        "mean95Interval": [
+          3215.4832312476883,
+          3241.0167687523117
+        ],
+        "min": 3109,
+        "p05": 3167,
+        "median": 3233,
+        "p95": 3271,
+        "max": 3284
+      },
+      "rateErrorPercent": 0.5294932838061372,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 230,
+      "siteId": 43,
+      "configuration": "fast-large-pack",
+      "pureSeconds": 2.006688963210702,
+      "modelPureSeconds": 2.006688963210702,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 1793.9993026724712,
+      "originalRate": {
+        "samples": 32,
+        "mean": 1780.25,
+        "standardDeviation": 37.8277345343334,
+        "standardError": 6.687061901537923,
+        "mean95Interval": [
+          1767.1433586729856,
+          1793.3566413270144
+        ],
+        "min": 1696,
+        "p05": 1716,
+        "median": 1787,
+        "p95": 1831,
+        "max": 1837
+      },
+      "rateErrorPercent": 0.7723242618997928,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 420,
+      "siteId": 43,
+      "configuration": "level100-unmounted",
+      "pureSeconds": 2.5714285714285716,
+      "modelPureSeconds": 2.5714285714285716,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 247.05882251211074,
+      "originalRate": {
+        "samples": 32,
+        "mean": 246.09375,
+        "standardDeviation": 2.323243624224545,
+        "standardError": 0.41069533025939675,
+        "mean95Interval": [
+          245.28878715269158,
+          246.89871284730842
+        ],
+        "min": 241,
+        "p05": 242,
+        "median": 246,
+        "p95": 249,
+        "max": 250
+      },
+      "rateErrorPercent": 0.39215644936563265,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 420,
+      "siteId": 43,
+      "configuration": "test-character",
+      "pureSeconds": 1.4214641080312722,
+      "modelPureSeconds": 1.4214641080312722,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 366.5441260497543,
+      "originalRate": {
+        "samples": 32,
+        "mean": 366.5625,
+        "standardDeviation": 2.0757152381769517,
+        "standardError": 0.366938080181793,
+        "mean95Interval": [
+          365.8433013628437,
+          367.2816986371563
+        ],
+        "min": 362,
+        "p05": 363,
+        "median": 367,
+        "p95": 369,
+        "max": 372
+      },
+      "rateErrorPercent": -0.005012501345802445,
+      "outputSuccessProbability": 1
+    },
+    {
+      "jobId": 420,
+      "siteId": 43,
+      "configuration": "fast-large-pack",
+      "pureSeconds": 2.5714285714285716,
+      "modelPureSeconds": 2.5714285714285716,
+      "pureSecondsError": 0,
+      "modelOutputPerHour": 368.4210503693444,
+      "originalRate": {
+        "samples": 32,
+        "mean": 367.4375,
+        "standardDeviation": 3.823753881985607,
+        "standardError": 0.675950574885102,
+        "mean95Interval": [
+          366.1126368732252,
+          368.7623631267748
+        ],
+        "min": 361,
+        "p05": 361,
+        "median": 367,
+        "p95": 373,
+        "max": 374
+      },
+      "rateErrorPercent": 0.26767827707960823,
+      "outputSuccessProbability": 1
+    }
+  ],
+  "finiteProbability": [
+    {
+      "jobId": 51,
+      "siteId": 43,
+      "count": 1,
+      "modelSeconds": 10.10928079779475,
+      "original": {
+        "samples": 32,
+        "mean": 9.95625,
+        "standardDeviation": 0.5584227229438288,
+        "standardError": 0.09871612354055949,
+        "mean95Interval": [
+          9.762766397860505,
+          10.149733602139497
+        ],
+        "min": 9.6,
+        "p05": 9.6,
+        "median": 9.6,
+        "p95": 10.799999999999999,
+        "max": 11.4
+      },
+      "meanErrorSeconds": 0.1530307977947487
+    },
+    {
+      "jobId": 51,
+      "siteId": 43,
+      "count": 14,
+      "modelSeconds": 24.529931169126495,
+      "original": {
+        "samples": 32,
+        "mean": 25.425000000000008,
+        "standardDeviation": 2.93843070362396,
+        "standardError": 0.5194460691448151,
+        "mean95Interval": [
+          24.40688570447617,
+          26.443114295523845
+        ],
+        "min": 20.4,
+        "p05": 21,
+        "median": 24.599999999999998,
+        "p95": 29.4,
+        "max": 34.199999999999996
+      },
+      "meanErrorSeconds": -0.8950688308735124
+    },
+    {
+      "jobId": 51,
+      "siteId": 43,
+      "count": 15,
+      "modelSeconds": 34.03921196692124,
+      "original": {
+        "samples": 32,
+        "mean": 35.1,
+        "standardDeviation": 3.055732318119505,
+        "standardError": 0.5401822609082976,
+        "mean95Interval": [
+          34.04124276861974,
+          36.158757231380264
+        ],
+        "min": 29.4,
+        "p05": 30,
+        "median": 34.199999999999996,
+        "p95": 39.6,
+        "max": 43.199999999999996
+      },
+      "meanErrorSeconds": -1.060788033078758
+    },
+    {
+      "jobId": 51,
+      "siteId": 43,
+      "count": 28,
+      "modelSeconds": 48.45986233825299,
+      "original": {
+        "samples": 32,
+        "mean": 49.800000000000004,
+        "standardDeviation": 3.791767397929361,
+        "standardError": 0.6702961099394803,
+        "mean95Interval": [
+          48.486219624518625,
+          51.11378037548138
+        ],
+        "min": 39.6,
+        "p05": 43.8,
+        "median": 49.8,
+        "p95": 54.6,
+        "max": 58.199999999999996
+      },
+      "meanErrorSeconds": -1.3401376617470149
+    }
+  ],
+  "gameNominal": {
+    "source": "Chrome test-server rounded linear prediction, not a stopwatch",
+    "fixtureDate": "2026-11-17",
+    "sourceVersion": "1.0.1214",
+    "gameVersion": "1.0.5543",
+    "observedOutputPerHour": 2116,
+    "cases": [
+      {
+        "jobId": 51,
+        "siteId": 43,
+        "count": 1,
+        "nominalSeconds": 2,
+        "finiteTaskSeconds": 10.10928079779475,
+        "differenceSeconds": 8.10928079779475,
+        "errorPercent": 405.4640398897375
+      },
+      {
+        "jobId": 51,
+        "siteId": 43,
+        "count": 10,
+        "nominalSeconds": 17,
+        "finiteTaskSeconds": 20.092807977947494,
+        "differenceSeconds": 3.092807977947494,
+        "errorPercent": 18.192988105573505
+      },
+      {
+        "jobId": 51,
+        "siteId": 43,
+        "count": 14,
+        "nominalSeconds": 24,
+        "finiteTaskSeconds": 24.529931169126495,
+        "differenceSeconds": 0.5299311691264954,
+        "errorPercent": 2.208046538027064
+      },
+      {
+        "jobId": 51,
+        "siteId": 43,
+        "count": 15,
+        "nominalSeconds": 26,
+        "finiteTaskSeconds": 34.03921196692124,
+        "differenceSeconds": 8.039211966921243,
+        "errorPercent": 30.920046026620174
+      },
+      {
+        "jobId": 51,
+        "siteId": 43,
+        "count": 28,
+        "nominalSeconds": 48,
+        "finiteTaskSeconds": 48.45986233825299,
+        "differenceSeconds": 0.4598623382529894,
+        "errorPercent": 0.9580465380270686
+      }
+    ]
+  },
+  "chromeNominal": {
+    "available": true,
+    "capturedDate": "2026-11-17",
+    "gameVersion": "1.0.5543",
+    "sourceVersion": "1.0.1214",
+    "meaning": "Hourly linear game nominal per primary output, separate from finite completion time.",
+    "cohorts": [
+      {
+        "id": "equipped",
+        "skipped": [],
+        "signedUnitTimeErrorPercent": {
+          "samples": 48,
+          "mean": 1.689035640846999,
+          "standardDeviation": 2.0931451340745326,
+          "standardError": 0.3021194766527217,
+          "mean95Interval": [
+            1.0968814666076645,
+            2.281189815086334
+          ],
+          "min": -1.1516516608333416,
+          "p05": -0.8839166832186551,
+          "median": 1.2015690841910232,
+          "p95": 4.980251560246884,
+          "max": 7.370259120251643
+        },
+        "absoluteUnitTimeErrorPercent": {
+          "samples": 48,
+          "mean": 1.9664955149024566,
+          "standardDeviation": 1.8349368758134008,
+          "standardError": 0.2648503247992095,
+          "mean95Interval": [
+            1.4473888782960058,
+            2.4856021515089073
+          ],
+          "min": 0.009124357147261009,
+          "p05": 0.1664861977028531,
+          "median": 1.2015690841910232,
+          "p95": 4.980251560246884,
+          "max": 7.370259120251643
+        },
+        "chanceDifference": {
+          "samples": 48,
+          "mean": -1.1564823173178713e-18,
+          "standardDeviation": 1.2615732665287446e-17,
+          "standardError": 1.8209241625820157e-18,
+          "mean95Interval": [
+            -4.725493675978622e-18,
+            2.4125290413428794e-18
+          ],
+          "min": -5.551115123125783e-17,
+          "p05": -2.7755575615628914e-17,
+          "median": 0,
+          "p95": 0,
+          "max": 5.551115123125783e-17
+        },
+        "caseCount": 48
+      },
+      {
+        "id": "without-hammer",
+        "skipped": [],
+        "signedUnitTimeErrorPercent": {
+          "samples": 5,
+          "mean": 2.856300049344051,
+          "standardDeviation": 1.2965555773649744,
+          "standardError": 0.579837281518914,
+          "mean95Interval": [
+            1.7198189775669797,
+            3.992781121121123
+          ],
+          "min": 1.7486165950816979,
+          "p05": 1.7486165950816979,
+          "median": 1.878014600227651,
+          "p95": 4.290999630293002,
+          "max": 4.587430711698315
+        },
+        "absoluteUnitTimeErrorPercent": {
+          "samples": 5,
+          "mean": 2.856300049344051,
+          "standardDeviation": 1.2965555773649744,
+          "standardError": 0.579837281518914,
+          "mean95Interval": [
+            1.7198189775669797,
+            3.992781121121123
+          ],
+          "min": 1.7486165950816979,
+          "p05": 1.7486165950816979,
+          "median": 1.878014600227651,
+          "p95": 4.290999630293002,
+          "max": 4.587430711698315
+        },
+        "chanceDifference": {
+          "samples": 5,
+          "mean": 5.551115123125783e-18,
+          "standardDeviation": 1.1102230246251566e-17,
+          "standardError": 4.965068306494546e-18,
+          "mean95Interval": [
+            -4.180418757603528e-18,
+            1.5282649003855094e-17
+          ],
+          "min": 0,
+          "p05": 0,
+          "median": 0,
+          "p95": 0,
+          "max": 2.7755575615628914e-17
+        },
+        "caseCount": 5
+      },
+      {
+        "id": "without-mount",
+        "skipped": [],
+        "signedUnitTimeErrorPercent": {
+          "samples": 13,
+          "mean": 2.0144066847271196,
+          "standardDeviation": 1.9308617142664541,
+          "standardError": 0.5355246858936922,
+          "mean95Interval": [
+            0.9647783003754828,
+            3.0640350690787566
+          ],
+          "min": -0.4224706288936453,
+          "p05": -0.4224706288936453,
+          "median": 2.050723097050433,
+          "p95": 4.211165896866098,
+          "max": 6.0921721225903
+        },
+        "absoluteUnitTimeErrorPercent": {
+          "samples": 13,
+          "mean": 2.10851776925866,
+          "standardDeviation": 1.8276252536594533,
+          "standardError": 0.5068920434155415,
+          "mean95Interval": [
+            1.1150093641641985,
+            3.1020261743531212
+          ],
+          "min": 0.05905683725915267,
+          "p05": 0.05905683725915267,
+          "median": 2.050723097050433,
+          "p95": 4.211165896866098,
+          "max": 6.0921721225903
+        },
+        "chanceDifference": {
+          "samples": 13,
+          "mean": 0,
+          "standardDeviation": 0,
+          "standardError": 0,
+          "mean95Interval": [
+            0,
+            0
+          ],
+          "min": 0,
+          "p05": 0,
+          "median": 0,
+          "p95": 0,
+          "max": 0
+        },
+        "caseCount": 13
+      },
+      {
+        "id": "high-work-and-move-mastery",
+        "skipped": [],
+        "signedUnitTimeErrorPercent": {
+          "samples": 21,
+          "mean": 0.6753801473812407,
+          "standardDeviation": 1.7262433229784948,
+          "standardError": 0.37669717597433594,
+          "mean95Interval": [
+            -0.0629463175284577,
+            1.4137066122909392
+          ],
+          "min": -1.3881195825405923,
+          "p05": -0.9550596122965715,
+          "median": 0.14352655250811086,
+          "p95": 4.009546057254276,
+          "max": 5.310189478518512
+        },
+        "absoluteUnitTimeErrorPercent": {
+          "samples": 21,
+          "mean": 1.2488572723338078,
+          "standardDeviation": 1.369821107642711,
+          "standardError": 0.2989194721105226,
+          "mean95Interval": [
+            0.6629751069971835,
+            1.8347394376704322
+          ],
+          "min": 0.0368632154023496,
+          "p05": 0.14352264750812083,
+          "median": 0.8501321449906563,
+          "p95": 4.009546057254276,
+          "max": 5.310189478518512
+        },
+        "chanceDifference": {
+          "samples": 21,
+          "mean": -1.32169407693471e-18,
+          "standardDeviation": 5.910795602969698e-18,
+          "standardError": 1.289841346096228e-18,
+          "mean95Interval": [
+            -3.849783115283317e-18,
+            1.2063949614138966e-18
+          ],
+          "min": -2.7755575615628914e-17,
+          "p05": 0,
+          "median": 0,
+          "p95": 0,
+          "max": 0
+        },
+        "caseCount": 21
+      }
+    ],
+    "errors": []
+  },
+  "errors": [],
+  "errorCount": 0,
+  "limitations": [
+    "everyAttemptLands isolates logistics; it is not normal work probability.",
+    "Finite counts are fixed integer work attempts; burn and free-material events can change actual outputs or capacity.",
+    "The game ordinarily ends finite work at the station; the oracle explicitly appends final return and deposit.",
+    "Hourly prediction retains original randomness, levels, bonus drops and potion expiry; UI ETA caches are bypassed.",
+    "Discard, thieving and upgrades retain the product pure-work exception and are excluded from logistics equality.",
+    "No browser, real account, mobile device or production validation is performed by this command."
+  ]
+}

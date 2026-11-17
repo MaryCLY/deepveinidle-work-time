@@ -1,0 +1,2 @@
+* text=auto eol=lf
+tests/fixtures/work-time-baseline/buddy/** -text whitespace=trailing-space,space-before-tab,cr-at-eol

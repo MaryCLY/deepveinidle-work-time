@@ -1,0 +1,4000 @@
+[
+  {
+    "jobId": 51,
+    "siteId": 43,
+    "tier": 0,
+    "count": 1,
+    "seed": 1,
+    "everyAttemptLands": true,
+    "totalTicks": 16,
+    "seconds": 9.6,
+    "workTicks": 1,
+    "workSeconds": 0.6,
+    "overheadTicks": 15,
+    "overheadSeconds": 9,
+    "walkTicks": 6,
+    "events": {
+      "produced": 1,
+      "quantity": 1,
+      "burnt": 0,
+      "bonus": 0,
+      "deposited": 1,
+      "dropped": 0,
+      "free": 0,
+      "levelUp": 0
+    },
+    "legs": [
+      {
+        "from": {
+          "x": 200,
+          "y": 83
+        },
+        "to": {
+          "x": 203,
+          "y": 86
+        },
+        "distance": 6,
+        "speed": 2500
+      },
+      {
+        "from": {
+          "x": 203,
+          "y": 86
+        },
+        "to": {
+          "x": 200,
+          "y": 83
+        },
+        "distance": 6,
+        "speed": 2500
+      }
+    ],
+    "initialPosition": {
+      "x": 200,
+      "y": 83
+    },
+    "finalPosition": {
+      "x": 200,
+      "y": 83
+    },
+    "skillsChanged": [
+      "smithing"
+    ],
+    "trace": [
+      {
+        "elapsed": 1,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 2,
+        "before": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "banking",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "withdrew",
+            "jobId": 51,
+            "batches": 14
+          }
+        ]
+      },
+      {
+        "elapsed": 3,
+        "before": {
+          "activity": "idle",
+          "phase": "banking",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 4,
+        "before": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "walkStarted",
+            "distance": 6,
+            "speed": 2500
+          }
+        ]
+      },
+      {
+        "elapsed": 5,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 201,
+          "y": 84
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 83
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "elapsed": 6,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 201,
+          "y": 84
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 203,
+          "y": 85
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 202,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 85
+          }
+        ]
+      },
+      {
+        "elapsed": 7,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 203,
+          "y": 85
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 86
+          },
+          {
+            "kind": "arrived",
+            "x": 203,
+            "y": 86
+          }
+        ]
+      },
+      {
+        "elapsed": 8,
+        "before": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 9,
+        "before": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 10,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 0,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ],
+        "appendedFinalReturn": true
+      },
+      {
+        "elapsed": 11,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "walkStarted",
+            "distance": 6,
+            "speed": 2500
+          }
+        ]
+      },
+      {
+        "elapsed": 12,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 84
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 85
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "elapsed": 13,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 84
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 201,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 202,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 83
+          }
+        ]
+      },
+      {
+        "elapsed": 14,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 201,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 200,
+            "y": 83
+          },
+          {
+            "kind": "arrived",
+            "x": 200,
+            "y": 83
+          }
+        ]
+      },
+      {
+        "elapsed": 15,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 16,
+        "before": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": null,
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "deposited",
+            "count": 27
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "jobId": 51,
+    "siteId": 43,
+    "tier": 0,
+    "count": 14,
+    "seed": 1,
+    "everyAttemptLands": true,
+    "totalTicks": 29,
+    "seconds": 17.4,
+    "workTicks": 14,
+    "workSeconds": 8.4,
+    "overheadTicks": 15,
+    "overheadSeconds": 9,
+    "walkTicks": 6,
+    "events": {
+      "produced": 14,
+      "quantity": 14,
+      "burnt": 0,
+      "bonus": 0,
+      "deposited": 1,
+      "dropped": 0,
+      "free": 0,
+      "levelUp": 0
+    },
+    "legs": [
+      {
+        "from": {
+          "x": 200,
+          "y": 83
+        },
+        "to": {
+          "x": 203,
+          "y": 86
+        },
+        "distance": 6,
+        "speed": 2500
+      },
+      {
+        "from": {
+          "x": 203,
+          "y": 86
+        },
+        "to": {
+          "x": 200,
+          "y": 83
+        },
+        "distance": 6,
+        "speed": 2500
+      }
+    ],
+    "initialPosition": {
+      "x": 200,
+      "y": 83
+    },
+    "finalPosition": {
+      "x": 200,
+      "y": 83
+    },
+    "skillsChanged": [
+      "smithing"
+    ],
+    "trace": [
+      {
+        "elapsed": 1,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 2,
+        "before": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "banking",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "withdrew",
+            "jobId": 51,
+            "batches": 14
+          }
+        ]
+      },
+      {
+        "elapsed": 3,
+        "before": {
+          "activity": "idle",
+          "phase": "banking",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 4,
+        "before": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "walkStarted",
+            "distance": 6,
+            "speed": 2500
+          }
+        ]
+      },
+      {
+        "elapsed": 5,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 201,
+          "y": 84
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 83
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "elapsed": 6,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 201,
+          "y": 84
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 203,
+          "y": 85
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 202,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 85
+          }
+        ]
+      },
+      {
+        "elapsed": 7,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 203,
+          "y": 85
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 86
+          },
+          {
+            "kind": "arrived",
+            "x": 203,
+            "y": 86
+          }
+        ]
+      },
+      {
+        "elapsed": 8,
+        "before": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 9,
+        "before": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 10,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 13,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 11,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 13,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 12,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 12,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 12,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 11,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 13,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 11,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 10,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 14,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 10,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 9,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 15,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 9,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 8,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 16,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 8,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 7,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 17,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 7,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 6,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 18,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 6,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 5,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 19,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 5,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 4,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 20,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 4,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 3,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 21,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 3,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 2,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 22,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 2,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 23,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 0,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ],
+        "appendedFinalReturn": true
+      },
+      {
+        "elapsed": 24,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "walkStarted",
+            "distance": 6,
+            "speed": 2500
+          }
+        ]
+      },
+      {
+        "elapsed": 25,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 84
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 85
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "elapsed": 26,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 84
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 201,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 202,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 83
+          }
+        ]
+      },
+      {
+        "elapsed": 27,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 201,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 200,
+            "y": 83
+          },
+          {
+            "kind": "arrived",
+            "x": 200,
+            "y": 83
+          }
+        ]
+      },
+      {
+        "elapsed": 28,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 29,
+        "before": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": null,
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "deposited",
+            "count": 14
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "jobId": 51,
+    "siteId": 43,
+    "tier": 0,
+    "count": 15,
+    "seed": 1,
+    "everyAttemptLands": true,
+    "totalTicks": 44,
+    "seconds": 26.4,
+    "workTicks": 15,
+    "workSeconds": 9,
+    "overheadTicks": 29,
+    "overheadSeconds": 17.4,
+    "walkTicks": 12,
+    "events": {
+      "produced": 15,
+      "quantity": 15,
+      "burnt": 0,
+      "bonus": 0,
+      "deposited": 2,
+      "dropped": 0,
+      "free": 0,
+      "levelUp": 0
+    },
+    "legs": [
+      {
+        "from": {
+          "x": 200,
+          "y": 83
+        },
+        "to": {
+          "x": 203,
+          "y": 86
+        },
+        "distance": 6,
+        "speed": 2500
+      },
+      {
+        "from": {
+          "x": 203,
+          "y": 86
+        },
+        "to": {
+          "x": 200,
+          "y": 83
+        },
+        "distance": 6,
+        "speed": 2500
+      },
+      {
+        "from": {
+          "x": 200,
+          "y": 83
+        },
+        "to": {
+          "x": 203,
+          "y": 86
+        },
+        "distance": 6,
+        "speed": 2500
+      },
+      {
+        "from": {
+          "x": 203,
+          "y": 86
+        },
+        "to": {
+          "x": 200,
+          "y": 83
+        },
+        "distance": 6,
+        "speed": 2500
+      }
+    ],
+    "initialPosition": {
+      "x": 200,
+      "y": 83
+    },
+    "finalPosition": {
+      "x": 200,
+      "y": 83
+    },
+    "skillsChanged": [
+      "smithing"
+    ],
+    "trace": [
+      {
+        "elapsed": 1,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": 15,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": 15,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 2,
+        "before": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": 15,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "banking",
+          "limit": 15,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "withdrew",
+            "jobId": 51,
+            "batches": 14
+          }
+        ]
+      },
+      {
+        "elapsed": 3,
+        "before": {
+          "activity": "idle",
+          "phase": "banking",
+          "limit": 15,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 15,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 4,
+        "before": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 15,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 15,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "walkStarted",
+            "distance": 6,
+            "speed": 2500
+          }
+        ]
+      },
+      {
+        "elapsed": 5,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 15,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 15,
+          "x": 201,
+          "y": 84
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 83
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "elapsed": 6,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 15,
+          "x": 201,
+          "y": 84
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 15,
+          "x": 203,
+          "y": 85
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 202,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 85
+          }
+        ]
+      },
+      {
+        "elapsed": 7,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 15,
+          "x": 203,
+          "y": 85
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 15,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 86
+          },
+          {
+            "kind": "arrived",
+            "x": 203,
+            "y": 86
+          }
+        ]
+      },
+      {
+        "elapsed": 8,
+        "before": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 15,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 15,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 9,
+        "before": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 15,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 15,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 10,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 15,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 11,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 13,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 12,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 13,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 12,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 13,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 12,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 11,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 14,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 11,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 10,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 15,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 10,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 9,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 16,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 9,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 8,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 17,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 8,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 7,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 18,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 7,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 6,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 19,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 6,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 5,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 20,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 5,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 4,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 21,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 4,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 3,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 22,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 3,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 2,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 23,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 2,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          },
+          {
+            "kind": "packFull"
+          }
+        ]
+      },
+      {
+        "elapsed": 24,
+        "before": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 25,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "walkStarted",
+            "distance": 6,
+            "speed": 2500
+          }
+        ]
+      },
+      {
+        "elapsed": 26,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": 1,
+          "x": 203,
+          "y": 84
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 85
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "elapsed": 27,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": 1,
+          "x": 203,
+          "y": 84
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": 1,
+          "x": 201,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 202,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 83
+          }
+        ]
+      },
+      {
+        "elapsed": 28,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": 1,
+          "x": 201,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 200,
+            "y": 83
+          },
+          {
+            "kind": "arrived",
+            "x": 200,
+            "y": 83
+          }
+        ]
+      },
+      {
+        "elapsed": 29,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 30,
+        "before": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "banking",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "deposited",
+            "count": 14
+          },
+          {
+            "kind": "withdrew",
+            "jobId": 51,
+            "batches": 14
+          }
+        ]
+      },
+      {
+        "elapsed": 31,
+        "before": {
+          "activity": "idle",
+          "phase": "banking",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 32,
+        "before": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "walkStarted",
+            "distance": 6,
+            "speed": 2500
+          }
+        ]
+      },
+      {
+        "elapsed": 33,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 201,
+          "y": 84
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 83
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "elapsed": 34,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 201,
+          "y": 84
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 203,
+          "y": 85
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 202,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 85
+          }
+        ]
+      },
+      {
+        "elapsed": 35,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 203,
+          "y": 85
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 86
+          },
+          {
+            "kind": "arrived",
+            "x": 203,
+            "y": 86
+          }
+        ]
+      },
+      {
+        "elapsed": 36,
+        "before": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 37,
+        "before": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 38,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 0,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ],
+        "appendedFinalReturn": true
+      },
+      {
+        "elapsed": 39,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "walkStarted",
+            "distance": 6,
+            "speed": 2500
+          }
+        ]
+      },
+      {
+        "elapsed": 40,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 84
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 85
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "elapsed": 41,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 84
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 201,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 202,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 83
+          }
+        ]
+      },
+      {
+        "elapsed": 42,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 201,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 200,
+            "y": 83
+          },
+          {
+            "kind": "arrived",
+            "x": 200,
+            "y": 83
+          }
+        ]
+      },
+      {
+        "elapsed": 43,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 44,
+        "before": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": null,
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "deposited",
+            "count": 27
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "jobId": 51,
+    "siteId": 43,
+    "tier": 0,
+    "count": 28,
+    "seed": 1,
+    "everyAttemptLands": true,
+    "totalTicks": 57,
+    "seconds": 34.199999999999996,
+    "workTicks": 28,
+    "workSeconds": 16.8,
+    "overheadTicks": 29,
+    "overheadSeconds": 17.4,
+    "walkTicks": 12,
+    "events": {
+      "produced": 28,
+      "quantity": 28,
+      "burnt": 0,
+      "bonus": 0,
+      "deposited": 2,
+      "dropped": 0,
+      "free": 0,
+      "levelUp": 0
+    },
+    "legs": [
+      {
+        "from": {
+          "x": 200,
+          "y": 83
+        },
+        "to": {
+          "x": 203,
+          "y": 86
+        },
+        "distance": 6,
+        "speed": 2500
+      },
+      {
+        "from": {
+          "x": 203,
+          "y": 86
+        },
+        "to": {
+          "x": 200,
+          "y": 83
+        },
+        "distance": 6,
+        "speed": 2500
+      },
+      {
+        "from": {
+          "x": 200,
+          "y": 83
+        },
+        "to": {
+          "x": 203,
+          "y": 86
+        },
+        "distance": 6,
+        "speed": 2500
+      },
+      {
+        "from": {
+          "x": 203,
+          "y": 86
+        },
+        "to": {
+          "x": 200,
+          "y": 83
+        },
+        "distance": 6,
+        "speed": 2500
+      }
+    ],
+    "initialPosition": {
+      "x": 200,
+      "y": 83
+    },
+    "finalPosition": {
+      "x": 200,
+      "y": 83
+    },
+    "skillsChanged": [
+      "smithing"
+    ],
+    "trace": [
+      {
+        "elapsed": 1,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": 28,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": 28,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 2,
+        "before": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": 28,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "banking",
+          "limit": 28,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "withdrew",
+            "jobId": 51,
+            "batches": 14
+          }
+        ]
+      },
+      {
+        "elapsed": 3,
+        "before": {
+          "activity": "idle",
+          "phase": "banking",
+          "limit": 28,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 28,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 4,
+        "before": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 28,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 28,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "walkStarted",
+            "distance": 6,
+            "speed": 2500
+          }
+        ]
+      },
+      {
+        "elapsed": 5,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 28,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 28,
+          "x": 201,
+          "y": 84
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 83
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "elapsed": 6,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 28,
+          "x": 201,
+          "y": 84
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 28,
+          "x": 203,
+          "y": 85
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 202,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 85
+          }
+        ]
+      },
+      {
+        "elapsed": 7,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 28,
+          "x": 203,
+          "y": 85
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 28,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 86
+          },
+          {
+            "kind": "arrived",
+            "x": 203,
+            "y": 86
+          }
+        ]
+      },
+      {
+        "elapsed": 8,
+        "before": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 28,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 28,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 9,
+        "before": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 28,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 28,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 10,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 28,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 27,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 11,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 27,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 26,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 12,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 26,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 25,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 13,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 25,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 24,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 14,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 24,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 23,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 15,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 23,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 22,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 16,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 22,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 21,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 17,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 21,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 20,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 18,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 20,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 19,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 19,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 19,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 18,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 20,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 18,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 17,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 21,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 17,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 16,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 22,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 16,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 15,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 23,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 15,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          },
+          {
+            "kind": "packFull"
+          }
+        ]
+      },
+      {
+        "elapsed": 24,
+        "before": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 25,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "walkStarted",
+            "distance": 6,
+            "speed": 2500
+          }
+        ]
+      },
+      {
+        "elapsed": 26,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": 14,
+          "x": 203,
+          "y": 84
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 85
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "elapsed": 27,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": 14,
+          "x": 203,
+          "y": 84
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": 14,
+          "x": 201,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 202,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 83
+          }
+        ]
+      },
+      {
+        "elapsed": 28,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": 14,
+          "x": 201,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 200,
+            "y": 83
+          },
+          {
+            "kind": "arrived",
+            "x": 200,
+            "y": 83
+          }
+        ]
+      },
+      {
+        "elapsed": 29,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 30,
+        "before": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "banking",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "deposited",
+            "count": 14
+          },
+          {
+            "kind": "withdrew",
+            "jobId": 51,
+            "batches": 14
+          }
+        ]
+      },
+      {
+        "elapsed": 31,
+        "before": {
+          "activity": "idle",
+          "phase": "banking",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 32,
+        "before": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "walkStarted",
+            "distance": 6,
+            "speed": 2500
+          }
+        ]
+      },
+      {
+        "elapsed": 33,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 201,
+          "y": 84
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 83
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "elapsed": 34,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 201,
+          "y": 84
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 203,
+          "y": 85
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 202,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 85
+          }
+        ]
+      },
+      {
+        "elapsed": 35,
+        "before": {
+          "activity": "walking",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 203,
+          "y": 85
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 86
+          },
+          {
+            "kind": "arrived",
+            "x": 203,
+            "y": 86
+          }
+        ]
+      },
+      {
+        "elapsed": 36,
+        "before": {
+          "activity": "idle",
+          "phase": "toWork",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 37,
+        "before": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "events": []
+      },
+      {
+        "elapsed": 38,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 14,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 13,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 39,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 13,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 12,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 40,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 12,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 11,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 41,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 11,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 10,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 42,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 10,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 9,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 43,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 9,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 8,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 44,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 8,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 7,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 45,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 7,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 6,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 46,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 6,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 5,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 47,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 5,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 4,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 48,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 4,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 3,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 49,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 3,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 2,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 50,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 2,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ]
+      },
+      {
+        "elapsed": 51,
+        "before": {
+          "activity": "working",
+          "phase": "working",
+          "limit": 1,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "working",
+          "limit": 0,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "produced",
+            "jobId": 51,
+            "itemId": 80,
+            "xp": 17,
+            "tier": 0
+          }
+        ],
+        "appendedFinalReturn": true
+      },
+      {
+        "elapsed": 52,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 86
+        },
+        "events": [
+          {
+            "kind": "walkStarted",
+            "distance": 6,
+            "speed": 2500
+          }
+        ]
+      },
+      {
+        "elapsed": 53,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 86
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 84
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 85
+          },
+          {
+            "kind": "moved",
+            "x": 203,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "elapsed": 54,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 203,
+          "y": 84
+        },
+        "after": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 201,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 202,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 84
+          },
+          {
+            "kind": "moved",
+            "x": 201,
+            "y": 83
+          }
+        ]
+      },
+      {
+        "elapsed": 55,
+        "before": {
+          "activity": "walking",
+          "phase": "toBank",
+          "limit": null,
+          "x": 201,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "moved",
+            "x": 200,
+            "y": 83
+          },
+          {
+            "kind": "arrived",
+            "x": 200,
+            "y": 83
+          }
+        ]
+      },
+      {
+        "elapsed": 56,
+        "before": {
+          "activity": "idle",
+          "phase": "toBank",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "events": []
+      },
+      {
+        "elapsed": 57,
+        "before": {
+          "activity": "banking",
+          "phase": "banking",
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "after": {
+          "activity": "idle",
+          "phase": null,
+          "limit": null,
+          "x": 200,
+          "y": 83
+        },
+        "events": [
+          {
+            "kind": "deposited",
+            "count": 14
+          }
+        ]
+      }
+    ]
+  }
+]

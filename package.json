@@ -1,0 +1,25 @@
+{
+  "name": "@dvi-lab/work-time",
+  "version": "0.1.0",
+  "description": "Analytical production and gathering task time with injected Deep Vein Idle rules",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/work-time-package.test.mjs tests/work-time-baseline.test.mjs"
+  },
+  "repository": {
+    "url": "git+https://github.com/MaryCLY/deepveinidle-work-time.git",
+    "type": "git"
+  }
+}

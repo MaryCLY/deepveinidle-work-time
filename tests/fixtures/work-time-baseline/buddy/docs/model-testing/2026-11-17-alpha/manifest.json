@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 1,
+  "stage": "0.6.0-alpha",
+  "recordDate": "2026-11-17",
+  "sourceBaseCommit": "a176d4e2b8adef66f711e1596cd8f787570e4d6b",
+  "sourceState": "Working tree before the alpha commit; source file hashes identify the inputs, not a fabricated final commit.",
+  "capturedAt": "2026-11-17T06:54:27.416Z",
+  "source": {
+    "sourceVersion": "1.0.1214",
+    "sha256": "cb67b9c88201f9768b3ec90ffdbeb0ccf7d33b897649c019f13b95c6f0785dc5",
+    "declarations": 1428,
+    "initialTick": 1000000,
+    "tickMs": 600
+  },
+  "model": {
+    "sourceVersion": "1.0.1214",
+    "version": 3,
+    "initialCraftTicks": 5,
+    "initialGatherTicks": 2,
+    "turnoverTicks": 6,
+    "finishTicks": 2,
+    "walkStartTicks": 1
+  },
+  "hashNormalization": "utf8-lf",
+  "hashEncoding": "UTF-8 with CRLF normalized to LF; bytes are normalized byte lengths.",
+  "inputs": [
+    {
+      "path": "vendor/game-original.js",
+      "bytes": 8180094,
+      "sha256": "cb67b9c88201f9768b3ec90ffdbeb0ccf7d33b897649c019f13b95c6f0785dc5"
+    },
+    {
+      "path": "vendor/manifest.json",
+      "bytes": 68632,
+      "sha256": "83d04284d9629809c4f37a76214c7823e7253f1ef2b0a9a344e5ea187f2d7f93"
+    },
+    {
+      "path": "src/engine/upstream.js",
+      "bytes": 514701,
+      "sha256": "56e06bb9880aa2f3bd83ef9b4e39460d145a4cd11241766751d84c03f1e17e36"
+    },
+    {
+      "path": "src/engine/batch-time.js",
+      "bytes": 8874,
+      "sha256": "b75785f7c4a5d6fb33440b01120af7275165737824252fca71995f7145c6ac9d"
+    },
+    {
+      "path": "scripts/check-time-model.mjs",
+      "bytes": 15214,
+      "sha256": "e6dba671c318869d497a7d3fd1f5263e71e5f2526b3a2ab6a73947997e432aa8"
+    },
+    {
+      "path": "tests/helpers/game-work-oracle.mjs",
+      "bytes": 10640,
+      "sha256": "2949002dd9cf18cff9c3b98e956d0efa5293217c93d907ae38cfea402adc3659"
+    },
+    {
+      "path": "tests/fixtures/batch-calibration.js",
+      "bytes": 1159,
+      "sha256": "e527348b689a1472669a6605fa9dd7596dbed599a60e93a5c7b427d7a8138ff4"
+    },
+    {
+      "path": "tests/fixtures/chrome-time-references.js",
+      "bytes": 5359,
+      "sha256": "829a7e44a9d202d9f985702e28b9aa65b42108f180e8a209b0d8aee864195789"
+    },
+    {
+      "path": "scripts/archive-time-model.mjs",
+      "bytes": 9583,
+      "sha256": "9452f35f76ec6989852139a0518d7e31723f0547c7e1b253f7afb149bf863363"
+    }
+  ],
+  "configurations": [
+    {
+      "index": 0,
+      "id": "level100-unmounted",
+      "level": 100,
+      "playerFactory": "oracle.createPlayer()",
+      "patch": {}
+    },
+    {
+      "index": 1,
+      "id": "test-character",
+      "level": 100,
+      "playerFactory": "oracle.createPlayer({patch:bronzePickaxeCalibration.player})",
+      "fixture": "tests/fixtures/batch-calibration.js#player"
+    },
+    {
+      "index": 2,
+      "id": "fast-large-pack",
+      "level": 100,
+      "playerFactory": "oracle.createPlayer({patch})",
+      "patch": {
+        "equipment": {
+          "mount": 328
+        },
+        "perks": {
+          "pockets": 5
+        },
+        "masteries": {
+          "move": 200
+        },
+        "brews": {
+          "swift": 1060000
+        },
+        "brewTier": {
+          "swift": 4
+        }
+      }
+    }
+  ],
+  "design": {
+    "bankId": 1,
+    "actorId": 0,
+    "initialTick": 1000000,
+    "tickMs": 600,
+    "origin": {
+      "x": 200,
+      "y": 83
+    },
+    "pack": "empty",
+    "finalBanking": "explicitly appended",
+    "tierPolicy": "0 through 4 when original output supports rarity, otherwise 0",
+    "finiteBoundaryCounts": "unique [1,max(1,capacity-1),capacity,capacity+1,capacity*3+1]; capacity fallback 28 for unbounded capacity",
+    "isolatedSeed": 1,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+    ],
+    "hourlyJobs": [
+      1,
+      41,
+      45,
+      51,
+      68,
+      230,
+      420
+    ],
+    "finiteJobId": 51,
+    "finiteCounts": [
+      1,
+      14,
+      15,
+      28
+    ],
+    "phaseTraceCounts": [
+      1,
+      14,
+      15,
+      28
+    ],
+    "logisticsToleranceSeconds": 1e-7,
+    "capacityBlank": "unbounded, represented as null by the production model"
+  },
+  "roles": {
+    "chrome": "Observed nominal references and mechanism checks; not blind holdout data.",
+    "logistics": "Independent original-state-machine implementation under forced successful attempts; not random total-time accuracy.",
+    "probability": "Synthetic original-source multi-seed cross-check; not real-account stopwatch data.",
+    "reservedFiniteReferences": "Counts 1 and 28 were initially reserved and not used to fit fixed phase constants; this archive is retrospective."
+  },
+  "files": [
+    {
+      "path": "summary.json",
+      "bytes": 32343,
+      "sha256": "3707ee7d5a2cb881c3f283bbe6aaf21a8f85e87a479f69bc3a4dae37479163a7",
+      "description": "Formal report summary; runtime duration omitted."
+    },
+    {
+      "path": "logistics.csv",
+      "bytes": 897514,
+      "sha256": "cda02f47d993a73c09859afdf420e9e7957170ffcd4a65a53e2dbdebb667e587",
+      "rows": 14950,
+      "description": "All formal isolated logistics cases, including the historical v2 error."
+    },
+    {
+      "path": "hourly-probability.csv",
+      "bytes": 19125,
+      "sha256": "fd2e7f665ad8f9cc4c9032224d65ca847459637032234bb58884eb1ce734f05f",
+      "rows": 672,
+      "description": "Normal-probability primary output for 21 groups and seeds 1 through 32."
+    },
+    {
+      "path": "finite-probability.csv",
+      "bytes": 5009,
+      "sha256": "73fe9db51c1e669787b97a8aca64813681ecb0f30794596b08e6f37d1285b595",
+      "rows": 128,
+      "description": "Normal-probability finite bronze pickaxe samples; final banking appended."
+    },
+    {
+      "path": "representative-paths.json",
+      "bytes": 30825,
+      "sha256": "6bb28beeb6a45b1f009240eb38715e71e4ccb93466226334b2300a080dc7925a",
+      "rows": 18,
+      "description": "Selected formal cases with original path legs, endpoints, event counts and both model results."
+    },
+    {
+      "path": "phase-traces.json",
+      "bytes": 79202,
+      "sha256": "0db7422d657a4a61eba7a61656b235eb633eb226c8b7538516f1d1ccd8db75d9",
+      "rows": 4,
+      "description": "Deterministic tick traces regenerated from the reviewed original source, seed 1, everyAttemptLands true."
+    }
+  ],
+  "excludedFromArchive": [
+    "34 MB detailed report",
+    "generated oracle bundle",
+    "account identifiers, credentials and chat",
+    "temporary logs and scratch scans"
+  ]
+}
