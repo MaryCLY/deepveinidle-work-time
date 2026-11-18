@@ -62,6 +62,7 @@ const result = engine.estimateTaskTime({
 | 输入字段 | 单位与含义 |
 | --- | --- |
 | `character.skills[skill].level` | 最终技能等级，正整数，不传 XP。 |
+| `zeroExperience?` | 可选布尔新手状态；true要求等级1，无输入普通采集每tick一次；制造、升级不受影响。省略按普通公式。 |
 | `speedMultiplier` | 普通工作最终速度倍率；1 为无属性加速，0 为无法工作；不含相对任务等级加速。 |
 | `upgradeSpeedMultiplier` | 升级独立最终速度倍率。基线游戏升级不含副手，不能复用含副手的普通速度。 |
 | `luck` | 工具及装备最终幸运的小数加成，0.2 表示 20%。 |

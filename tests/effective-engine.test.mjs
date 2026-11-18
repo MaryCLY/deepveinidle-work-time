@@ -220,3 +220,29 @@ test('item quantities combine overlapping sources and malformed game results rem
  const damaged=createWorkTimeEngine(game({recipeInputs:()=>[{itemId:'bad',qty:0}]}));
  assert.throws(()=>damaged.estimateTaskTime({character:character(),task:task()}),/invalidResult/);
 });
+
+test('optional zero-experience state preserves instant initial gathering without raw XP',()=>{
+ const engine=createWorkTimeEngine(game({recipes:[{...recipe,levelReq:1}]}));
+ const options={character:character({level:1,zeroExperience:true,speedMultiplier:undefined}),task:task()};
+ const fresh=engine.estimateTaskTime(options);
+ assert.equal(fresh.actionSeconds,.6);assert.equal(fresh.seconds,6);
+ close(engine.workActionSeconds({...options,character:character({level:1})}),3);
+ close(engine.workActionSeconds({...options,character:character({level:1,zeroExperience:false})}),3);
+});
+
+test('zero-experience state does not override manufacturing inputs or upgrade speed',()=>{
+ for(const job of [{...recipe,levelReq:1,skill:'smithing'},{...recipe,levelReq:1,inputs:[{itemId:7,qty:1}]}]){
+  const engine=createWorkTimeEngine(game({recipes:[job]}));
+  close(engine.workActionSeconds({character:{skills:{[job.skill]:{level:1,zeroExperience:true,speedMultiplier:1}}},task:task()}),3);
+ }
+ const upgrade={id:2,skill:'mining',levelReq:1,from:[1],to:[2],extra:[]};
+ const engine=createWorkTimeEngine(game({upgradeRecipes:[upgrade],upgradeBaseTicks:()=>9}));
+ close(engine.workActionSeconds({character:character({level:1,zeroExperience:true,upgradeSpeedMultiplier:1}),task:{jobId:'upgrade-2'}}),5.4);
+});
+
+test('zero-experience state must be a boolean consistent with level one',()=>{
+ const engine=createWorkTimeEngine(game({recipes:[{...recipe,levelReq:1}]}));
+ for(const attrs of [{level:1,zeroExperience:'true'},{level:1,zeroExperience:0},{level:2,zeroExperience:true}]){
+  assert.throws(()=>engine.workActionSeconds({character:character(attrs),task:task()}),/invalidWorkConfiguration/);
+ }
+});
