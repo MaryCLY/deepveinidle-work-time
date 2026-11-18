@@ -46,7 +46,6 @@ export function createWorkTimeEngine(game={}){
   if(!Number.isSafeInteger(job.output?.qty)||job.output.qty<=0||!Array.isArray(job.inputs))throw Error('invalidJob');
   const skill=character?.skills?.[job.skill];
   if(!Number.isSafeInteger(skill?.level)||skill.level<1)throw Error('invalidWorkConfiguration');
-  if(skill.zeroExperience!==undefined&&(typeof skill.zeroExperience!=='boolean'||skill.zeroExperience&&skill.level!==1))throw Error('invalidWorkConfiguration');
   return {character,task,tier,job,skill,input};
  }
  function upgradeItems(context){
@@ -72,9 +71,6 @@ export function createWorkTimeEngine(game={}){
  }
  function action(context){
   const {job,skill}=context,feature='workActionSeconds';
-  // Native zero-XP shortcut applies only to ordinary no-input gathering.
-  // Boss actions are outside the ordinary recipes resolved by this entry.
-  if(!job.upgrade&&gatheringSkills.includes(job.skill)&&job.inputs.length===0&&skill.zeroExperience===true)return tickMilliseconds(game,feature)/1000;
   requireCapability(validNumber(game.levelSpeedCoefficient),feature,'levelSpeedCoefficient');
   const factor=1+Math.max(0,skill.level-job.levelReq)*game.levelSpeedCoefficient;
   const speed=job.upgrade?skill.upgradeSpeedMultiplier:skill.speedMultiplier;

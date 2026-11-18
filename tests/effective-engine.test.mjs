@@ -221,16 +221,18 @@ test('item quantities combine overlapping sources and malformed game results rem
  assert.throws(()=>damaged.estimateTaskTime({character:character(),task:task()}),/invalidResult/);
 });
 
-test('optional zero-experience state preserves instant initial gathering without raw XP',()=>{
+test('level one uses ordinary level and speed timing regardless of legacy extra state',()=>{
  const engine=createWorkTimeEngine(game({recipes:[{...recipe,levelReq:1}]}));
- const options={character:character({level:1,zeroExperience:true,speedMultiplier:undefined}),task:task()};
- const fresh=engine.estimateTaskTime(options);
- assert.equal(fresh.actionSeconds,.6);assert.equal(fresh.seconds,6);
- close(engine.workActionSeconds({...options,character:character({level:1})}),3);
- close(engine.workActionSeconds({...options,character:character({level:1,zeroExperience:false})}),3);
+ for(const zeroExperience of [undefined,true,false,'true',0]){
+  const options={character:character({level:1,zeroExperience}),task:task()};
+  const result=engine.estimateTaskTime(options);
+  close(result.actionSeconds,3);close(result.seconds,30);
+  close(engine.workActionSeconds({...options,character:character({level:1,zeroExperience,speedMultiplier:2})}),1.5);
+ }
+ close(engine.workActionSeconds({character:character({level:2,zeroExperience:true}),task:task()}),3/1.005);
 });
 
-test('zero-experience state does not override manufacturing inputs or upgrade speed',()=>{
+test('level one manufacturing and upgrades retain their ordinary timing',()=>{
  for(const job of [{...recipe,levelReq:1,skill:'smithing'},{...recipe,levelReq:1,inputs:[{itemId:7,qty:1}]}]){
   const engine=createWorkTimeEngine(game({recipes:[job]}));
   close(engine.workActionSeconds({character:{skills:{[job.skill]:{level:1,zeroExperience:true,speedMultiplier:1}}},task:task()}),3);
@@ -240,9 +242,9 @@ test('zero-experience state does not override manufacturing inputs or upgrade sp
  close(engine.workActionSeconds({character:character({level:1,zeroExperience:true,upgradeSpeedMultiplier:1}),task:{jobId:'upgrade-2'}}),5.4);
 });
 
-test('zero-experience state must be a boolean consistent with level one',()=>{
+test('legacy extra state cannot bypass required speed or make zero speed reachable',()=>{
  const engine=createWorkTimeEngine(game({recipes:[{...recipe,levelReq:1}]}));
- for(const attrs of [{level:1,zeroExperience:'true'},{level:1,zeroExperience:0},{level:2,zeroExperience:true}]){
-  assert.throws(()=>engine.workActionSeconds({character:character(attrs),task:task()}),/invalidWorkConfiguration/);
- }
+ assert.throws(()=>engine.workActionSeconds({character:character({level:1,zeroExperience:true,speedMultiplier:undefined}),task:task()}),/invalidWorkConfiguration/);
+ const result=engine.estimateTaskTime({character:character({level:1,zeroExperience:true,speedMultiplier:0}),task:task()});
+ assert.equal(result.status,'unreachable');assert.equal(result.seconds,null);
 });

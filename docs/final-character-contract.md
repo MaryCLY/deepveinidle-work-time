@@ -2,7 +2,7 @@
 
 ## 目标和边界
 
-用户已确认：输入为角色最终属性（含可选零经验新手状态）、游戏文件和任务目标；派生的任务概率、品质、次数、产物、物流由模块计算。调用方不传装备/精通/药水原始配置，不编写workChance等任务回调。游戏版本/SHA仅追溯，按实际功能校验，不做全版本白名单。原25文件和origin只读；Buddy/Lab不改。
+用户已确认：输入为角色最终属性、游戏文件和任务目标；派生的任务概率、品质、次数、产物、物流由模块计算。调用方不传装备/精通/药水原始配置，不编写workChance等任务回调。游戏版本/SHA仅追溯，按实际功能校验，不做全版本白名单。原25文件和origin只读。
 
 ## 游戏文件
 
@@ -16,7 +16,6 @@ gameFile必要能力按功能提供：tickMs、recipes、upgradeRecipes、items/
 
 `character.skills[skill]`：
 - `level`：最终技能等级，正整数。
-- `zeroExperience?`：可选布尔新手状态；true要求level=1，对无输入的普通采集沿用每tick一次工作特例。省略或false使用普通等级/速度公式，不传原始XP。制造、有输入配方及升级不应用此特例。
 - `speedMultiplier`：普通工作最终速度倍率，1表示无属性加速，允许0表示无法工作；不含相对任务等级修正。
 - `upgradeSpeedMultiplier`：升级使用的最终速度倍率，仅升级需要；旧规则升级不含副手，不能冒用普通速度。
 - `luck`：最终幸运的小数加成，0.2表示20%，包含工具及装备幸运。
@@ -31,7 +30,7 @@ gameFile必要能力按功能提供：tickMs、recipes、upgradeRecipes、items/
 
 主入口 `createWorkTimeEngine(gameFile)`，返回 `estimateTaskTime({character,task,environment})`，task为 `{jobId,tier=0,count?,quantity?,discard=false,siteId?,inputItemId?}`。count（次数）和quantity（目标品质产量）恰好一个；普通jobId为配方ID，升级为upgrade-ID。单输入升级可从tier推导inputItemId；多输入升级须显式给物品，显式tier冲突时报错。制造tier表示原料品质，实际输出按游戏规则。模块查配方，不让调用方传任务概率、单次时间或materials。低层时间/期望/品质/预计产物方法亦使用最终character并复用同一规则。
 
-普通单次概率 = min(1, (1+max(0,level-levelReq)*游戏levelSpeedCoefficient)*speedMultiplier/baseTicks)。升级用游戏upgradeBaseTicks、任务等级修正和upgradeSpeedMultiplier，保留取整/至少1tick规则。烧毁/被抓由配方风险随等级衰减，再乘failureMultiplier。品质使用游戏阈值乘(1+luck)*(1+rareFindBonus+worldRarityBonus+hotMultiplier-1)，plain主产物固定普通。所有公式以已核对游戏原声明为依据，不拟合常数。
+所有普通工作统一使用最终等级和速度计算。普通单次概率 = min(1, (1+max(0,level-levelReq)*游戏levelSpeedCoefficient)*speedMultiplier/baseTicks)。升级用游戏upgradeBaseTicks、任务等级修正和upgradeSpeedMultiplier，保留取整/至少1tick规则。烧毁/被抓由配方风险随等级衰减，再乘failureMultiplier。品质使用游戏阈值乘(1+luck)*(1+rareFindBonus+worldRarityBonus+hotMultiplier-1)，plain主产物固定普通。所有公式以已核对游戏原声明为依据，不拟合常数。
 
 结果保留status/seconds/workSeconds/overheadSeconds/attempts/quantity/burn/caught/quality/actionSeconds/waitSeconds等；添加materials及products（主产物各品质、烧毁副产物、配方显式bonus），次数模式返回期望产量；目标模式按指定品质反推期望次数。先消耗材料、判烧毁再判被抓；烧毁副产物每事件一个，wait乘未烧毁概率。bonus按成功工作事件及游戏品质规则计算；不外推坐骑/宠物、未来升级、工具免耗或药水失效。物流仍用原v3路径/容量/相位，并在内部直接读最终movement。
 
@@ -40,5 +39,3 @@ gameFile必要能力按功能提供：tickMs、recipes、upgradeRecipes、items/
 0.2.0主API采用新契约；0.1适配器计算模块只作为内部实现/回归参考，不作为新主入口，不另增加对外兼容层。旧规则行为测试显式对照内部rule engine，离线消费测试改验新公共契约，补新公共接口独立期望向量及全部14950物流回放，不能拿旧路径通过冒充新接口已验。
 
 测试覆盖：最终属性无需原始装备；等级/速度/幸运/寻宝/风险/升级分离；文件提取不执行客户端、支持语义导出/缺失能力/版本差异；count与quantity、材料产物和bonus；纯工作/物流隔离；离线包消费/构建入口；原25资料raw/LF不变。游戏文件在Node构建期解析，浏览器运行入口不依赖Node内建模块。
-
-新手特例由用户于2026-11-18确认保留。快照不模拟首次产出后的经验变化，与既有静态属性预估范围一致。

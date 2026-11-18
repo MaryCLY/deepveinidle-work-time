@@ -165,7 +165,7 @@ test('npm packed package installs offline and calculates without adjacent reposi
    ?run(process.execPath,[npmCli,...args],options)
    :run('npm',args,options);
   const packed=JSON.parse(runNpm(['pack',packageDirectory,'--json','--ignore-scripts','--offline','--cache',cache,'--pack-destination',directory],{cwd:directory}))[0];
-  assert.equal(packed.name,'@dvi-lab/work-time');assert.equal(packed.version,'0.2.0');
+  assert.equal(packed.name,'@dvi-lab/work-time');assert.equal(packed.version,'0.2.1');
   assert.ok(packed.files.some(file=>file.path==='LICENSE'));assert.ok(packed.files.some(file=>file.path==='README.md'));
   assert.ok(packed.files.every(file=>file.path==='package.json'||file.path==='README.md'||file.path==='LICENSE'||file.path.startsWith('src/')));
   assert.ok(!packed.files.some(file=>file.path.includes('check-game-file')));

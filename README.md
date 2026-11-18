@@ -47,7 +47,7 @@ const result = engine.estimateTaskTime({
 });
 ```
 
-`character` 填最终等级和倍率。加成用小数表示，例如 `0.2` 表示 20%。计算品质时传入快照 `environment`，计算物流时传入 `movement`。字段单位及各任务所需属性见[输入契约](docs/final-character-contract.md)。
+`character` 填最终等级和倍率。加成用小数表示，例如 `0.2` 表示 20%。普通工作统一按最终等级和速度计算单次耗时。计算品质时传入快照 `environment`，计算物流时传入 `movement`。字段单位及各任务所需属性见[输入契约](docs/final-character-contract.md)。
 
 ## 任务与结果
 
