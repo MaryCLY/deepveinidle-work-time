@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
-import {createWorkTimeEngine,batchTimeModel} from '../src/index.js';
+import {createRuleEngine as createWorkTimeEngine,batchTimeModel} from '../src/rule-engine.js';
 
 const baseline=new URL('./fixtures/work-time-baseline/',import.meta.url);
 const archive=new URL('buddy/docs/model-testing/2026-11-17-alpha/',baseline);

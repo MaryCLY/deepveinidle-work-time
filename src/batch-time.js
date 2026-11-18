@@ -7,7 +7,7 @@ import {callRule,requireCapability,tickMilliseconds} from './adapter.js';
 // Rare bonus drops and future level/brew changes do not alter batch capacity.
 export const batchTimeModel=Object.freeze({sourceVersion:'1.0.1214',version:3,
  initialCraftTicks:5,initialGatherTicks:2,turnoverTicks:6,finishTicks:2,walkStartTicks:1});
-export function createBatchTimeEstimator(game){
+export function createBatchTimeEstimator(game,{resolveMovement}={}){
 const routes=new Map(),siteRoutes=new Map();
 const checked=value=>{if(!Number.isFinite(value)||value<0||value>Number.MAX_SAFE_INTEGER)throw Error('quantityOverflow');return value;};
 const unknown=(workSeconds,reason)=>({status:'unknownTime',seconds:null,workSeconds,overheadSeconds:null,batches:null,reason,sourceVersion:batchTimeModel.sourceVersion});
@@ -160,7 +160,7 @@ function estimateBatchTime({job,tier=0,count,player,actionSeconds,discard=false,
  if(!Number.isFinite(actionSeconds)||actionSeconds<0)return unknown(null,'actionTime');
  const workSeconds=checked(count*actionSeconds),base={workSeconds,sourceVersion:batchTimeModel.sourceVersion};
  if((discard&&gatheringSkills.includes(job.skill))||job.skill==='thieving'||job.upgrade)return {...base,status:'ok',seconds:workSeconds,overheadSeconds:0,batches:0,batchCapacity:null};
- const travel=movement(player);if(!travel)return unknown(workSeconds,'movementConfiguration');
+ const travel=resolveMovement?resolveMovement(player):movement(player);if(!travel)return unknown(workSeconds,'movementConfiguration');
  const route=workRoute(job.id,siteId);if(!route)return unknown(workSeconds,'workLocation');
  const batchCapacity=capacity(job,tier,travel.slots);
  if(batchCapacity<=0)return {...base,status:'unreachable',seconds:null,overheadSeconds:null,batches:null,batchCapacity};

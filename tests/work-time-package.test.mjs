@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {execFileSync} from 'node:child_process';
-import {createWorkTimeEngine,batchTimeModel,gatheringSkills,toolSlots} from '../src/index.js';
+import {createRuleEngine as createWorkTimeEngine,batchTimeModel,gatheringSkills,toolSlots} from '../src/rule-engine.js';
 
 const source={sourceVersion:'1.0.1214',sourceSha256:'cb67b9c88201f9768b3ec90ffdbeb0ccf7d33b897649c019f13b95c6f0785dc5'};
 const root=fileURLToPath(new URL('../',import.meta.url));
@@ -165,16 +165,40 @@ test('npm packed package installs offline and calculates without adjacent reposi
    ?run(process.execPath,[npmCli,...args],options)
    :run('npm',args,options);
   const packed=JSON.parse(runNpm(['pack',packageDirectory,'--json','--ignore-scripts','--offline','--cache',cache,'--pack-destination',directory],{cwd:directory}))[0];
-  assert.equal(packed.name,'@dvi-lab/work-time');assert.equal(packed.version,'0.1.0');
+  assert.equal(packed.name,'@dvi-lab/work-time');assert.equal(packed.version,'0.2.0');
   assert.ok(packed.files.some(file=>file.path==='LICENSE'));assert.ok(packed.files.some(file=>file.path==='README.md'));
   assert.ok(packed.files.every(file=>file.path==='package.json'||file.path==='README.md'||file.path==='LICENSE'||file.path.startsWith('src/')));
-  await fs.writeFile(path.join(consumer,'package.json'),'{"private":true,"type":"module"}\n');
+  assert.ok(!packed.files.some(file=>file.path.includes('check-game-file')));
+  // Archive already-built parser artifacts without invoking their source prepare scripts.
+  // npm 10's directory fetcher runs prepare despite --ignore-scripts during npm pack.
+  const dependencies={},lock=JSON.parse(await fs.readFile(path.join(root,'package-lock.json'),'utf8'));
+  for(const [dependency,metadata] of Object.entries(lock.packages).filter(([name])=>name.startsWith('node_modules/'))){
+   const name=dependency.slice(13),stage=path.join(directory,'parser-'+name.replaceAll('/','-'));
+   await fs.cp(path.join(root,dependency),path.join(stage,'package'),{recursive:true});
+   const artifact=name.replaceAll('/','-')+'-'+metadata.version+'.tgz';
+   run('tar',['-czf',path.join(directory,artifact),'-C',stage,'package']);
+   dependencies[name]='file:../'+artifact;
+  }
+  await fs.writeFile(path.join(consumer,'package.json'),JSON.stringify({private:true,type:'module',dependencies})+'\n');
   runNpm(['install',path.join(directory,packed.filename),'--offline','--ignore-scripts','--no-audit','--no-fund','--cache',cache],{cwd:consumer});
-  const script=`import assert from 'node:assert/strict';\nimport {createWorkTimeEngine} from '@dvi-lab/work-time';\n${createAdapter.toString()}\nconst game=createAdapter();const entrance=game.siteEntrance;game.siteEntrance=(w,x,y,a,f)=>f?entrance(w,x,y,a,f):{x:x+1,y};\nconst engine=createWorkTimeEngine(game,${JSON.stringify(source)});\nconst result=engine.estimateTaskTime({job:${JSON.stringify(craft())},quantity:4,player:${JSON.stringify(player())},tick:100});\nassert.equal(result.status,'ok');assert.ok(Math.abs(result.seconds-13.8)<1e-7);console.log('isolated-consumer-ok');\n`;
+  const script=[
+   "import assert from 'node:assert/strict';",
+   "import {createWorkTimeEngine} from '@dvi-lab/work-time';",
+   "import {compileGameFile} from '@dvi-lab/work-time/game-file';",
+   "const compiled=compileGameFile(\"export const tickMs=600,levelSpeedCoefficient=.005,recipes=[{id:1,skill:'mining',levelReq:1,baseTicks:2,inputs:[],output:{itemId:1,qty:1},plain:true}]; export const recipeInputs=job=>job.inputs;\",{sourceVersion:'future'});",
+   "assert.equal(compiled.features.tickMs,true);assert.equal(compiled.features.world,false);assert.ok(compiled.diagnostics.some(issue=>issue.feature==='world'&&issue.code==='missingDeclaration'));",
+   "const {gameFile}=await import('data:text/javascript;base64,'+Buffer.from(compiled.code).toString('base64'));",
+   "const result=createWorkTimeEngine(gameFile).estimateTaskTime({character:{skills:{mining:{level:1,speedMultiplier:1}}},task:{jobId:1,count:4,discard:true}});",
+   "assert.equal(result.status,'ok');assert.ok(Math.abs(result.seconds-4.8)<1e-7);assert.deepEqual(result.products,{1:4});",
+   "console.log('isolated-consumer-ok');"
+  ].join('\n');
   await fs.writeFile(path.join(consumer,'check.mjs'),script);
   assert.equal(run(process.execPath,['check.mjs'],{cwd:consumer}).trim(),'isolated-consumer-ok');
   const installed=JSON.parse(await fs.readFile(path.join(consumer,'node_modules','@dvi-lab','work-time','package.json'),'utf8'));
-  assert.equal(installed.type,'module');assert.equal(installed.dependencies,undefined);assert.deepEqual(installed.scripts,{test:'node --test tests/work-time-package.test.mjs tests/work-time-baseline.test.mjs'});
+  assert.deepEqual(Object.keys(installed.exports).sort(),['.','./game-file']);
+  assert.equal(installed.bin,undefined);
+  assert.equal(installed.type,'module');assert.deepEqual(installed.dependencies,{acorn:'8.15.0','eslint-scope':'8.4.0'});assert.equal(installed.exports['./game-file'],'./src/game-file.js');
+  assert.deepEqual(installed.scripts,{"test":"node --test tests/work-time-package.test.mjs tests/work-time-baseline.test.mjs tests/game-file.test.mjs tests/effective-engine.test.mjs"});
  }finally{
   // Only this test's newly created directory is removed, never existing files.
   await fs.rm(directory,{recursive:true,force:true});
