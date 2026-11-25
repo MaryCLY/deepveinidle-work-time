@@ -11,8 +11,14 @@ const baselineSymbols=Object.freeze({
  bonusMinimumUncommon:'cO',withRarity:'Jc',baseItemId:'no',itemTier:'_o',
  upgradeMaterials:'lm',upgradeResult:'kr',
 });
+const optionalSymbols=Object.freeze({
+ bosses:undefined,bossUnlockLevel:undefined,bossFeedRecipe:undefined,bossFeedParts:undefined,
+ bossUsesFarmingSpeed:undefined,bossHeartLayout:undefined,bossKrakenLayout:undefined,
+ bossColonyLayout:undefined,bossBlightLayout:undefined,bossSiegeLayout:undefined,
+});
+const featureSymbols=Object.freeze({...baselineSymbols,...optionalSymbols});
 const reviewedGlobals=new Set([
- 'WeakSet','WeakMap','Uint8Array','Uint16Array','Uint32Array','Int32Array',
+ 'WeakSet','WeakMap','Uint8Array','Uint16Array','Uint32Array','Int16Array','Int32Array',
  'Float64Array','Math','Map','Set','Number','Object','Array','String','Error',
  'Date','Boolean','Infinity','undefined','NaN','JSON','RegExp','parseInt','parseFloat',
 ]);
@@ -298,7 +304,7 @@ export function compileGameFile(source,options={}){
  const {symbols={},sourceVersion,sourceUrl}=options;
  if(!symbols||typeof symbols!=='object'||Array.isArray(symbols))throw invalid('symbols','expected an object');
  for(const [feature,symbol] of Object.entries(symbols)){
-  if(!Object.hasOwn(baselineSymbols,feature)||typeof symbol!=='string'||symbol.length===0){
+  if(!Object.hasOwn(featureSymbols,feature)||typeof symbol!=='string'||symbol.length===0){
    throw invalid('symbols',`unsupported feature or symbol ${feature}`);
   }
  }
@@ -310,9 +316,10 @@ export function compileGameFile(source,options={}){
  const {declarations,semanticExports,speedAnchors,owners}=indexDeclarations(ast,source);
  const effects=initializationEffects(ast,declarations,owners);
  const selected=new Set(),features={},diagnostics=[],resolved=[];
- for(const [feature,baseline] of Object.entries(baselineSymbols)){
+ for(const [feature,baseline] of Object.entries(featureSymbols)){
   const anchor=feature==='levelSpeedCoefficient'&&speedAnchors.size===1?[...speedAnchors][0]:undefined;
   const symbol=semanticExports.get(feature)??symbols[feature]??anchor??baseline;
+  if(symbol===undefined)continue;
   // Collect independently: a failed root must not leak a partial closure into output.
   const closure=new Set();
   function collect(name){

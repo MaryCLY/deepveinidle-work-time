@@ -1,6 +1,6 @@
 {
   "name": "@dvi-lab/work-time",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Production and gathering estimates from final character attributes and compiled Deep Vein Idle game files",
   "type": "module",
   "exports": {

@@ -70,6 +70,14 @@ const result = engine.estimateTaskTime({
 
 用 `status` 判断 `ok`、`levelTooLow`、`unreachable` 或 `unknownTime`。缺少物流数据时，总耗时为 `null`，已知工作耗时仍由 `workSeconds` 返回。
 
+## 生活 Boss 投喂
+
+`engine.estimateBossFeedRate({character, task: {bossId, itemId}})` 估算持续投喂一件物品的平均耗时。`itemId` 包含品质编码。使用该投喂技能对应的最终等级、`speedMultiplier` 和 `movement`。`movement.capacity` 是取料时可用于该物品的有效格数。
+
+构建投喂用的游戏文件时，传入当前客户端的符号映射。参照[正式服 1.0.4915 构建示例](https://github.com/MaryCLY/deepveinidle-work-time/blob/v0.3.0/docs/game-file-check.md#生活-boss-声明)。
+
+结果含 `feedSecondsPerItem`、`logisticsSecondsPerItem`、`secondsPerItem`、`itemsPerHour`、游戏文件来源和代表路线。纯投喂按完整一件计算，物流按稳定补料循环折算。`secondsPerItemRange` 给出已算出的站位路线的耗时范围。分项缺失时保留可独立计算的结果。公开契约和游戏文件能力见[投喂模型](https://github.com/MaryCLY/deepveinidle-work-time/blob/v0.3.0/docs/design.md#生活-boss-投喂)。
+
 ## 开发
 
 测试需要 `tar`。

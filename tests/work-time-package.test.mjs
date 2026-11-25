@@ -165,7 +165,8 @@ test('npm packed package installs offline and calculates without adjacent reposi
    ?run(process.execPath,[npmCli,...args],options)
    :run('npm',args,options);
   const packed=JSON.parse(runNpm(['pack',packageDirectory,'--json','--ignore-scripts','--offline','--cache',cache,'--pack-destination',directory],{cwd:directory}))[0];
-  assert.equal(packed.name,'@dvi-lab/work-time');assert.equal(packed.version,'0.2.1');
+  const manifest=JSON.parse(await fs.readFile(path.join(root,'package.json'),'utf8'));
+  assert.equal(packed.name,'@dvi-lab/work-time');assert.equal(packed.version,manifest.version);
   assert.ok(packed.files.some(file=>file.path==='LICENSE'));assert.ok(packed.files.some(file=>file.path==='README.md'));
   assert.ok(packed.files.every(file=>file.path==='package.json'||file.path==='README.md'||file.path==='LICENSE'||file.path.startsWith('src/')));
   assert.ok(!packed.files.some(file=>file.path.includes('check-game-file')));
@@ -190,11 +191,23 @@ test('npm packed package installs offline and calculates without adjacent reposi
    "const {gameFile}=await import('data:text/javascript;base64,'+Buffer.from(compiled.code).toString('base64'));",
    "const result=createWorkTimeEngine(gameFile).estimateTaskTime({character:{skills:{mining:{level:1,speedMultiplier:1}}},task:{jobId:1,count:4,discard:true}});",
    "assert.equal(result.status,'ok');assert.ok(Math.abs(result.seconds-4.8)<1e-7);assert.deepEqual(result.products,{1:4});",
+   "const feedSource=`export const tickMs=600,levelSpeedCoefficient=.005,bossUnlockLevel=90;",
+   "export const bosses=[{id:0,key:'heart',look:'boss',chestLook:'chest',skills:['mining','smithing'],classes:[{cls:'ore',skill:'mining',items:[1]}]}];",
+   "export const bossFeedRecipe=()=>({levelReq:90,baseTicks:10}),bossFeedParts=()=>2;",
+   "export const baseItemId=id=>id,itemTier=()=>0,item=()=>({stackable:false});",
+   "export const world={sites:[{id:8,look:'chest',x:0,y:0},{id:9,look:'boss',x:2,y:0}]};",
+   "export const bossHeartLayout={site:{x:2,y:0},stations:[{kind:'chute',tiles:[{x:3,y:0}]}]};",
+   "export const siteEntrance=()=>({x:1,y:0}),walkPath=(world,x,y,targetX)=>Array.from({length:Math.abs(targetX-x)});`;",
+   "const feedFile=compileGameFile(feedSource,{sourceVersion:'boss-fixture'});",
+   "const {gameFile:bossFile}=await import('data:text/javascript;base64,'+Buffer.from(feedFile.code).toString('base64'));",
+   "const feed=createWorkTimeEngine(bossFile).estimateBossFeedRate({character:{skills:{mining:{level:90,speedMultiplier:2}},movement:{strideSpeed:1000,capacity:6}},task:{bossId:0,itemId:1}});",
+   "assert.equal(feed.status,'ok');assert.equal(feed.source.sourceVersion,'boss-fixture');assert.ok(Math.abs(feed.secondsPerItem-4.2)<1e-7);",
    "console.log('isolated-consumer-ok');"
   ].join('\n');
   await fs.writeFile(path.join(consumer,'check.mjs'),script);
   assert.equal(run(process.execPath,['check.mjs'],{cwd:consumer}).trim(),'isolated-consumer-ok');
   const installed=JSON.parse(await fs.readFile(path.join(consumer,'node_modules','@dvi-lab','work-time','package.json'),'utf8'));
+  assert.equal(installed.version,manifest.version);
   assert.deepEqual(Object.keys(installed.exports).sort(),['.','./game-file']);
   assert.equal(installed.bin,undefined);
   assert.equal(installed.type,'module');assert.deepEqual(installed.dependencies,{acorn:'8.15.0','eslint-scope':'8.4.0'});assert.equal(installed.exports['./game-file'],'./src/game-file.js');

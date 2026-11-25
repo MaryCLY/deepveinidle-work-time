@@ -86,6 +86,25 @@ test('explicit symbol overrides support a changed minified mapping without versi
  }
 });
 
+test('boss declarations compile on demand even with a renderer reading the layout length',async()=>{
+ const source=`export const tickMs=600;
+ const stages={stations:[{kind:'chute',tiles:[{x:3,y:0}]}]};
+ class Renderer { frame=new Int16Array(stages.stations.length).fill(-1); }
+ export const bosses=[{id:0,key:'heart'}];
+ const recipe=()=>({skill:'mining',baseTicks:30});`;
+ const result=compiler.compileGameFile(source,{symbols:{bossHeartLayout:'stages',bossFeedRecipe:'recipe',bossFeedParts:'missing'}});
+ assert.equal(result.features.bossHeartLayout,true);
+ assert.equal(result.features.bosses,true);
+ assert.equal(result.features.bossFeedParts,false);
+ assert.equal(result.features.tickMs,true);
+ assert.ok(!result.code.includes('Renderer'));
+ const {gameFile}=await loadCompiled(result.code);
+ assert.equal(gameFile.bosses[0].key,'heart');
+ assert.equal(gameFile.bossHeartLayout.stations[0].tiles[0].x,3);
+ assert.equal(gameFile.bossFeedRecipe(1).baseTicks,30);
+ assert.equal(Object.hasOwn(compiler.compileGameFile('const ke=[];').features,'bosses'),false);
+});
+
 test('imports, eval and ambient environment dependencies are diagnosed and never loaded',async()=>{
  const source=`import remote from 'not-installed-client';
  export const tickMs=600;

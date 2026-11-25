@@ -1,6 +1,6 @@
 # 工作耗时引擎设计
 
-当前 `@dvi-lab/work-time@0.2.1` 主契约见[最终角色属性与游戏文件契约](final-character-contract.md)。角色最终属性、可信游戏文件、任务目标为输入，所有任务派生量由库计算。公共 API 与单位见根[README](../README.md)。
+当前 `@dvi-lab/work-time@0.3.0` 主契约见[最终角色属性与游戏文件契约](final-character-contract.md)。角色最终属性、可信游戏文件、任务目标为输入，所有任务派生量由库计算。公共 API 与单位见根[README](../README.md)。
 
 ## 模块边界
 
@@ -9,6 +9,7 @@
 - `src/game-file.js`：独立 Node 构建入口，Acorn/eslint-scope 解析可信游戏文件并生成最小声明闭包 ESM；提取过程中收集每项能力的诊断，构建脚本输出警告；编译不执行输入，不自行联网。详见[预处理诊断](game-file-check.md)。生成模块的正常 import 会执行选中声明，非安全沙箱。
 - `src/adapter.js`：只在实际使用分支检查必要能力，错误附功能／能力；版本和摘要不作准入条件。
 - `src/batch-time.js`：共享 v3 路径／容量／相位。新入口注入最终 movement 解析；内部旧规则路径保留原移动计算，用于回归对照。
+- `src/boss-feed.js`：投喂分段规则、首领补料路线、稳定循环速率及分项结果。
 - `src/rule-engine.js`、`src/work-expectation.js`：内部0.1参考路径，不另增公开兼容入口。
 - `src/domain.js`：冻结的采集技能／工具槽位。
 
@@ -29,3 +30,17 @@
 新旧接口分别回放全部14,950物流向量；新公共路径另验概率、品质、材料产物、升级与缺能力。隔离打包测试实际安装和调用两个公开入口，解析依赖从已安装 lockfile 包制成本地tarball预置，离线不需兄弟repo。npm test 显式列四个文件以兼容 Node20 Windows shell。历史数据不因新测试而重写。
 
 npm 包白名单仅 src、README、LICENSE及自动包含的 package.json。MIT 适用于本包代码，不承诺扩展游戏资源权利。[本轮实际结果与限制](verification.md)。
+
+## 生活 Boss 投喂
+
+`estimateBossFeedRate({character, task: {bossId, itemId}})` 使用独立模型。`itemId` 为带品质的整数游戏 ID。`character.skills` 提供参与门槛及对应技能最终等级、速度。农耕作物使用包含投喂生效副手的最终倍率。`character.movement` 使用该动作生效的移动值与有效格数。
+
+逐段判定成功率。普通物品先按配方等级修正和最终速度计算每 Tick 的基础成功率，农耕作物用专用时间与最终速度。再应用分段数与每 Tick 上限，完整一件的期望 Tick 数为分段数除以每段成功率。
+
+补料循环从投喂站前往首领取料点，再到轮换后的投喂站。各段移动分别向上取整，补料和动作切换计入固定交互 Tick。单种可堆叠物品有至少两格可用时可一次取出全部同品质存货，平均物流趋近于零。只有一格可用时每次取一件。有限容量物品按每次可取件数折算物流。路线使用匿名站位序列，首选客户端预览使用的代表站位组。首次到场和阶段间等待在稳定循环之外。`secondsPerItemRange` 统计至少两条可计算路线的范围，并给出 `knownRoutes` 和 `routeCount`。混合路线只有各类站位齐备时才计入。代表路线不可用时，保留可用范围，综合单值和件/时留空。
+
+状态包括 `ok`、`ineligibleItem`、`levelTooLow`、`unreachable` 和 `unknownTime`。缺少角色或游戏能力时以 `reason` 指出缺项，有独立依据的分项仍返回。错误格式的任务参数抛错。来源 `source` 取编译游戏文件的版本和摘要。
+
+构建入口可从语义化导出或经核对的压缩符号提取 `bosses`、`bossUnlockLevel`、`bossFeedRecipe`、`bossFeedParts`、`bossUsesFarmingSpeed`、五个首领的 `boss*Layout`，以及现有的物品编码、步行和地图能力。投喂能力按需提取，普通配方可独立使用。耗时模型与工具页的贡献、经验、行情和百箱成本相互独立。
+
+见[投喂离线回放与测试服标称](boss-feed-verification.md)。

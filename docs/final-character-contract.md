@@ -16,13 +16,13 @@ gameFile必要能力按功能提供：tickMs、recipes、upgradeRecipes、items/
 
 `character.skills[skill]`：
 - `level`：最终技能等级，正整数。
-- `speedMultiplier`：普通工作最终速度倍率，1表示无属性加速，允许0表示无法工作；不含相对任务等级修正。
+- `speedMultiplier`：当前普通工作或投喂动作的最终速度倍率。1 表示无属性加速，0 表示无法执行。相对任务等级修正由引擎计算。
 - `upgradeSpeedMultiplier`：升级使用的最终速度倍率，仅升级需要；旧规则升级不含副手，不能冒用普通速度。
 - `luck`：最终幸运的小数加成，0.2表示20%，包含工具及装备幸运。
 - `rareFindBonus`：寻宝/稀有发现等个人最终加成的小数和，0.2表示20%；不包含luck、任务/环境热度和世界增益。
 - `failureMultiplier`：角色对烧毁/被抓概率的最终乘数，仅有相应风险时需要；1表示不减免。不读取天赋等级重算。
 
-`character.movement={strideSpeed,capacity}`：最终移动值（1000表示每tick一格，和游戏stride同单位）、背包格数。只在保留产物的物流中需要，不从坐骑/移动精通/药剂重算。
+`character.movement={strideSpeed,capacity}` 提供最终移动值和背包格数，用于保留产物的物流和首领补料。移动值 1000 表示每 Tick 一格，与游戏 `stride` 同单位。投喂时 `capacity` 为补料时可供目标物品使用的格数。
 
 `environment={tick,worldRarityBonus}`：品质涉及游戏热度/世界增益时显式提供；worldRarityBonus为小数。未使用功能不要求相关属性；必要字段缺失明确错误，不填默认0/1掩盖未知。
 

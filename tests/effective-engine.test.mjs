@@ -14,6 +14,134 @@ function game(patch={}){
 const character=(patch={})=>({skills:{mining:{level:10,speedMultiplier:1,...patch}}});
 const task=(patch={})=>({jobId:1,count:10,discard:true,...patch});
 
+function bossGame(patch={}){
+ const stations=[{kind:'chute',tiles:[{x:3,y:0}]},{kind:'chute',tiles:[{x:5,y:0}]}];
+ return game({
+  bossUnlockLevel:90,bossFeedRecipe:()=>({...recipe,baseTicks:30}),bossFeedParts:()=>3,
+  bossUsesFarmingSpeed:()=>false,bosses:[{id:0,key:'heart',chestLook:'chest',look:'boss',
+   skills:['mining','smithing'],classes:[{cls:'ore',skill:'mining',items:[1]}]}],
+  bossHeartLayout:{site:{x:2,y:0},stations},
+  world:{sites:[{id:8,look:'chest',x:0,y:0},{id:9,look:'boss',x:2,y:0}]},
+  baseItemId:id=>id%1000,itemTier:id=>Math.floor(id/1000),itemSupportsRarity:()=>true,
+  item:()=>({stackable:false}),siteEntrance:()=>({x:1,y:0}),
+  walkPath:(_world,x,_y,targetX)=>Array.from({length:Math.abs(targetX-x)}),
+  ...patch,
+ });
+}
+
+function bossOptions(skill={},movement={capacity:4,strideSpeed:2000}){
+ return {character:{skills:{mining:{level:90,speedMultiplier:50,...skill}},movement},task:{bossId:0,itemId:1001}};
+}
+
+test('boss feed caps each of three segments at one success per tick and averages a two-station supply cycle',()=>{
+ const result=createWorkTimeEngine(bossGame({source:{sourceVersion:'boss-fixture'}})).estimateBossFeedRate(bossOptions());
+ assert.equal(result.status,'ok');
+ close(result.feedSecondsPerItem,1.8);
+ close(result.logisticsSecondsPerItem,1.65);
+ close(result.secondsPerItem,3.45);
+ close(result.itemsPerHour,3600/3.45);
+ assert.equal(result.source.sourceVersion,'boss-fixture');
+ assert.equal(result.route.bankSiteId,8);
+ assert.deepEqual(result.route.stations,[{x:3,y:0},{x:5,y:0}]);
+});
+
+test('boss feed can use the paired profession to join but checks the selected item level and quality',()=>{
+ const engine=createWorkTimeEngine(bossGame());
+ const options=bossOptions({level:10});
+ assert.equal(engine.estimateBossFeedRate(options).status,'unknownTime');
+ options.character.skills.smithing={level:89};
+ assert.equal(engine.estimateBossFeedRate(options).status,'levelTooLow');
+ options.character.skills.smithing.level=90;
+ assert.equal(engine.estimateBossFeedRate(options).status,'ok');
+ options.character.skills.mining.level=9;
+ assert.equal(engine.estimateBossFeedRate(options).status,'levelTooLow');
+ options.task.itemId=5001;
+ assert.equal(engine.estimateBossFeedRate(options).status,'ineligibleItem');
+});
+
+test('missing boss path keeps the expected action time and zero usable slots cannot be resupplied',()=>{
+ const options=bossOptions({speedMultiplier:2});
+ const result=createWorkTimeEngine(bossGame({walkPath:()=>null})).estimateBossFeedRate(options);
+ assert.equal(result.status,'unknownTime');
+ assert.equal(result.secondsPerItem,null);
+ close(result.feedSecondsPerItem,45/7);
+ options.character.movement.capacity=0;
+ const unreachable=createWorkTimeEngine(bossGame()).estimateBossFeedRate(options);
+ assert.equal(unreachable.status,'unreachable');
+ close(unreachable.feedSecondsPerItem,45/7);
+});
+
+function stackedFarmGame(){
+ return bossGame({bosses:[{id:3,key:'blight',look:'boss',chestLook:'chest',skills:['farming','herbalism'],
+   classes:[{cls:'crops',skill:'farming',items:[1]}]}],
+  bossFeedRecipe:()=>({...recipe,skill:'farming',baseTicks:30}),bossUsesFarmingSpeed:()=>true,
+  bossBlightLayout:{site:{x:2,y:0},stations:[{kind:'trough',tiles:[{x:3,y:0}]}]},item:()=>({stackable:true})});
+}
+
+test('bulk stacked farm items use crop speed without a level correction or repeated refills',()=>{
+ const result=createWorkTimeEngine(stackedFarmGame()).estimateBossFeedRate({character:{skills:{farming:{level:90,speedMultiplier:2}},
+  movement:{capacity:2}},task:{bossId:3,itemId:1001}});
+ assert.equal(result.status,'ok');
+ close(result.secondsPerItem,9);
+ assert.equal(result.logisticsSecondsPerItem,0);
+ close(result.itemsPerHour,400);
+});
+
+test('stackable boss stock takes one item per refill when nothing fits after opening its stack',()=>{
+ const result=createWorkTimeEngine(stackedFarmGame()).estimateBossFeedRate({character:{skills:{farming:{level:90,speedMultiplier:2}},
+  movement:{capacity:1,strideSpeed:1000}},task:{bossId:3,itemId:1001}});
+ assert.equal(result.status,'ok');
+ assert.equal(result.route.itemsPerRefill,1);
+ close(result.logisticsSecondsPerItem,7.2);
+ close(result.secondsPerItem,16.2);
+});
+
+test('boss feed preserves a known resupply time when only feeding speed is unavailable',()=>{
+ const result=createWorkTimeEngine(bossGame()).estimateBossFeedRate(bossOptions({speedMultiplier:undefined}));
+ assert.equal(result.status,'unknownTime');
+ assert.equal(result.reason,'skillSpeed');
+ assert.equal(result.feedSecondsPerItem,null);
+ close(result.logisticsSecondsPerItem,1.65);
+ assert.equal(result.secondsPerItem,null);
+});
+
+test('sea boss keeps the representative fish route and reports the range across complete station groups',()=>{
+ const g=bossGame({bosses:[{id:1,key:'kraken',look:'boss',chestLook:'chest',skills:['fishing','cooking'],
+   classes:[{cls:'raw',skill:'fishing',items:[1]}]}],
+  bossFeedRecipe:()=>({...recipe,skill:'fishing',baseTicks:30}),
+  bossKrakenLayout:{site:{x:2,y:0},stations:[{kind:'stove',tiles:[{x:6,y:0}]},{kind:'barrel',tiles:[{x:2,y:0}]}]}});
+ const options={character:{skills:{fishing:{level:90,speedMultiplier:50}},movement:{capacity:4,strideSpeed:2000}},
+  task:{bossId:1,itemId:1001}};
+ const result=createWorkTimeEngine(g).estimateBossFeedRate(options);
+ assert.deepEqual(result.route.stationKinds,['barrel']);
+ close(result.secondsPerItem,3.3);
+ close(result.secondsPerItemRange.min,3.3);
+ close(result.secondsPerItemRange.max,3.9);
+ g.bossKrakenLayout.stations.pop();
+ const partial=createWorkTimeEngine(g).estimateBossFeedRate(options);
+ assert.equal(partial.status,'unknownTime');
+ close(partial.feedSecondsPerItem,1.8);
+ assert.equal(partial.secondsPerItemRange,null);
+});
+
+test('sea boss preserves the two known alternate timings if the representative route is unavailable',()=>{
+ const g=bossGame({bosses:[{id:1,key:'kraken',look:'boss',chestLook:'chest',skills:['fishing','cooking'],
+   classes:[{cls:'raw',skill:'fishing',items:[1]}]}],
+  bossFeedRecipe:()=>({...recipe,skill:'fishing',baseTicks:30}),
+  bossKrakenLayout:{site:{x:2,y:0},stations:[{kind:'barrel',tiles:[{x:3,y:0}]},{kind:'stove',tiles:[{x:6,y:0}]}]},
+  siteEntrance:(_world,_x,_y,_seed,_station,trip)=>({x:1,y:trip%2}),
+  walkPath:(_world,x,_y,targetX,targetY)=>x===3&&targetY===1?null:Array.from({length:Math.abs(targetX-x)}),
+ });
+ const result=createWorkTimeEngine(g).estimateBossFeedRate({character:{skills:{fishing:{level:90,speedMultiplier:50}},
+  movement:{capacity:4,strideSpeed:2000}},task:{bossId:1,itemId:1001}});
+ assert.equal(result.status,'unknownTime');
+ assert.equal(result.secondsPerItem,null);
+ close(result.secondsPerItemRange.min,3.6);
+ close(result.secondsPerItemRange.max,3.9);
+ assert.equal(result.secondsPerItemRange.knownRoutes,2);
+ assert.equal(result.secondsPerItemRange.routeCount,3);
+});
+
 test('final character level and speed produce literal expected action time and count yields',()=>{
  const result=createWorkTimeEngine(game()).estimateTaskTime({character:character({level:30,speedMultiplier:2}),task:task()});
  assert.equal(result.status,'ok');close(result.actionSeconds,15/11);close(result.seconds,150/11);

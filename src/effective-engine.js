@@ -1,6 +1,7 @@
 import {gatheringSkills} from './domain.js';
 import {callRule,requireCapability,tickMilliseconds,validateAdapter} from './adapter.js';
 import {createBatchTimeEstimator} from './batch-time.js';
+import {createBossFeedEstimator} from './boss-feed.js';
 
 const checked=value=>{if(!Number.isFinite(value)||value<0||value>Number.MAX_SAFE_INTEGER)throw Error('quantityOverflow');return value;};
 const probability=value=>{if(!Number.isFinite(value)||value<0||value>1)throw Error('invalidResult');return value;};
@@ -191,6 +192,7 @@ export function createWorkTimeEngine(game={}){
   return batchTime({job,tier,count:task.count,player:character,actionSeconds,discard:task.discard??false,siteId:task.siteId});
  }
  return Object.freeze({estimateTaskTime,estimateBatchTime,estimateWorkExpectation,
+  estimateBossFeedRate:createBossFeedEstimator(game),
   workActionSeconds:options=>{const context=resolve(options);return context.skill.level<context.job.levelReq?null:action(context);},
   workQualities:options=>mainQualities(resolve(options),options.environment)});
 }

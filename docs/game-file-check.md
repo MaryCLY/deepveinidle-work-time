@@ -9,3 +9,25 @@
 - 这些检查不证明未来规则的精度或语义兼容性，也不作版本一致性检查。
 
 验证复用预处理器的声明、依赖、初始化和局部失败测试，并在隔离安装的包中实际验证诊断与可用能力。原始测试记录和冻结数据保持只读。
+
+## 生活 Boss 声明
+
+投喂能力有语义化导出或 `symbols` 显式映射时才尝试提取。以下示例对应正式服 1.0.4915 的 `index-szBaIgSm.js`，SHA-256 为 `7fdb0dbe3a5aa0bda15768e45c55a5f064508b5259e1b6f44c0cb5e271b3272c`。将 `source` 替换为调用方加载的可信源码。部署改变符号后以新源码核对映射。 [正式服客户端](https://deepveinidle.com/assets/index-szBaIgSm.js)
+
+```js
+const {code, diagnostics} = compileGameFile(source, {
+  sourceVersion: '1.0.4915',
+  sourceUrl: 'https://deepveinidle.com/assets/index-szBaIgSm.js',
+  symbols: {
+    tickMs: 'ue', recipes: 'Ve', upgradeRecipes: 'Un', items: 'li', item: 'Xe',
+    recipeInputs: 'ba', recipeOutput: 'du', itemSupportsRarity: 'Nd',
+    rarityThresholds: 'Vh', levelSpeedCoefficient: '_le', upgradeBaseTicks: '$B',
+    hotRarityMultiplier: 'mA', world: 'P', siteEntrance: 'xs', walkPath: 'ik',
+    bonusMinimumUncommon: 'Cb', withRarity: '$o', baseItemId: 're', itemTier: 'eo',
+    upgradeMaterials: 'Xp', upgradeResult: '_d',
+    bosses: 'ke', bossUnlockLevel: 'Br', bossFeedRecipe: 'Up', bossFeedParts: 'hz',
+    bossUsesFarmingSpeed: 'Xue', bossHeartLayout: 'ct', bossKrakenLayout: 'Ra',
+    bossColonyLayout: 'rr', bossBlightLayout: 'Xa', bossSiegeLayout: 'sn',
+  },
+});
+```
