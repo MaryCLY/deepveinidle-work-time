@@ -242,3 +242,84 @@ test('assignment-created aliases and destructured initializer parameters reject 
   });
  }
 });
+
+test('reduce accumulators built in a fresh array do not mutate the selected source',async()=>{
+ for(const method of ['reduce','reduceRight']){
+  const source=`export const recipes=[{id:1},{id:2}];
+  const derived=recipes.${method}((acc,row)=>{acc.push({id:row.id});return acc;},[]);`;
+  const result=compiler.compileGameFile(source);
+  assert.equal(result.features.recipes,true,JSON.stringify(result.diagnostics));
+  assert.deepEqual((await loadCompiled(result.code)).gameFile.recipes,[{id:1},{id:2}]);
+ }
+});
+
+test('reduce tracks writes through external accumulators, source elements and the source array',()=>{
+ for(const method of ['reduce','reduceRight'])for(const initialization of [
+  `const rows=[{id:2}];const alias=recipes;rows.${method}((acc,row)=>{acc.push(row);return acc;},alias);`,
+  `recipes.${method}((acc,row)=>{row.id=2;return acc;},[]);`,
+  `recipes.${method}((acc,row,index,rows)=>{rows.push({id:2});return acc;},[]);`,
+  `recipes.${method}((acc,row)=>{acc.id=2;return acc;});`,
+ ]){
+  const source=`export const tickMs=600;export const recipes=[{id:1},{id:2}];${initialization}`;
+  const result=compiler.compileGameFile(source);
+  assert.equal(result.features.recipes,false,source);
+  assert.ok(result.diagnostics.some(d=>d.feature==='recipes'&&d.code==='externalInitialization'),source);
+  assert.equal(result.features.tickMs,true);
+ }
+});
+
+test('object literal methods are inspected before classifying their arguments as mutation targets',async()=>{
+ const declarations=`const config={id:1};export const recipes=[{id:config.id}];
+ const methods={label:value=>String(value),touch:value=>{value.id=2;}};`;
+ const read=compiler.compileGameFile(declarations+'const label=methods.label(config.id);');
+ assert.equal(read.features.recipes,true,JSON.stringify(read.diagnostics));
+ assert.deepEqual((await loadCompiled(read.code)).gameFile.recipes,[{id:1}]);
+ for(const call of ['methods.touch(config);','const unknown={};unknown.touch(config);']){
+  const write=compiler.compileGameFile(declarations+call);
+  assert.equal(write.features.recipes,false,call);
+  assert.ok(write.diagnostics.some(d=>d.feature==='recipes'&&d.code==='externalInitialization'));
+ }
+});
+
+test('conditional lazy caches can clear at a size bound while external cache seeding remains rejected',async()=>{
+ const declarations=`const plain=new Map(),special=new Map();
+ function lookup(id){const useSpecial=id>100,hit=useSpecial?special.get(id):plain.get(id);if(hit)return hit;
+ const value={id};if(useSpecial){const entry={...value};return special.size>=2&&special.clear(),special.set(id,entry),entry;}
+ return plain.set(id,value),value;}
+ export {lookup as item};`;
+ const cold=compiler.compileGameFile(declarations+'const warm=lookup(1);');
+ assert.equal(cold.features.item,true,JSON.stringify(cold.diagnostics));
+ const {gameFile}=await loadCompiled(cold.code);
+ for(const id of [1,101,102,103,101])assert.deepEqual(gameFile.item(id),{id});
+ for(const seed of ['plain.set(1,{id:99});','special.set(101,{id:99});']){
+  const seeded=compiler.compileGameFile(declarations+seed);
+  assert.equal(seeded.features.item,false,seed);
+  assert.ok(seeded.diagnostics.some(d=>d.feature==='item'&&d.code==='externalInitialization'));
+ }
+});
+
+test('object methods bind receiver this and preserve lexical this inside nested arrows',()=>{
+ for(const body of ['this[1]={name:"after"};','const run=()=>{this[1]={name:"after"};};run();']){
+  const source=`export const items={1:{name:'before'},hydrate(){${body}}};items.hydrate();`;
+  const result=compiler.compileGameFile(source);
+  assert.equal(result.features.items,false,source);
+  assert.ok(result.diagnostics.some(d=>d.feature==='items'&&d.code==='externalInitialization'));
+ }
+});
+
+test('overwritten object methods keep conservative mutation checks',()=>{
+ const result=compiler.compileGameFile(`export const recipes=[{id:1},{id:2}];
+ const methods={mutate:value=>{}};methods.mutate=value=>{value.id=9};methods.mutate(recipes[0]);`);
+ assert.equal(result.features.recipes,false);
+ assert.ok(result.diagnostics.some(d=>d.feature==='recipes'&&d.code==='externalInitialization'));
+});
+
+test('reduce callbacks that replace their accumulator retain source aliases in later iterations',()=>{
+ for(const method of ['reduce','reduceRight'])for(const change of ['if(index===0)return row;','if(index===0)acc=row;']){
+  const source=`export const recipes=[{id:1},{id:2}];
+  recipes.${method}((acc,row,index)=>{${change}acc.id=99;return acc;},{});`;
+  const result=compiler.compileGameFile(source);
+  assert.equal(result.features.recipes,false,source);
+  assert.ok(result.diagnostics.some(d=>d.feature==='recipes'&&d.code==='externalInitialization'));
+ }
+});

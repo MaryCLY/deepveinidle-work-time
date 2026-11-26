@@ -116,6 +116,7 @@ function initializationEffects(ast,declarations,owners){
  const scope=analyze(ast,{ecmaVersion:2024,sourceType:'module'});
  const moduleScope=scope.scopes.find(candidate=>candidate.type==='module');
  const moduleVariables=new Set(moduleScope.variables),variables=new WeakMap(),effects=[],assignedAliases=new Map();
+ const thisBinding=Symbol('this'),modifiedObjects=new Set();
  let executingFunction;
  for(const current of scope.scopes)for(const variable of current.variables){
   for(const identifier of variable.identifiers)variables.set(identifier,variable);
@@ -123,6 +124,7 @@ function initializationEffects(ast,declarations,owners){
  }
  function roots(node,environment,seen=new Set()){
   if(!node)return new Set();
+  if(node.type==='ThisExpression')return environment.get(thisBinding)??new Set();
   if(node.type==='MemberExpression'||node.type==='ChainExpression')return roots(node.object??node.expression,environment,seen);
   if(node.type==='Identifier'){
    const variable=variables.get(node);
@@ -162,9 +164,26 @@ function initializationEffects(ast,declarations,owners){
   }else if(node.type==='MemberExpression')record(roots(node.object,environment),owner,node);
   else for(const child of children(node))assignment(child,owner,environment);
  }
+ // A changed object cannot be resolved from its original literal methods.
+ visit(ast,node=>{
+  const target=node.type==='AssignmentExpression'?node.left:
+   node.type==='UpdateExpression'||node.type==='UnaryExpression'&&node.operator==='delete'?node.argument:undefined;
+  if(target?.type==='MemberExpression')for(const name of roots(target.object,new Map()))modifiedObjects.add(name);
+ });
  function callable(node){
   if(!node)return undefined;
   if(node.type==='FunctionExpression'||node.type==='ArrowFunctionExpression')return node;
+  if(node.type==='MemberExpression'&&node.object.type==='Identifier'){
+   if(node.computed&&node.property.type!=='Literal')return undefined;
+   if(roots(node.object,new Map()).size&&[...roots(node.object,new Map())].some(name=>modifiedObjects.has(name)))return undefined;
+   const key=node.computed?node.property.value:node.property.name;
+   const definitions=variables.get(node.object)?.defs??[];
+   const object=definitions.length===1?definitions[0].node.init:undefined;
+   if(object?.type!=='ObjectExpression'||object.properties.some(property=>property.type==='SpreadElement'||property.computed&&property.key.type!=='Literal'))return undefined;
+   const properties=object.properties.filter(property=>(property.computed?property.key.value:property.key.name??property.key.value)===key);
+   const property=properties.length===1?properties[0]:undefined;
+   return property?.kind==='init'?callable(property.value):undefined;
+  }
   if(node.type!=='Identifier')return undefined;
   for(const definition of variables.get(node)?.defs??[]){
    if(definition.node.type==='FunctionDeclaration')return definition.node;
@@ -175,9 +194,10 @@ function initializationEffects(ast,declarations,owners){
    if(init?.type==='FunctionExpression'||init?.type==='ArrowFunctionExpression')return init;
   }
  }
- function inspectFunction(fn,args,owner,environment,stack){
+ function inspectFunction(fn,args,owner,environment,stack,receiver=new Set()){
   if(stack.has(fn))return;
   const nextStack=new Set(stack).add(fn),local=new Map(environment);
+  if(fn.type!=='ArrowFunctionExpression')local.set(thisBinding,receiver);
   function bind(parameter,names){
    if(!parameter)return;
    if(parameter.type==='Identifier')local.set(variables.get(parameter),names);
@@ -194,6 +214,25 @@ function initializationEffects(ast,declarations,owners){
   fn.params.forEach((parameter,index)=>bind(parameter,args[index]??new Set()));
   const previous=executingFunction;executingFunction=fn;
   try{scan(fn.body,owner,local,nextStack);}finally{executingFunction=previous;}
+ }
+ function preservesAccumulator(callback){
+  const parameter=callback?.params[0];
+  if(parameter?.type!=='Identifier')return false;
+  const variable=variables.get(parameter);
+  let stable=true,returns=0;
+  function returned(expression){
+   if(expression?.type==='SequenceExpression')expression=expression.expressions.at(-1);
+   returns++;
+   if(expression?.type!=='Identifier'||variables.get(expression)!==variable)stable=false;
+  }
+  function inspect(node){
+   if(!node||['FunctionDeclaration','FunctionExpression','ArrowFunctionExpression'].includes(node.type))return;
+   if(node.type==='ReturnStatement')returned(node.argument);
+   if(node.type==='AssignmentExpression'&&bindingNames(node.left).some(name=>name===parameter.name))stable=false;
+   for(const child of children(node))inspect(child);
+  }
+  if(callback.body.type==='BlockStatement')inspect(callback.body);else returned(callback.body);
+  return stable&&returns>0;
  }
  function mutable(name){
   return declarations.get(name).some(entry=>entry.node.type==='VariableDeclarator'&&
@@ -215,12 +254,20 @@ function initializationEffects(ast,declarations,owners){
   if(node.type==='UpdateExpression'||node.type==='UnaryExpression'&&node.operator==='delete')assignment(node.argument,owner,environment);
   if(node.type==='CallExpression'||node.type==='NewExpression'){
    const fn=callable(node.callee);
-   if(fn)inspectFunction(fn,node.arguments.map(argument=>roots(argument,environment)),owner,environment,stack);
+   if(fn)inspectFunction(fn,node.arguments.map(argument=>roots(argument,environment)),owner,environment,stack,
+    node.type==='CallExpression'&&node.callee.type==='MemberExpression'?roots(node.callee.object,environment):new Set());
    else if(node.callee.type==='MemberExpression'){
     const member=node.callee,method=member.computed?member.property.value:member.property.name;
     const receiver=roots(member.object,environment);
     if(!readMethods.has(method))record([...receiver].filter(mutable),owner,node);
-    if(iterationMethods.has(method))for(const argument of node.arguments){
+    if(method==='reduce'||method==='reduceRight'){
+     const callback=callable(node.arguments[0]);
+     const accumulator=node.arguments.length>1?roots(node.arguments[1],environment):new Set(receiver);
+     // Only an unchanged accumulator returned on every path stays independent.
+     // Other reducers may carry a source element into a later iteration.
+     if(!preservesAccumulator(callback))for(const name of receiver)accumulator.add(name);
+     if(callback)inspectFunction(callback,[accumulator,receiver,new Set(),receiver],owner,environment,stack);
+    }else if(iterationMethods.has(method))for(const argument of node.arguments){
      const callback=callable(argument);
      if(callback)inspectFunction(callback,[receiver],owner,environment,stack);
     }
@@ -261,19 +308,39 @@ function lazyMemoWrite(effect,closure,declarations,owners){
  if(cacheEntries.length!==1)return false;
  const init=cacheEntries[0].node.init;
  if(init?.type!=='NewExpression'||!['Map','WeakMap'].includes(init.callee.name)||init.arguments.length)return false;
- const statements=fn.body.body,first=statements[0],check=statements[1],last=statements.at(-1);
- const hit=first?.type==='VariableDeclaration'&&first.declarations.length===1?first.declarations[0]:undefined;
- const get=hit?.init;
- if(hit?.id.type!=='Identifier'||get?.type!=='CallExpression'||get.callee.type!=='MemberExpression'||
-  get.callee.object.name!==name||get.callee.property.name!=='get'||get.arguments.length!==1||get.arguments[0].type!=='Identifier')return false;
+ const statements=fn.body.body,first=statements[0],check=statements[1];
+ function cacheGet(expression){
+  if(expression?.type==='ConditionalExpression')return cacheGet(expression.consequent)??cacheGet(expression.alternate);
+  return expression?.type==='CallExpression'&&expression.callee.type==='MemberExpression'&&
+   expression.callee.object.name===name&&expression.callee.property.name==='get'&&
+   expression.arguments.length===1&&expression.arguments[0].type==='Identifier'?expression:undefined;
+ }
+ const hit=first?.type==='VariableDeclaration'?first.declarations.find(declaration=>cacheGet(declaration.init)):undefined;
+ const get=cacheGet(hit?.init);
  const returned=check?.consequent?.type==='BlockStatement'?check.consequent.body[0]:check?.consequent;
- if(check?.type!=='IfStatement'||check.test.name!==hit.id.name||returned?.type!=='ReturnStatement'||returned.argument?.name!==hit.id.name)return false;
- const sequence=last?.type==='ReturnStatement'?last.argument:undefined;
- if(sequence?.type!=='SequenceExpression'||sequence.expressions.length!==2||sequence.expressions[0]!==node)return false;
- if(node.type!=='CallExpression'||node.callee.type!=='MemberExpression'||node.callee.object.name!==name||
-  node.callee.property.name!=='set'||node.arguments.length!==2||node.arguments[0].name!==get.arguments[0].name||
-  node.arguments[1].type!=='Identifier'||sequence.expressions[1].name!==node.arguments[1].name)return false;
- return true;
+ if(hit?.id.type!=='Identifier'||check?.type!=='IfStatement'||check.test.name!==hit.id.name||
+  returned?.type!=='ReturnStatement'||returned.argument?.name!==hit.id.name)return false;
+ function boundedClear(expression){
+  const guard=expression?.type==='LogicalExpression'&&expression.operator==='&&'?expression.left:undefined;
+  const clear=expression?.right;
+  return guard?.type==='BinaryExpression'&&guard.operator==='>='&&guard.left.type==='MemberExpression'&&
+   guard.left.object.name===name&&guard.left.property.name==='size'&&guard.right.type==='Literal'&&
+   Number.isInteger(guard.right.value)&&guard.right.value>0&&clear?.type==='CallExpression'&&
+   clear.callee.type==='MemberExpression'&&clear.callee.object.name===name&&clear.callee.property.name==='clear'&&clear.arguments.length===0;
+ }
+ let accepted=false;
+ visit(fn.body,statement=>{
+  const sequence=statement.type==='ReturnStatement'?statement.argument:undefined;
+  if(sequence?.type!=='SequenceExpression'||sequence.expressions.length<2||sequence.expressions.length>3)return;
+  const expressions=sequence.expressions,set=expressions.at(-2),value=expressions.at(-1);
+  if(set.type!=='CallExpression'||set.callee.type!=='MemberExpression'||set.callee.object.name!==name||
+   set.callee.property.name!=='set'||set.arguments.length!==2||set.arguments[0].name!==get.arguments[0].name||
+   set.arguments[1].type!=='Identifier'||value.type!=='Identifier'||value.name!==set.arguments[1].name)return;
+  const clear=expressions.length===3?expressions[0]:undefined;
+  if(clear&&!boundedClear(clear))return;
+  if(node===set||clear?.right===node)accepted=true;
+ });
+ return accepted;
 }
 
 function declarationDependencies(entry){
