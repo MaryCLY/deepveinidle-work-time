@@ -207,14 +207,179 @@ test('missing capabilities are isolated to the executed feature and no failure f
 });
 
 test('retained outputs use final movement directly and missing movement preserves known work time',()=>{
- const g=game({world:{sites:[{id:2,x:1,y:0,jobIds:[1]}],bankById:new Map([[1,{id:1,x:0,y:0}]])},
+ const g=gatheringGame({recipes:[recipe],world:{sites:[{id:2,x:1,y:0,jobIds:[1]}],bankById:new Map([[1,{id:1,x:0,y:0}]])},
   siteEntrance:()=>({x:0,y:0}),item:()=>({stackable:false})});
  const engine=createWorkTimeEngine(g);
  const unknown=engine.estimateTaskTime({character:character(),task:task({discard:false})});
  assert.equal(unknown.status,'unknownTime');assert.equal(unknown.reason,'movementConfiguration');close(unknown.workSeconds,30);
- const finalCharacter={...character(),movement:{strideSpeed:1000,capacity:4}};
+ const finalCharacter={...character({keyDropMultiplier:1}),movement:{strideSpeed:1000,capacity:4}};
  const result=engine.estimateTaskTime({character:finalCharacter,task:task({discard:false})});
  assert.equal(result.batches,5);assert.equal(result.batchCapacity,2);assert.equal(result.overheadSeconds,16.8);close(result.seconds,46.8);
+});
+
+function gatheringGame(patch={}){
+ return game({
+  recipes:[{...recipe,output:{itemId:1,qty:1}}],
+  world:{sites:[{id:2,x:3,y:0,jobIds:[1]}],bankById:new Map([[1,{id:1,x:0,y:0}]])},
+  siteEntrance:(_world,x)=>({x:x===3?2:0,y:0}),
+  walkPath:(_world,x,_y,targetX)=>Array.from({length:Math.abs(targetX-x)}),
+  item:id=>({stackable:![1,10,12].includes(id)}),coinItemId:99,
+  dungeonKeyTier:()=>({finds:[]}),levelXp:level=>level*100,
+  dungeonKeyBaseTicks:(job,xp)=>job.baseTicks+xp/1000,
+  dungeonKeyChance:(find,ticks,multiplier)=>find.chance*ticks*multiplier,
+  skillPet:()=>undefined,
+  hotRarityMultiplier:()=>1,
+  ...patch,
+ });
+}
+
+function gatheringOptions(count,{capacity=4,skill={},task:patch={}}={}){
+ return {character:{...character({luck:0,rareFindBonus:0,keyDropMultiplier:1,...skill}),movement:{strideSpeed:1000,capacity}},
+  environment:{tick:0,worldRarityBonus:0},task:task({discard:false,count,...patch})};
+}
+
+test('forced key rolls use the character multiplier and occupy distinct stacks outside expected products',()=>{
+ const engine=createWorkTimeEngine(gatheringGame({
+  dungeonKeyTier:()=>({finds:[{itemId:8,chance:1/12},{itemId:9,chance:1/12},{itemId:99,chance:1/12}]}),
+ }));
+ const options=gatheringOptions(7,{skill:{keyDropMultiplier:2}});
+ const result=engine.estimateTaskTime(options);
+ assert.equal(result.batchCapacity,2);
+ assert.equal(result.batches,4);
+ close(result.seconds,48.6);
+ assert.deepEqual(result.products,{1:7});
+ assert.equal(engine.estimateBatchTime(options).seconds,result.seconds);
+ assert.deepEqual(engine.estimateWorkExpectation(options).products,{1:7});
+});
+
+test('key rarity uses adjusted base ticks and scales the chance of picking up a stack',()=>{
+ const engine=createWorkTimeEngine(gatheringGame({
+  dungeonKeyTier:()=>({finds:[{itemId:8,chance:1/30},{itemId:9,chance:1/30}]}),
+  hotRarityMultiplier:()=>1.5,
+ }));
+ const rare=gatheringOptions(7,{skill:{luck:.25,rareFindBonus:.3,keyDropMultiplier:2}});
+ rare.environment.worldRarityBonus=.2;
+ const forced=engine.estimateBatchTime(rare);
+ assert.equal(forced.batchCapacity,2);
+ assert.equal(forced.batches,4);
+ const none=createWorkTimeEngine(gatheringGame({dungeonKeyTier:()=>({finds:[{itemId:8,chance:0}]})}));
+ assert.equal(none.estimateBatchTime(gatheringOptions(7)).batchCapacity,4);
+ assert.equal(none.estimateBatchTime(gatheringOptions(7)).batches,2);
+});
+
+test('stackable bonus charges each item ID on its first drop in the trip',()=>{
+ const job={...recipe,output:{itemId:1,qty:1},bonus:{itemId:8,chance:.5}};
+ const result=createWorkTimeEngine(gatheringGame({recipes:[job]})).estimateBatchTime(gatheringOptions(7));
+ close(result.batchCapacity,3+2/17);
+ close(result.batches,2+225/289);
+ close(result.totalWalkTicks,4*(2+225/289));
+});
+
+test('each trip independently has a chance of ending with the shorter capacity',()=>{
+ const job={...recipe,output:{itemId:1,qty:1},bonus:{itemId:12,chance:1/7}};
+ const engine=createWorkTimeEngine(gatheringGame({recipes:[job]}));
+ const result=engine.estimateBatchTime(gatheringOptions(8));
+ close(result.batchCapacity,3.5);
+ close(result.batches,2.75);
+ close(result.totalWalkTicks,11);
+ close(result.walkStarts,5.5);
+ close(result.overheadSeconds,18.6);
+ const long=engine.estimateBatchTime(gatheringOptions(1e12));
+ assert.ok(Math.abs(long.batches-285714285714.6531)<.001);
+ assert.ok(Number.isFinite(long.seconds));
+});
+
+test('one more work attempt cannot shorten the estimate at the exact trip cutoff',()=>{
+ const job={...recipe,output:{itemId:1,qty:1},bonus:{itemId:12,chance:28/27.85-1}};
+ const engine=createWorkTimeEngine(gatheringGame({recipes:[job],
+  world:{sites:[{id:2,x:40,y:0,jobIds:[1]}],bankById:new Map([[1,{id:1,x:0,y:0}]])},
+  siteEntrance:(_world,x)=>({x:Math.max(0,x-1),y:0}),
+ }));
+ const estimate=count=>engine.estimateBatchTime(gatheringOptions(count,{capacity:28,skill:{speedMultiplier:1000}}));
+ const cutoff=estimate(27*128),next=estimate(27*128+1),later=estimate(27*128+44);
+ close(cutoff.batchCapacity,27.85);
+ assert.ok(next.seconds>=cutoff.seconds,`${next.seconds} < ${cutoff.seconds}`);
+ assert.ok(next.batches>=cutoff.batches);
+ assert.ok(next.totalWalkTicks>=cutoff.totalWalkTicks);
+ assert.ok(next.walkStarts>=cutoff.walkStarts);
+ assert.ok(later.overheadSeconds>next.overheadSeconds);
+});
+
+test('nonstackable bonus adds expected walking only when it can change the number of trips',()=>{
+ const job={...recipe,output:{itemId:1,qty:1},bonus:{itemId:12,chance:.5}};
+ const engine=createWorkTimeEngine(gatheringGame({recipes:[job]}));
+ const result=engine.estimateBatchTime(gatheringOptions(10,{capacity:5}));
+ close(result.batchCapacity,10/3);
+ close(result.batches,3+8/27);
+ close(result.totalWalkTicks,4*(3+8/27));
+ const short=engine.estimateBatchTime(gatheringOptions(6,{capacity:5}));
+ assert.equal(short.batches,2);
+ close(short.overheadSeconds,13.2);
+ assert.equal(engine.estimateBatchTime(gatheringOptions(12,{capacity:6})).batchCapacity,4);
+});
+
+test('pet drops add nonstackable slots and a zero-slot pack stays unreachable',()=>{
+ const engine=createWorkTimeEngine(gatheringGame({skillPet:()=>({itemId:10}),skillPetChance:()=>1}));
+ const result=engine.estimateTaskTime(gatheringOptions(7));
+ assert.equal(result.batchCapacity,2);
+ assert.equal(result.batches,4);
+ assert.deepEqual(result.products,{1:7});
+ assert.equal(engine.estimateBatchTime(gatheringOptions(7,{capacity:0})).status,'unreachable');
+});
+
+test('pet drop storage follows the item definition',()=>{
+ const engine=createWorkTimeEngine(gatheringGame({skillPet:()=>({itemId:11}),skillPetChance:()=>1}));
+ assert.equal(engine.estimateBatchTime(gatheringOptions(7)).batchCapacity,3);
+});
+
+test('burn fills the pack with a byproduct while caught skips all drops',()=>{
+ const job={...recipe,output:{itemId:1,qty:1},bonus:{itemId:8,chance:1},
+  burn:{chanceAtReq:.5,safeAtLevel:20,itemId:12},caught:{chanceAtReq:.5,safeAtLevel:20,stunTicks:1}};
+ const engine=createWorkTimeEngine(gatheringGame({recipes:[job],dungeonKeyTier:()=>({finds:[{itemId:8,chance:1/6}]})}));
+ const options=gatheringOptions(9,{skill:{failureMultiplier:1}});
+ const result=engine.estimateTaskTime(options);
+ close(result.batchCapacity,4+108/283);
+ close(result.batches,2+(175/283)**2);
+ assert.deepEqual(result.products,{1:2.25,8:2.25,12:4.5});
+ assert.equal(engine.estimateBatchTime(options).batchCapacity,result.batchCapacity);
+});
+
+test('a repeated stackable ID uses one slot across qualified main, bonus and key rolls',()=>{
+ const job={...recipe,plain:false,output:{itemId:1,qty:1},bonus:{itemId:7,chance:1}};
+ const engine=createWorkTimeEngine(gatheringGame({recipes:[job],item:id=>({stackable:id!==1001}),itemSupportsRarity:()=>true,
+  rarityThresholds:{uncommon:1,rare:0,epic:0,legendary:0},bonusMinimumUncommon:()=>true,
+  dungeonKeyTier:()=>({finds:[{itemId:1007,chance:1/6}]})}));
+ const result=engine.estimateBatchTime(gatheringOptions(7));
+ assert.equal(result.batchCapacity,3);
+ assert.equal(result.batches,3);
+});
+
+test('a single random stack can fill a stack-only pack and orders do not drive search cost',()=>{
+ const job={...recipe,output:{itemId:7,qty:1},bonus:{itemId:8,chance:.5}};
+ const engine=createWorkTimeEngine(gatheringGame({recipes:[job]}));
+ assert.equal(engine.estimateBatchTime(gatheringOptions(7,{capacity:2})).batchCapacity,2);
+ const large=engine.estimateBatchTime(gatheringOptions(1e12,{capacity:2}));
+ assert.equal(large.batches,5e11);
+ assert.ok(Number.isFinite(large.seconds));
+});
+
+test('deterministic gathering preserves an exact maximum-safe integer capacity',()=>{
+ const engine=createWorkTimeEngine(gatheringGame());
+ const capacity=Number.MAX_SAFE_INTEGER;
+ const result=engine.estimateBatchTime(gatheringOptions(capacity,{capacity,skill:{speedMultiplier:1000}}));
+ assert.equal(result.batchCapacity,capacity);
+ assert.equal(result.batches,1);
+});
+
+test('retained gathering logistics require drop inputs',()=>{
+ const engine=createWorkTimeEngine(gatheringGame({dungeonKeyTier:undefined}));
+ assert.throws(()=>engine.estimateBatchTime(gatheringOptions(7)),error=>error.capability==='dungeonKeyTier');
+ const invalid=createWorkTimeEngine(gatheringGame());
+ assert.throws(()=>invalid.estimateBatchTime(gatheringOptions(7,{skill:{keyDropMultiplier:.5}})),/invalidWorkConfiguration/);
+ assert.equal(engine.estimateBatchTime(gatheringOptions(7,{task:{discard:true}})).batches,0);
+ const thieving=createWorkTimeEngine(game({recipes:[{...recipe,skill:'thieving'}]}));
+ assert.equal(thieving.estimateBatchTime({character:{skills:{thieving:{level:10,speedMultiplier:1}}},
+  task:task({discard:false})}).batches,0);
 });
 
 
@@ -267,20 +432,27 @@ function finalMovement(game,configuration,calibration,design){
  return {strideSpeed:Math.round(game.mountStride(player)*swift*game.masteryMultiplier(player.masteries,'move')),capacity:game.inventoryCapacity(player)};
 }
 
-test('final character batch entry replays every one of the 14950 frozen logistics vectors',async()=>{
+test('final character batch entry replays the 14950 frozen logistics vectors with drops isolated',async()=>{
  const manifest=readJson(new URL('manifest.json',archive));
  const gameData=await import(new URL('buddy/src/engine/upstream.js',baseline));
  const {bronzePickaxeCalibration}=await import(new URL('buddy/tests/fixtures/batch-calibration.js',baseline));
- const engine=createWorkTimeEngine({...gameData,levelSpeedCoefficient:.005});
+ // The frozen vectors isolate main-item logistics. Supply recipes and drop rules
+ // matching those conditions without changing the archive.
+ const recipes=gameData.recipes.map(job=>!job.inputs.length&&['mining','fishing','woodcutting'].includes(job.skill)
+  ?{...job,bonus:undefined}:job);
+ const engine=createWorkTimeEngine({...gameData,recipes,levelSpeedCoefficient:.005,
+  dungeonKeyTier:()=>({finds:[]}),skillPet:()=>undefined});
+ const environment={tick:manifest.design.initialTick,worldRarityBonus:0};
  const characters=new Map(manifest.configurations.map(configuration=>[configuration.index,{
-  skills:Object.fromEntries(gameData.allSkills.map(skill=>[skill,{level:500,speedMultiplier:1000000}])),
+  skills:Object.fromEntries(gameData.allSkills.map(skill=>[skill,{level:500,speedMultiplier:1000000,luck:0,rareFindBonus:0,keyDropMultiplier:1}])),
   movement:finalMovement(gameData,configuration,bronzePickaxeCalibration,manifest.design),
  }]));
  const rows=archivedRows(),secondsPerTick=manifest.design.tickMs/1000;
  assert.equal(rows.length,14950);
  for(const row of rows){
   const label=[row.configurationIndex,row.jobId,row.siteId,row.tier,row.count].join('/');
-  const result=engine.estimateBatchTime({character:characters.get(row.configurationIndex),task:{jobId:row.jobId,siteId:row.siteId,tier:row.tier,count:row.count}});
+  const result=engine.estimateBatchTime({character:characters.get(row.configurationIndex),environment,
+   task:{jobId:row.jobId,siteId:row.siteId,tier:row.tier,count:row.count}});
   assert.equal(result.status,'ok',label);close(result.workSeconds,row.oracleWorkTicks*secondsPerTick);
   close(result.overheadSeconds,row.oracleOverheadSeconds);close(result.seconds,row.oracleTotalTicks*secondsPerTick);
   assert.equal(result.batches,row.batches,label);assert.equal(result.batchCapacity,row.capacity,label);

@@ -15,6 +15,8 @@ const optionalSymbols=Object.freeze({
  bosses:undefined,bossUnlockLevel:undefined,bossFeedRecipe:undefined,bossFeedParts:undefined,
  bossUsesFarmingSpeed:undefined,bossHeartLayout:undefined,bossKrakenLayout:undefined,
  bossColonyLayout:undefined,bossBlightLayout:undefined,bossSiegeLayout:undefined,
+ coinItemId:undefined,dungeonKeyTier:undefined,dungeonKeyChance:undefined,
+ dungeonKeyBaseTicks:undefined,levelXp:undefined,skillPet:undefined,skillPetChance:undefined,
 });
 const featureSymbols=Object.freeze({...baselineSymbols,...optionalSymbols});
 const reviewedGlobals=new Set([

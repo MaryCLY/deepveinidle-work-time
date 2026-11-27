@@ -12,6 +12,8 @@ Node构建入口 `@dvi-lab/work-time/game-file` 导出 `compileGameFile(source,{
 
 gameFile必要能力按功能提供：tickMs、recipes、upgradeRecipes、items/item、recipeInputs/recipeOutput/itemSupportsRarity、rarityThresholds、levelSpeedCoefficient、upgradeBaseTicks、hotRarityMultiplier、world/siteEntrance/walkPath、bonusMinimumUncommon（仅配方bonus需要）、withRarity/baseItemId/itemTier、upgradeMaterials/upgradeResult（物品编码与升级规则）。基线映射来自已核对1214声明，版本及hash不作为条件。提取不包含角色属性汇总函数、登录、网络或页面组件。
 
+计算保留产物的无材料采矿、钓鱼和伐木的物流时另用 `coinItemId`、`dungeonKeyTier(levelReq)` 和 `skillPet(skill)`。有钥匙时用 `levelXp(level)`、`dungeonKeyBaseTicks(job, xp)` 和 `dungeonKeyChance(find, baseTicks, rarityMultiplier)`。有技能宠物时用 `skillPetChance(skill)`。
+
 ## 角色最终属性
 
 `character.skills[skill]`：
@@ -20,6 +22,7 @@ gameFile必要能力按功能提供：tickMs、recipes、upgradeRecipes、items/
 - `upgradeSpeedMultiplier`：升级使用的最终速度倍率，仅升级需要；旧规则升级不含副手，不能冒用普通速度。
 - `luck`：最终幸运的小数加成，0.2表示20%，包含工具及装备幸运。
 - `rareFindBonus`：寻宝/稀有发现等个人最终加成的小数和，0.2表示20%；不包含luck、任务/环境热度和世界增益。
+- `keyDropMultiplier`：采集钥匙掉率的最终倍率，有限且至少为 1。计算采集掉落占包时提供，1 表示没有钥匙发现加成。
 - `failureMultiplier`：角色对烧毁/被抓概率的最终乘数，仅有相应风险时需要；1表示不减免。不读取天赋等级重算。
 
 `character.movement={strideSpeed,capacity}` 提供最终移动值和背包格数，用于保留产物的物流和首领补料。移动值 1000 表示每 Tick 一格，与游戏 `stride` 同单位。投喂时 `capacity` 为补料时可供目标物品使用的格数。
@@ -30,9 +33,11 @@ gameFile必要能力按功能提供：tickMs、recipes、upgradeRecipes、items/
 
 主入口 `createWorkTimeEngine(gameFile)`，返回 `estimateTaskTime({character,task,environment})`，task为 `{jobId,tier=0,count?,quantity?,discard=false,siteId?,inputItemId?}`。count（次数）和quantity（目标品质产量）恰好一个；普通jobId为配方ID，升级为upgrade-ID。单输入升级可从tier推导inputItemId；多输入升级须显式给物品，显式tier冲突时报错。制造tier表示原料品质，实际输出按游戏规则。模块查配方，不让调用方传任务概率、单次时间或materials。低层时间/期望/品质/预计产物方法亦使用最终character并复用同一规则。
 
+`estimateTaskTime` 和 `estimateBatchTime` 计算保留产物的无材料采矿、钓鱼和伐木时均计入掉落占包。主产物、配方副产物品质和钥匙掉率按需使用最终品质属性及 `environment`。有烧毁或被抓规则的配方需要 `failureMultiplier`。此时 `batchCapacity`、`batches`、`totalWalkTicks` 和 `walkStarts` 可为小数。
+
 所有普通工作统一使用最终等级和速度计算。普通单次概率 = min(1, (1+max(0,level-levelReq)*游戏levelSpeedCoefficient)*speedMultiplier/baseTicks)。升级用游戏upgradeBaseTicks、任务等级修正和upgradeSpeedMultiplier，保留取整/至少1tick规则。烧毁/被抓由配方风险随等级衰减，再乘failureMultiplier。品质使用游戏阈值乘(1+luck)*(1+rareFindBonus+worldRarityBonus+hotMultiplier-1)，plain主产物固定普通。所有公式以已核对游戏原声明为依据，不拟合常数。
 
-结果保留status/seconds/workSeconds/overheadSeconds/attempts/quantity/burn/caught/quality/actionSeconds/waitSeconds等；添加materials及products（主产物各品质、烧毁副产物、配方显式bonus），次数模式返回期望产量；目标模式按指定品质反推期望次数。先消耗材料、判烧毁再判被抓；烧毁副产物每事件一个，wait乘未烧毁概率。bonus按成功工作事件及游戏品质规则计算；不外推坐骑/宠物、未来升级、工具免耗或药水失效。物流仍用原v3路径/容量/相位，并在内部直接读最终movement。
+结果保留status/seconds/workSeconds/overheadSeconds/attempts/quantity/burn/caught/quality/actionSeconds/waitSeconds等；添加materials及products（主产物各品质、烧毁副产物、配方显式bonus），次数模式返回期望产量；目标模式按指定品质反推期望次数。先消耗材料、判烧毁再判被抓；烧毁副产物每事件一个，wait乘未烧毁概率。bonus按成功工作事件及游戏品质规则计算。材料、产量和物流使用当前角色快照。物流沿用原 v3 路径和相位，并在内部直接读最终 movement。
 
 ## 迁移与验证
 

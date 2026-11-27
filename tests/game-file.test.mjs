@@ -105,6 +105,55 @@ test('boss declarations compile on demand even with a renderer reading the layou
  assert.equal(Object.hasOwn(compiler.compileGameFile('const ke=[];').features,'bosses'),false);
 });
 
+test('gathering drop declarations compile from semantic exports or explicit mappings',async()=>{
+ const source=`const ks=200;
+ const key={itemId:770,chance:0.02};
+ const iZ=level=>({finds:level>=10?[key]:[]});
+ const jxo=(job,xp)=>job.baseTicks/xp;
+ const Nxo=(key,ticks,speed)=>key.chance*ticks*Math.sqrt(speed);
+ const os=level=>level*10;
+ const vZ=skill=>skill==='mining'?{skill,itemId:403}:undefined;
+ const QO=()=>0.001;`;
+ const symbols={
+  coinItemId:'ks',dungeonKeyTier:'iZ',dungeonKeyChance:'Nxo',dungeonKeyBaseTicks:'jxo',
+  levelXp:'os',skillPet:'vZ',skillPetChance:'QO',
+ };
+ const exports=Object.entries(symbols).map(([feature,symbol])=>`${symbol} as ${feature}`).join(',');
+ const variants=[
+  compiler.compileGameFile(source+`export {${exports}};`),
+  compiler.compileGameFile(source,{symbols}),
+ ];
+ for(const {code,features,diagnostics} of variants){
+  for(const feature of Object.keys(symbols))assert.equal(features[feature],true,JSON.stringify(diagnostics));
+  const {gameFile}=await loadCompiled(code);
+  assert.equal(gameFile.coinItemId,200);
+  const [key]=gameFile.dungeonKeyTier(10).finds;
+  assert.equal(key.itemId,770);
+  assert.equal(gameFile.dungeonKeyBaseTicks({baseTicks:200},gameFile.levelXp(10)),2);
+  assert.equal(gameFile.dungeonKeyChance(key,2,4),0.08);
+  assert.deepEqual(gameFile.skillPet('mining'),{skill:'mining',itemId:403});
+  assert.equal(gameFile.skillPetChance('mining'),0.001);
+ }
+ const compiled=compiler.compileGameFile(source);
+ const {gameFile}=await loadCompiled(compiled.code);
+ for(const feature of Object.keys(symbols)){
+  assert.equal(Object.hasOwn(compiled.features,feature),false);
+  assert.equal(Object.hasOwn(gameFile,feature),false);
+ }
+});
+
+test('an unavailable gathering drop declaration preserves the other selected capabilities',async()=>{
+ const result=compiler.compileGameFile(`export const tickMs=600;
+ export const dungeonKeyChance=()=>window.chance;
+ export const skillPetChance=()=>0.001;`);
+ assert.equal(result.features.dungeonKeyChance,false);
+ assert.ok(result.diagnostics.some(d=>d.feature==='dungeonKeyChance'&&d.dependency==='window'));
+ const {gameFile}=await loadCompiled(result.code);
+ assert.equal(gameFile.tickMs,600);
+ assert.equal(gameFile.skillPetChance('mining'),0.001);
+ assert.equal(Object.hasOwn(gameFile,'dungeonKeyChance'),false);
+});
+
 test('imports, eval and ambient environment dependencies are diagnosed and never loaded',async()=>{
  const source=`import remote from 'not-installed-client';
  export const tickMs=600;
